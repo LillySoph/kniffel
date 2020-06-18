@@ -1,6 +1,6 @@
 package logic;
 
 public enum FieldType {
-    Einser, Zweier, Dreier, Vierer, Fuenfer, Sechser,
-    Dreierpasch, Viererpasch, FullHouse, KleineStraße, GroßeStraße, Kniffel, Chance
+    Aces, Twos, Threes, Fours, Fives, Sixes,
+    ThreeOfOneKind, FourOfOneKind, FullHouse, SmallStraight, LargeStraight, Kniffel, Chance
 }

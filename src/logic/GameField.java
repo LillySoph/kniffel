@@ -2,88 +2,90 @@ package logic;
 
 public class GameField {
 
-    public int computePoints(FieldType fieldType, int[] dices) {
+    public int computePoints(FieldType fieldType, Dice[] dices) {
+        int result;
         switch(fieldType) {
             case Einser:
-                return returnPointsforEinser(dices);
+                result = returnPointsforEinser(dices);
             case Zweier:
-                return returnPointsforZweier(dices);
+                result = returnPointsforZweier(dices);
             case Dreier:
-                return returnPointsforDreier(dices);
+                result = returnPointsforDreier(dices);
             case Vierer:
-                return returnPointsforVierer(dices);
+                result = returnPointsforVierer(dices);
             case Fuenfer:
-                return returnPointsforFuenfer(dices);
+                result = returnPointsforFuenfer(dices);
             case Sechser:
-                return returnPointsforSechser(dices);
+                result = returnPointsforSechser(dices);
             case Dreierpasch:
-                return returnPointsforDreierpasch(dices);
+                result = returnPointsforDreierpasch(dices);
             case Viererpasch:
-                return returnePointsforViererpasch(dices);
+                result = returnePointsforViererpasch(dices);
             case FullHouse:
-                return returnPointsforFullHouse(dices);
+                result = returnPointsforFullHouse(dices);
             case KleineStraße:
-                return returnPointsforKleineStraße(dices);
+                result = returnPointsforKleineStraße(dices);
             case GroßeStraße:
-                return returnPointsforGroßeStraße(dices);
+                result = returnPointsforGroßeStraße(dices);
             case Kniffel:
-                return returnPointsforKniffel(dices);
+                result = returnPointsforKniffel(dices);
             case Chance:
-                return returnPointsforChance(dices);
+                result = returnPointsforChance(dices);
             default:
-                return -1;
+                result = 0;
         }
+
     }
 
-    private int returnPointsforEinser(int[] dices) {
+    private int returnPointsforEinser(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforZweier(int[] dices) {
+    private int returnPointsforZweier(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforDreier(int[] dices) {
+    private int returnPointsforDreier(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforVierer(int[] dices) {
+    private int returnPointsforVierer(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforFuenfer(int[] dices) {
+    private int returnPointsforFuenfer(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforSechser(int[] dices) {
+    private int returnPointsforSechser(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforDreierpasch(int[] dices) {
+    private int returnPointsforDreierpasch(Dice[] dices) {
         return 0;
     }
 
-    private int returnePointsforViererpasch(int[] dices) {
+    private int returnePointsforViererpasch(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforFullHouse(int[] dices) {
+    private int returnPointsforFullHouse(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforKleineStraße(int[] dices) {
+    private int returnPointsforKleineStraße(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforGroßeStraße(int[] dices) {
+    private int returnPointsforGroßeStraße(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforKniffel(int[] dices) {
+    private int returnPointsforKniffel(Dice[] dices) {
         return 0;
     }
 
-    private int returnPointsforChance(int[] dices) {
+    private int returnPointsforChance(Dice[] dices) {
         return 0;
     }
 

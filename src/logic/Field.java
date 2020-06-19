@@ -14,44 +14,67 @@ public class Field extends JButton {
         this.points = -1;
     }
 
-    // calculates and returns points depending on given dices & field type
-    public int returnPoints(Dice[] dices) {
-        int result;
-        // field is or is being set to zero
-        if(points >= 0)
-            return 0;
-        // calculate points
-        if(this.fieldType == FieldType.ThreeOfOneKind || this.fieldType == FieldType.FourOfOneKind || this.fieldType == FieldType.Kniffel)
-            result = returnPointsforNOfAKind(dices);
-        else if(this.fieldType == FieldType.FullHouse)
-            result = returnPointsforFullHouse(dices);
-        else if(this.fieldType == FieldType.SmallStraight || this.fieldType == FieldType.LargeStraight)
-            result = returnPointsforStraight(dices);
-        else if(this.fieldType == FieldType.Chance)
-            result = returnPointsforChance(dices);
-        else
-            result = returnPointsForFirstBlock(dices);
-        // return calculated points
-        return result;
-    }
+    public int getPoints() { return this.points; }
 
-    // calculates and returns points for Aces, Twos, Threes, Fours, Fives and Sixes
-    private int returnPointsForFirstBlock(Dice[] dices) {
-        int n = 0;
+    // calculates points depending on given dices & field type and updates button text
+    public void updatePoints(Dice[] dices) {
+
+        // field was zero before or is no being set to zero
+        if(points >= 0) {
+            this.points = 0;
+            this.setText(toString());
+            return;
+        }
+        // otherwise calculate points
         switch(this.fieldType) {
             case Aces:
-                n = 1;
+                this.points = calculatePointsForFirstBlock(dices, 1);
+                break;
             case Twos:
-                n = 2;
+                this.points = calculatePointsForFirstBlock(dices, 2);
+                break;
             case Threes:
-                n = 3;
+                this.points = calculatePointsForFirstBlock(dices, 3);
+                break;
             case Fours:
-                n = 4;
+                this.points = calculatePointsForFirstBlock(dices, 4);
+                break;
             case Fives:
-                n = 5;
+                this.points = calculatePointsForFirstBlock(dices, 5);
+                break;
             case Sixes:
-                n = 6;
+                this.points = calculatePointsForFirstBlock(dices, 6);
+                break;
+            case ThreeOfOneKind:
+                this.points = calculatePointsforNOfAKind(dices, 3);
+                break;
+            case FourOfOneKind:
+                this.points = calculatePointsforNOfAKind(dices, 4);
+                break;
+            case Kniffel:
+                this.points = calculatePointsforNOfAKind(dices, 5);
+                break;
+            case FullHouse:
+                this.points = calculatePointsforFullHouse(dices);
+                break;
+            case SmallStraight:
+                this.points = calculatePointsforStraight(dices, 4);
+                break;
+            case LargeStraight:
+                this.points = calculatePointsforStraight(dices, 5);
+                break;
+            default:
+                this.points = calculatePointsforChance(dices);
         }
+
+        // update button text
+        this.setText(toString());
+    }
+
+    public String toString() { return this.points + "";}
+
+    // calculates and returns points for Aces, Twos, Threes, Fours, Fives and Sixes
+    private int calculatePointsForFirstBlock(Dice[] dices, int n) {
         int result = 0;
         for(int i=0; i<dices.length; i++) {
             if(dices[i].getValue() == n)
@@ -60,17 +83,8 @@ public class Field extends JButton {
         return result;
     }
 
-    // calculates and returns points for ThreOfAKind, FourOfAKind and Kniffel
-    private int returnPointsforNOfAKind(Dice[] dices) {
-        int n = 0;
-        switch(this.fieldType) {
-            case ThreeOfOneKind:
-                n = 1;
-            case FourOfOneKind:
-                n = 2;
-            case Kniffel:
-                n = 5;
-        }
+    // calculates and returns points for ThreeOfAKind, FourOfAKind and Kniffel
+    private int calculatePointsforNOfAKind(Dice[] dices, int n) {
         int counter = 0;
         int sum = 0;
         for(int i=0; i<dices.length; i++) {
@@ -87,7 +101,7 @@ public class Field extends JButton {
     }
 
     // calculates and returns points for FullHouse
-    private int returnPointsforFullHouse(Dice[] dices) {
+    private int calculatePointsforFullHouse(Dice[] dices) {
         boolean found3OfAKind = false;
         int counter3 = 0;
         int num3 = 1;
@@ -117,15 +131,8 @@ public class Field extends JButton {
     }
 
     // calculates and returns points for SmalLStraight and LargeStraight
-    private int returnPointsforStraight(Dice[] dices) {
-        int nInARow, points;
-        if(this.fieldType == FieldType.SmallStraight) {
-            nInARow = 4;
-            points = 30;
-        } else {
-            nInARow = 5;
-            points = 40;
-        }
+    private int calculatePointsforStraight(Dice[] dices, int nInARow) {
+        int points = (nInARow - 1) * 10;
         int start = 1;
         boolean straight = false;
         while(!straight || start == 7 - nInARow) {
@@ -143,7 +150,7 @@ public class Field extends JButton {
     }
 
     // calculates and returns points for Chance
-    private int returnPointsforChance(Dice[] dices) {
+    private int calculatePointsforChance(Dice[] dices) {
         int result = 0;
         for(int i=0; i<dices.length; i++) {
             result += dices[i].getValue();

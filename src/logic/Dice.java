@@ -23,10 +23,7 @@ public class Dice extends JButton {
 
     // change keepDice to its contrary
     public void changeKeepDice() {
-        if(this.keepDice = false)
-            keepDice = true;
-        else
-            keepDice = false;
+        this.keepDice = (!keepDice);
     }
 
     // returns whether the dice should be kept for the next round or rolled
@@ -39,10 +36,11 @@ public class Dice extends JButton {
         this.keepDice = true;
     }
 
-    // "roll" dice, generate number between 1 and 6
+    // "roll" dice, generate number between 1 and 6, and updates button text
     public void roll() {
         this.value = (int) (Math.random() * 6) + 1;
         keepDice = false;
+        this.setText(toString());
     }
 
     // return value of dice as string for textfield

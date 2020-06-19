@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CalculatePointsTest {
 
-    // Aces, Twos, Threes, Fours, Fives, Sixes
+
     Dice[] dices = new Dice[5];
 
     public void setDicesValue(int[] values) {
@@ -18,32 +18,34 @@ public class CalculatePointsTest {
         }
     }
 
+    // Aces, Twos, Threes, Fours, Fives, Sixes
+
     @Test
     public void testAces() {
         Field f = new Field(FieldType.Aces);
         int [] v1 = {1, 1, 1, 1, 1};
         setDicesValue(v1);
-        assertEquals(5, f.returnPoints(dices));
+        assertEquals(5, f.updatePoints(dices));
 
         int [] v2 = {1, 1, 1, 1, 3};
         setDicesValue(v2);
-        assertEquals(4, f.returnPoints(dices));
+        assertEquals(4, f.updatePoints(dices));
 
         int [] v3 = {1, 1, 5, 1, 3};
         setDicesValue(v1);
-        assertEquals(3, f.returnPoints(dices));
+        assertEquals(3, f.updatePoints(dices));
 
         int [] v4 = {6, 1, 5, 1, 3};
         setDicesValue(v1);
-        assertEquals(2, f.returnPoints(dices));
+        assertEquals(2, f.updatePoints(dices));
 
         int [] v5 = {6, 4, 5, 1, 3};
         setDicesValue(v1);
-        assertEquals(1, f.returnPoints(dices));
+        assertEquals(1, f.updatePoints(dices));
 
         int [] v6 = {6, 4, 5, 2, 3};
         setDicesValue(v1);
-        assertEquals(0, f.returnPoints(dices));
+        assertEquals(0, f.updatePoints(dices));
     }
 
     @Test
@@ -51,27 +53,27 @@ public class CalculatePointsTest {
         Field f = new Field(FieldType.Twos);
         int [] v1 = {2, 2, 2, 2, 2};
         setDicesValue(v1);
-        assertEquals(10, f.returnPoints(dices));
+        assertEquals(10, f.updatePoints(dices));
 
         int [] v2 = {1, 2, 2, 2, 3};
         setDicesValue(v2);
-        assertEquals(8, f.returnPoints(dices));
+        assertEquals(8, f.updatePoints(dices));
 
         int [] v3 = {2, 2, 5, 2, 3};
         setDicesValue(v1);
-        assertEquals(6, f.returnPoints(dices));
+        assertEquals(6, f.updatePoints(dices));
 
         int [] v4 = {6, 2, 5, 2, 3};
         setDicesValue(v1);
-        assertEquals(4, f.returnPoints(dices));
+        assertEquals(4, f.updatePoints(dices));
 
         int [] v5 = {6, 4, 5, 2, 3};
         setDicesValue(v1);
-        assertEquals(2, f.returnPoints(dices));
+        assertEquals(2, f.updatePoints(dices));
 
         int [] v6 = {6, 4, 5, 1, 3};
         setDicesValue(v1);
-        assertEquals(0, f.returnPoints(dices));
+        assertEquals(0, f.updatePoints(dices));
     }
 
     @Test
@@ -79,30 +81,45 @@ public class CalculatePointsTest {
         Field f = new Field(FieldType.Threes);
         int [] v1 = {3, 3, 3, 3, 3};
         setDicesValue(v1);
-        assertEquals(10, f.returnPoints(dices));
+        assertEquals(15, f.updatePoints(dices));
 
         int [] v2 = {1, 3, 3, 3, 2};
         setDicesValue(v2);
-        assertEquals(8, f.returnPoints(dices));
+        assertEquals(12, f.updatePoints(dices));
 
         int [] v3 = {3, 3, 5, 3, 2};
         setDicesValue(v1);
-        assertEquals(6, f.returnPoints(dices));
+        assertEquals(9, f.updatePoints(dices));
 
         int [] v4 = {6, 3, 5, 3, 2};
         setDicesValue(v1);
-        assertEquals(4, f.returnPoints(dices));
+        assertEquals(6, f.updatePoints(dices));
 
         int [] v5 = {6, 4, 5, 3, 2};
         setDicesValue(v1);
-        assertEquals(2, f.returnPoints(dices));
+        assertEquals(3, f.updatePoints(dices));
 
         int [] v6 = {6, 4, 5, 1, 2};
         setDicesValue(v1);
-        assertEquals(0, f.returnPoints(dices));
+        assertEquals(0, f.updatePoints(dices));
     }
 
-    // ThreeOfOneKind, FourOfOneKind, FullHouse, SmallStraight, LargeStraight, Kniffel, Chance
+    // ThreeOfOneKind, FourOfOneKind, Kniffel
+
+    @Test
+    public void testThreeOfOneKind() {
+        Field f = new Field(FieldType.ThreeOfOneKind);
+        int [] v1 = {1, 2, 3, 4, 5};
+        setDicesValue(v1);
+        assertEquals(0, f.updatePoints(dices));
+    }
+
+
+    // FullHouse
+
+    // SmallStraight, LargeStraight
+
+    // Chance
 
 
 }

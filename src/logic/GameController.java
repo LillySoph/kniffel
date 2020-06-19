@@ -3,15 +3,14 @@ package logic;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GameController implements ActionListener {
 
     private Game game;
-    
-    /**
-     * Konstruktor
-     * @author prett
-     */
+
+    // Constructor
     public GameController() {
     	
     	/**
@@ -19,7 +18,19 @@ public class GameController implements ActionListener {
     	 * @author prett
     	 */
     	game.getRollButton().addActionListener(this);
-    	
+
+		game.addWindowListener(
+				new WindowAdapter(){
+					@Override
+					public void windowClosing(WindowEvent e) {
+						if(game.isActive())
+							JOptionPane.showMessageDialog(game, "Das spiel läuft noch. Wollen Sie sicher beenden?");
+						else
+							System.exit(0);
+					}
+				}
+		);
+
     }
 
     @Override
@@ -34,7 +45,7 @@ public class GameController implements ActionListener {
 		}
 		// button clicked was field button
 		else if(e.getSource() instanceof Field) {
-			game.updateScore(e.getSource());
+			game.updateScore((Field) e.getSource());
 		}
 
     }

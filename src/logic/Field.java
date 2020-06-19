@@ -9,6 +9,7 @@ public class Field extends JButton {
 
     public Field(FieldType fieldType) {
         this.fieldType = fieldType;
+        // field is empty
         this.points = -1;
     }
 

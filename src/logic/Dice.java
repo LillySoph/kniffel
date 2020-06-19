@@ -10,6 +10,10 @@ public class Dice extends JButton {
         roll();
     }
 
+    // get value for testing
+    public Dice(int value) { this.value = value; }
+
+    //
     public int getValue() {
         return this.value;
     }
@@ -17,5 +21,7 @@ public class Dice extends JButton {
     public void roll() {
         this.value = (int) (Math.random() * 6) + 1;
     }
+
+    public String toString() { return "" + value; }
 
 }

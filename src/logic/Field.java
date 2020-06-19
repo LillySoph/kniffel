@@ -36,12 +36,18 @@ public class Field extends JButton {
     private int returnPointsForFirstBlock(Dice[] dices) {
         int n = 0;
         switch(this.fieldType) {
-            case Aces -> n = 1;
-            case Twos -> n = 2;
-            case Threes -> n = 3;
-            case Fours -> n = 4;
-            case Fives -> n = 5;
-            case Sixes -> n = 6;
+            case Aces:
+                n = 1;
+            case Twos:
+                n = 2;
+            case Threes:
+                n = 3;
+            case Fours:
+                n = 4;
+            case Fives:
+                n = 5;
+            case Sixes:
+                n = 6;
         }
         int result = 0;
         for(int i=0; i<dices.length; i++) {
@@ -54,9 +60,12 @@ public class Field extends JButton {
     private int returnPointsforNOfAKind(Dice[] dices) {
         int n = 0;
         switch(this.fieldType) {
-            case ThreeOfOneKind -> n = 1;
-            case FourOfOneKind -> n = 2;
-            case Kniffel -> n = 5;
+            case ThreeOfOneKind:
+                n = 1;
+            case FourOfOneKind:
+                n = 2;
+            case Kniffel:
+                n = 5;
         }
         int counter = 0;
         int sum = 0;

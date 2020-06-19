@@ -4,7 +4,7 @@ public class TestMain {
 
     public static void main(String[] args) {
         int n = 1;
-        Field f = new Field(FieldType.Chance);
+        Field f = new Field(FieldType.SmallStraight);
         Dice[] dices = new Dice[5];
         while(n <= 3) {
             System.out.println("\n** " + n + ". Wurf: **");
@@ -16,6 +16,6 @@ public class TestMain {
             dices[1].roll();
             n++;
         }
-        System.out.println("\nEintragen als Chance - Punktzahl: "+ f.returnPoints(dices));
+        System.out.println("\nEintragen als kleine Straße - Punktzahl: "+ f.returnPoints(dices));
     }
 }

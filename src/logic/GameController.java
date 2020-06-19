@@ -1,50 +1,41 @@
 package logic;
 
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
-
 public class GameController implements ActionListener {
 
-	/**
-	 * Ich habe den Button "Würfeln" implementiert
-	 * @author prett
-	 * 
-	 */
-	private JButton clickRoll;
-	
-	
-	
     private Game game;
     
     /**
      * Konstruktor
      * @author prett
      */
-    
     public GameController() {
     	
     	/**
     	 * "Würfeln" als ActionListener eingetragen
     	 * @author prett
     	 */
-    	clickRoll.addActionListener(this);
+    	game.getRollButton().addActionListener(this);
     	
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	
-    	
-    	/**
-    	 * Wenn ich würfeln geklickt habe passiert.....
-    	 * @author prett
-    	 */
-    	if(e.getSource() == this.clickRoll) {
-    		
+    	// button clicked was roll button
+    	if(e.getSource() == game.getRollButton()) {
+    		game.rollDices();
     	}
+    	// button clicked was dice button
+    	else if(e.getSource() instanceof Dice) {
+    		((Dice) e.getSource()).changeKeepDice();
+		}
+		// button clicked was field button
+		else if(e.getSource() instanceof Field) {
+			game.updateScore(e.getSource());
+		}
 
     }
 

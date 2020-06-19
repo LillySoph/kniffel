@@ -9,13 +9,20 @@ public class TestMain {
         while(n <= 3) {
             System.out.println("\n** " + n + ". Wurf: **");
             for (int i = 0; i < dices.length; i++) {
-                dices[i] = new Dice();
+                dices[i] = new Dice(i);
                 System.out.print((i + 1) + ": [" + dices[i].getValue() + "]  ");
             }
             dices[4].roll();
             dices[1].roll();
             n++;
         }
-        System.out.println("\nEintragen als kleine Straße - Punktzahl: "+ f.returnPoints(dices));
+        //System.out.println("\nEintragen als kleine Straße - Punktzahl: "+ f.returnPoints(dices));
+
+        for(FieldType ft : FieldType.values()) {
+            System.out.println(ft);
+            f = new Field(ft);
+            System.out.println("f hat type: " + ft);
+        }
+
     }
 }

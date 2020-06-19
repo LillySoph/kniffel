@@ -5,23 +5,47 @@ import javax.swing.*;
 public class Dice extends JButton {
 
     private int value;
+    private boolean keepDice;
 
+    // creates new dice and "rolls" it
     public Dice() {
         roll();
     }
 
-    // get value for testing
-    public Dice(int value) { this.value = value; }
+    // ** Constructor For Testing ** //
+    public Dice(int value) {
+        this.value = value; }
 
-    //
+    // getter for value of dice
     public int getValue() {
         return this.value;
     }
 
-    public void roll() {
-        this.value = (int) (Math.random() * 6) + 1;
+    // change keepDice to its contrary
+    public void changeKeepDice() {
+        if(this.keepDice = false)
+            keepDice = true;
+        else
+            keepDice = false;
     }
 
+    // returns whether the dice should be kept for the next round or rolled
+    public boolean isKept() {
+        return (this.keepDice == true);
+    }
+
+    // player wants to keep the dice for next roll, set keepDice to true
+    public void keep() {
+        this.keepDice = true;
+    }
+
+    // "roll" dice, generate number between 1 and 6
+    public void roll() {
+        this.value = (int) (Math.random() * 6) + 1;
+        keepDice = false;
+    }
+
+    // return value of dice as string for textfield
     public String toString() { return "" + value; }
 
 }

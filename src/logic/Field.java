@@ -14,12 +14,16 @@ public class Field extends JButton {
         this.points = -1;
     }
 
+    public void resetPoints() {
+    	this.points = -1;
+    }
+    
     public int getPoints() { return this.points; }
 
     // calculates points depending on given dices & field type and updates button text
     public void updatePoints(Dice[] dices) {
 
-        // field was zero before or is no being set to zero
+        // field was zero before or is now being set to zero
         if(points >= 0) {
             this.points = 0;
             this.setText(toString());

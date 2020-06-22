@@ -5,15 +5,18 @@ import javax.swing.*;
 public class Field extends JButton {
 
 	//TODO Small Straight &  LargeStraight fehlen noch @author prett
-	
+	// Attribut isEmpty hinzugefügt. Ist true, wenn feld noch nicht gefüllt, ersetzt points=-1
+
 	private int points;
 	private FieldType fieldType;
+	private boolean isEmpty;
 
 	// creates empty field button of given type
 	public Field(FieldType fieldType) {
 		this.fieldType = fieldType;
 		// field is empty
-		this.points = -1;
+        this.points = 0;
+		this.isEmpty = true;
 	}
 
 	public void resetPoints() {
@@ -29,53 +32,52 @@ public class Field extends JButton {
 	public void updatePoints(Dice[] dices) {
 
 		// field was zero before or is now being set to zero
-		if (points >= 0) {
+		if (!(this.isEmpty)) {
 			this.points = 0;
-			this.setText(toString());
-			return;
-		}
-		// otherwise calculate points
-		switch (this.fieldType) {
-		case Aces:
-			this.points = calculatePointsForFirstBlock(dices, 1);
-			break;
-		case Twos:
-			this.points = calculatePointsForFirstBlock(dices, 2);
-			break;
-		case Threes:
-			this.points = calculatePointsForFirstBlock(dices, 3);
-			break;
-		case Fours:
-			this.points = calculatePointsForFirstBlock(dices, 4);
-			break;
-		case Fives:
-			this.points = calculatePointsForFirstBlock(dices, 5);
-			break;
-		case Sixes:
-			this.points = calculatePointsForFirstBlock(dices, 6);
-			break;
-		case ThreeOfOneKind:
-			this.points = calculatePointsOfAKind(dices, 3);
-			break;
-		case FourOfOneKind:
-			this.points = calculatePointsOfAKind(dices, 4);
-			break;
-		case Kniffel:
-			this.points = calculatePointsOfAKind(dices, 5);
-			break;
-		case FullHouse:
-			this.points = calculatePointsForFullHouse(dices);
-			break;
-		case SmallStraight:
-			this.points = calculatePointsForStraight(dices, 4);
-			break;
-		case LargeStraight:
-			this.points = calculatePointsForStraight(dices, 5);
-			break;
-		default:
-			this.points = calculatePointsForChance(dices);
-		}
-
+		} else {
+            // otherwise calculate points
+            switch (this.fieldType) {
+                case Aces:
+                    this.points = calculatePointsForFirstBlock(dices, 1);
+                    break;
+                case Twos:
+                    this.points = calculatePointsForFirstBlock(dices, 2);
+                    break;
+                case Threes:
+                    this.points = calculatePointsForFirstBlock(dices, 3);
+                    break;
+                case Fours:
+                    this.points = calculatePointsForFirstBlock(dices, 4);
+                    break;
+                case Fives:
+                    this.points = calculatePointsForFirstBlock(dices, 5);
+                    break;
+                case Sixes:
+                    this.points = calculatePointsForFirstBlock(dices, 6);
+                    break;
+                case ThreeOfOneKind:
+                    this.points = calculatePointsOfAKind(dices, 3);
+                    break;
+                case FourOfOneKind:
+                    this.points = calculatePointsOfAKind(dices, 4);
+                    break;
+                case Kniffel:
+                    this.points = calculatePointsOfAKind(dices, 5);
+                    break;
+                case FullHouse:
+                    this.points = calculatePointsForFullHouse(dices);
+                    break;
+                case SmallStraight:
+                    this.points = calculatePointsForStraight(dices, 4);
+                    break;
+                case LargeStraight:
+                    this.points = calculatePointsForStraight(dices, 5);
+                    break;
+                default:
+                    this.points = calculatePointsForChance(dices);
+            }
+            this.isEmpty = false;
+        }
 		// update button text
 		this.setText(toString());
 	}
@@ -248,13 +250,19 @@ public class Field extends JButton {
 		}
 		counter = 1;
 		i++;
-		
+
+		// TODO straight
+		return 0;
 		
 		
 		}
-		
-	}
 
+
+    // TODO chance
+	public int calculatePointsForChance(Dice [] dice) {
+        return 0;
+    }
+}
 	// calculates and returns points for SmalLStraight and LargeStraight
 /*	private int calculatePointsForStraight(Dice[] dices, int nInARow) {
 		int points = (nInARow - 1) * 10;

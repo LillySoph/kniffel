@@ -13,7 +13,7 @@ public class Game extends JFrame {
 
 	}
 
-	private boolean gameActive;
+	private boolean isStillRunning;
 	private ScoreCard scoreCard;
 	private Field[] fields = new Field[13];
 	private JButton rollButton = new JButton("Würfeln");
@@ -30,7 +30,7 @@ public class Game extends JFrame {
 		this.setLayout(new FlowLayout());
 
 		// set game to active
-		gameActive = true;
+		isStillRunning = true;
 
 		// initialize field buttons
 		int i = 0;
@@ -87,10 +87,14 @@ public class Game extends JFrame {
 
 	// rolls all dices that are not "kept" by player
 	public void rollDice() {
-		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
-		for(Dice d : dice) {
-			if (!(d.isSelected()) || d.getText() == "?")
-				d.roll();
+		if(isStillRunning) {
+			Dice[] dice = {dice1, dice2, dice3, dice4, dice5};
+			for (Dice d : dice) {
+				if (!(d.isSelected()) || d.getText() == "?")
+					d.roll();
+			}
+			incrementRollCounter();
+			updateRollAndRoundCounterTextFields();
 		}
 	}
 
@@ -109,10 +113,13 @@ public class Game extends JFrame {
 
 	// enters points into field and updates text fields
 	public void enterPoints(Field field) {
-		field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
-		scoreCard.updateScore();
-		incrementCounters();
-		resetDiceButtons();
+		if(isStillRunning) {
+			field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
+			scoreCard.updateScore();
+			incrementRoundCounters();
+			updateRollAndRoundCounterTextFields();
+			resetDiceButtons();
+		}
 	}
 
 	private void resetDiceButtons() {
@@ -123,24 +130,29 @@ public class Game extends JFrame {
 		}
 	}
 
-	// increment or reset roll and round counters
-	private void incrementCounters() {
+	private void incrementRollCounter() {
 		if (rollCounter < 3) {
 			rollCounter++;
 		} else {
 			rollCounter = 1;
-			if (roundCounter < 13) {
-				roundCounter++;
-			} else {
-				roundCounter = 1;
-				gameActive = false;
-			}
+			incrementRoundCounters();
 		}
-		updateCounterTextFields();
 	}
 
-	private void updateCounterTextFields() {
-		if (!gameActive) {
+	// increment or reset roll and round counters
+	private void incrementRoundCounters() {
+		if (roundCounter < 13) {
+			roundCounter++;
+		} else {
+			roundCounter = 1;
+			noteToKeepDice.setText("Das Spiel ist vorbei");
+			isStillRunning = false;
+		}
+		rollCounter = 0;
+	}
+
+	private void updateRollAndRoundCounterTextFields() {
+		if (!isStillRunning) {
 			rollTextField.setText("");
 			roundTextField.setText("");
 		} else {
@@ -148,22 +160,10 @@ public class Game extends JFrame {
 			roundTextField.setText(roundCounter + ". Runde");
 		}
 
-	/* player clicked on field, update score of that field
-	public void updateScore(Field field) {
-		incrementCounters();
-		field.updatePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
-		for(int i = 0; i < fields.length; i++) {
-			if(i < 6)
-				scoreSumUpper += fields[i].getPoints();
-			else
-				scoreSumLower += fields[i].getPoints();
-		}
-		if(scoreSumUpper >= 63) {
-			bonus = 35;
-			scoreSum += bonus;
-		}
-		scoreSum = scoreSumUpper + scoreSumLower;
-	}*/
-
 	}
+
+	public boolean isStillRunning() {
+		return this.isStillRunning;
+	}
+
 }

@@ -30,8 +30,8 @@ public class GameController implements ActionListener {
 					@Override
 					public void windowClosing(WindowEvent e) {
 						Object[] options = {"Nein, weiterspielen", "Ja, beenden"};
-						if(game.isActive()) {
-							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Wollen Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+						if(game.isStillRunning()) {
+							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
 									null, options, options[0]);
 						} else {
 							System.exit(0);

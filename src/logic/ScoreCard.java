@@ -34,12 +34,17 @@ public class ScoreCard extends JPanel {
     }
 
     public void updateScore() {
-        // calculate sum and bonus
+        // reset old sum
+        sumUpper = 0;
+        sumLower = 0;
+        // calculate new sum and bonus
         for(int i = 0; i < 6; i++) {
             this.sumUpper += fields[i].getPoints();
         }
-        if(this.sumUpper >= 63)
+        if(this.sumUpper >= 63) {
             bonus = 35;
+            sumUpper += bonus;
+        }
         for(int i = 6; i < 13; i++) {
             this.sumLower += fields[i].getPoints();
         }

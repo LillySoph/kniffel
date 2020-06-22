@@ -2,10 +2,9 @@ package logic;
 
 import javax.swing.*;
 
-public class Dice extends JButton {
+public class Dice extends JToggleButton {
 
     private int value;
-    private boolean keepDice;
 
     // creates new dice and "rolls" it
     public Dice() {
@@ -21,25 +20,10 @@ public class Dice extends JButton {
         return this.value;
     }
 
-    // change keepDice to its contrary
-    public void changeKeepDice() {
-        this.keepDice = (!keepDice);
-    }
-
-    // returns whether the dice should be kept for the next round or rolled
-    public boolean isKept() {
-        return (this.keepDice == true);
-    }
-
-    // player wants to keep the dice for next roll, set keepDice to true
-    public void keep() {
-        this.keepDice = true;
-    }
-
     // "roll" dice, generate number between 1 and 6, and updates button text
     public void roll() {
         this.value = (int) (Math.random() * 6) + 1;
-        keepDice = false;
+        this.setSelected(false);
         this.setText(toString());
     }
 

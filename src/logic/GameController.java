@@ -37,15 +37,15 @@ public class GameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     	// button clicked was roll button
     	if(e.getSource() == game.getRollButton()) {
-    		game.rollDices();
+    		game.rollDice();
     	}
     	// button clicked was dice button
-    	else if(e.getSource() instanceof Dice) {
-    		((Dice) e.getSource()).changeKeepDice();
-		}
+    	//else if(e.getSource() instanceof Dice) {
+		//((Dice) e.getSource()).changeKeepDice();
+		//}
 		// button clicked was field button
 		else if(e.getSource() instanceof Field) {
-			game.updateScore((Field) e.getSource());
+			game.enterPoints((Field) e.getSource());
 		}
 
     }

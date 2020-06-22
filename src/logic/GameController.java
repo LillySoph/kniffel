@@ -11,44 +11,52 @@ public class GameController implements ActionListener {
     private Game game;
 
     // Constructor
-    public GameController() {
-    	
-    	/**
-    	 * "Würfeln" als ActionListener eingetragen
-    	 * @author prett
-    	 */
-    	game.getRollButton().addActionListener(this);
+    public GameController(Game game) {
+		this.game = game;
+
+		// get buttons from game and initialize action listeners
+		game.getRollButton().addActionListener(this);
+		Dice dice[] = game.getDiceButtons();
+		Field fields[] = game.getFieldButtons();
+		for(int i = 0; i < dice.length; i++) {
+			dice[i].addActionListener(this);
+		}
+		for(int i = 0; i < fields.length; i++) {
+			fields[i].addActionListener(this);
+		}
 
 		game.addWindowListener(
 				new WindowAdapter(){
 					@Override
 					public void windowClosing(WindowEvent e) {
-						if(game.isActive())
-							JOptionPane.showMessageDialog(game, "Das spiel läuft noch. Wollen Sie sicher beenden?");
-						else
+						Object[] options = {"Nein, weiterspielen", "Ja, beenden"};
+						if(game.isActive()) {
+							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Wollen Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+									null, options, options[0]);
+						} else {
 							System.exit(0);
+						}
 					}
 				}
 		);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	// button clicked was roll button
-    	if(e.getSource() == game.getRollButton()) {
-    		game.rollDice();
-    	}
-    	// button clicked was dice button
-    	//else if(e.getSource() instanceof Dice) {
-		//((Dice) e.getSource()).changeKeepDice();
-		//}
-		// button clicked was field button
-		else if(e.getSource() instanceof Field) {
-			game.enterPoints((Field) e.getSource());
+    	Object source = e.getSource();
+    	// button clicked was field
+		if(source instanceof Field) {
+			this.game.enterPoints((Field) e.getSource());
+			System.out.println("Enter points! ");
 		}
-
+    	// button clicked was dice
+    	else if(source instanceof Dice) {
+			System.out.println("Keep dice (or not)! ");
+		}
+		// button clicked was roll button
+		else if(source instanceof JButton) {
+			this.game.rollDice();
+			System.out.println("Roll dice! ");
+		}
     }
-
-	
 }

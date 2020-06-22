@@ -7,16 +7,23 @@ public class Game extends JFrame {
 
 	public static void main(String[] args) {
 
-		new Game().setVisible(true);
+		Game g = new Game();
+		new GameController(g);
+		g.setVisible(true);
 
 	}
 
 	private boolean gameActive;
-	private Field fields[] = new Field[13];
+	private ScoreCard scoreCard;
+	private Field[] fields = new Field[13];
 	private JButton rollButton = new JButton("Würfeln");
 	private int rollCounter = 1, roundCounter = 1;
 	private JTextField rollTextField, roundTextField, noteToKeepDice;
-	private Dice dice1 = new Dice(), dice2 = new Dice(), dice3 = new Dice(), dice4 = new Dice(), dice5 = new Dice();
+	private Dice dice1 = new Dice();
+	private Dice dice2 = new Dice();
+	private Dice dice3 = new Dice();
+	private Dice dice4 = new Dice();
+	private Dice dice5 = new Dice();
 
 	Game() {
 		super("Willkommen zu Kniffel! ");
@@ -25,8 +32,16 @@ public class Game extends JFrame {
 		// set game to active
 		gameActive = true;
 
+		// initialize field buttons
+		int i = 0;
+		for(FieldType ft : FieldType.values()) {
+			fields[i] = new Field(ft);
+			i++;
+		}
+
 		// add score card to frame
-		this.add(new ScoreCard(fields));
+		scoreCard = new ScoreCard(fields);
+		this.add(scoreCard);
 
 		// create right panel and panels within right panel
 		JPanel rightSidePanel = new JPanel(), counterPanel = new JPanel(), rollPanel = new JPanel(), dicePanel = new JPanel(), notePanel = new JPanel();
@@ -50,6 +65,7 @@ public class Game extends JFrame {
 		dicePanel.add(dice3);
 		dicePanel.add(dice4);
 		dicePanel.add(dice5);
+		resetDiceButtons();
 
 		// create panel with note
 		noteToKeepDice = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
@@ -71,16 +87,11 @@ public class Game extends JFrame {
 
 	// rolls all dices that are not "kept" by player
 	public void rollDice() {
-		if (!(dice1.isSelected()))
-			dice1.roll();
-		if (!(dice2.isSelected()))
-			dice2.roll();
-		if (!(dice3.isSelected()))
-			dice3.roll();
-		if (!(dice4.isSelected()))
-			dice4.roll();
-		if (!(dice5.isSelected()))
-			dice5.roll();
+		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
+		for(Dice d : dice) {
+			if (!(d.isSelected()) || d.getText() == "?")
+				d.roll();
+		}
 	}
 
 	// returns roll button
@@ -88,9 +99,28 @@ public class Game extends JFrame {
 		return this.rollButton;
 	}
 
+	public Dice[] getDiceButtons() {
+		return new Dice[]{dice1, dice2, dice3, dice4, dice5};
+	}
+
+	public Field[] getFieldButtons() {
+		return fields;
+	}
+
 	// enters points into field and updates text fields
-	public void enterPoints(Field f) {
-		f.updatePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
+	public void enterPoints(Field field) {
+		field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
+		scoreCard.updateScore();
+		incrementCounters();
+		resetDiceButtons();
+	}
+
+	private void resetDiceButtons() {
+		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
+		for(Dice d : dice) {
+			d.setSelected(false);
+			d.setText("?");
+		}
 	}
 
 	// increment or reset roll and round counters
@@ -106,9 +136,10 @@ public class Game extends JFrame {
 				gameActive = false;
 			}
 		}
+		updateCounterTextFields();
 	}
 
-	private void updateAllTextFields() {
+	private void updateCounterTextFields() {
 		if (!gameActive) {
 			rollTextField.setText("");
 			roundTextField.setText("");

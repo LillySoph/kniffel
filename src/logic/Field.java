@@ -29,7 +29,7 @@ public class Field extends JButton {
 
 	// calculates points depending on given dices & field type and updates button
 	// text
-	public void updatePoints(Dice[] dices) {
+	public void calculateAndStorePoints(Dice[] dices) {
 
 		// field was zero before or is now being set to zero
 		if (!(this.isEmpty)) {

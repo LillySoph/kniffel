@@ -13,12 +13,12 @@ public class Game extends JFrame {
 
 	}
 
-	private boolean isStillRunning;
+	private boolean isStillRunning, roundIsOver;
 	private ScoreCard scoreCard;
 	private Field[] fields = new Field[13];
 	private JButton rollButton = new JButton("Würfeln");
-	private int rollCounter = 1, roundCounter = 1;
-	private JTextField rollTextField, roundTextField, noteToKeepDice;
+	private int rollCounter = 3, roundCounter = 1;
+	private JTextField rollTextField, roundTextField, noteForPlayer;
 	private Dice dice1 = new Dice();
 	private Dice dice2 = new Dice();
 	private Dice dice3 = new Dice();
@@ -31,6 +31,7 @@ public class Game extends JFrame {
 
 		// set game to active
 		isStillRunning = true;
+		roundIsOver = false;
 
 		// initialize field buttons
 		int i = 0;
@@ -48,11 +49,10 @@ public class Game extends JFrame {
 		rightSidePanel.setLayout(new GridLayout(4, 1));
 
 		// create panel with roll and round counters
-		rollTextField = new JTextField("Wurf " + rollCounter + " von 3");
-		roundTextField = new JTextField(roundCounter + ". Runde");
+		rollTextField = new JTextField();
 		counterPanel.setLayout(new FlowLayout());
 		counterPanel.add(rollTextField);
-		counterPanel.add(roundTextField);
+		updateCounterTextFields();
 
 		// create panel with roll button
 		rollPanel.setLayout(new FlowLayout());
@@ -68,9 +68,9 @@ public class Game extends JFrame {
 		resetDiceButtons();
 
 		// create panel with note
-		noteToKeepDice = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
+		noteForPlayer = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
 		notePanel.setLayout(new FlowLayout());
-		notePanel.add(noteToKeepDice);
+		notePanel.add(noteForPlayer);
 
 		// add panels to right panel
 		rightSidePanel.add(counterPanel);
@@ -85,16 +85,17 @@ public class Game extends JFrame {
 		this.pack();
 	}
 
-	// rolls all dices that are not "kept" by player
+	// rolls all dice that are not "kept" by player and increments roll counter
 	public void rollDice() {
 		if(isStillRunning) {
 			Dice[] dice = {dice1, dice2, dice3, dice4, dice5};
 			for (Dice d : dice) {
-				if (!(d.isSelected()) || d.getText() == "?")
+				if (!(d.isSelected()) || d.getText().equals("?"))
 					d.roll();
 			}
-			incrementRollCounter();
-			updateRollAndRoundCounterTextFields();
+			System.out.println("Würfel-Zähler: " + rollCounter);
+			updateRolLCounter();
+			updateCounterTextFields();
 		}
 	}
 
@@ -116,9 +117,10 @@ public class Game extends JFrame {
 		if(isStillRunning) {
 			field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
 			scoreCard.updateScore();
-			incrementRoundCounters();
-			updateRollAndRoundCounterTextFields();
+			updateRoundCounters();
+			updateCounterTextFields();
 			resetDiceButtons();
+			roundIsOver = true;
 		}
 	}
 
@@ -130,34 +132,36 @@ public class Game extends JFrame {
 		}
 	}
 
-	private void incrementRollCounter() {
-		if (rollCounter < 3) {
-			rollCounter++;
+	private void updateRolLCounter() {
+		if (rollCounter > 0) {
+			rollCounter--;
 		} else {
-			rollCounter = 1;
-			incrementRoundCounters();
+			rollCounter = 3;
 		}
 	}
 
 	// increment or reset roll and round counters
-	private void incrementRoundCounters() {
-		if (roundCounter < 13) {
+	private void updateRoundCounters() {
+		if(!roundIsOver) {
+			System.out.println("Runde ist noch nicht vorbei");
+		} else if (roundIsOver && roundCounter < 13) {
 			roundCounter++;
 		} else {
 			roundCounter = 1;
-			noteToKeepDice.setText("Das Spiel ist vorbei");
+			noteForPlayer.setText("Das Spiel ist vorbei");
 			isStillRunning = false;
 		}
-		rollCounter = 0;
+		rollCounter = 3;
 	}
 
-	private void updateRollAndRoundCounterTextFields() {
-		if (!isStillRunning) {
-			rollTextField.setText("");
-			roundTextField.setText("");
-		} else {
-			rollTextField.setText("Wurf " + rollCounter + " von 3");
-			roundTextField.setText(roundCounter + ". Runde");
+	private void updateCounterTextFields() {
+		if (isStillRunning) {
+			if(rollCounter == 0)
+				rollTextField.setText("Würfeln, um Runde " + (roundCounter+1) + " zu starten");
+			else if (rollCounter == 1)
+				rollTextField.setText("Bitte wählen Sie eine Option");
+			else
+				rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
 		}
 
 	}

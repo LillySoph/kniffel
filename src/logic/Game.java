@@ -13,7 +13,7 @@ public class Game extends JFrame {
 
 	}
 
-	private boolean isStillRunning, roundIsOver;
+	private boolean isStillRunning;
 	private ScoreCard scoreCard;
 	private Field[] fields = new Field[13];
 	private JButton rollButton = new JButton("Würfeln");
@@ -28,10 +28,6 @@ public class Game extends JFrame {
 	Game() {
 		super("Willkommen zu Kniffel! ");
 		this.setLayout(new FlowLayout());
-
-		// set game to active
-		isStillRunning = true;
-		roundIsOver = false;
 
 		// initialize field buttons
 		int i = 0;
@@ -52,13 +48,12 @@ public class Game extends JFrame {
 		rollTextField = new JTextField();
 		counterPanel.setLayout(new FlowLayout());
 		counterPanel.add(rollTextField);
-		updateCounterTextFields();
 
 		// create panel with roll button
 		rollPanel.setLayout(new FlowLayout());
 		rollPanel.add(rollButton);
 
-		// create panel with dice
+		// create panel with dice buttons
 		dicePanel.setLayout(new FlowLayout());
 		dicePanel.add(dice1);
 		dicePanel.add(dice2);
@@ -67,7 +62,7 @@ public class Game extends JFrame {
 		dicePanel.add(dice5);
 		resetDiceButtons();
 
-		// create panel with note
+		// create panel with note for player
 		noteForPlayer = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
 		notePanel.setLayout(new FlowLayout());
 		notePanel.add(noteForPlayer);
@@ -81,49 +76,82 @@ public class Game extends JFrame {
 		// add right panel to frame
 		this.add(rightSidePanel);
 
+		this.updateGUI();
+
 		this.setLocationRelativeTo(null);
 		this.pack();
 	}
 
-	// rolls all dice that are not "kept" by player and increments roll counter
+	/**
+	 * Rolls all dice that are not "kept" by player and increments roll counter.
+	 */
 	public void rollDice() {
-		if(isStillRunning) {
-			Dice[] dice = {dice1, dice2, dice3, dice4, dice5};
-			for (Dice d : dice) {
-				if (!(d.isSelected()) || d.getText().equals("?"))
-					d.roll();
-			}
-			System.out.println("Würfel-Zähler: " + rollCounter);
-			updateRolLCounter();
-			updateCounterTextFields();
+		Dice[] dice = {dice1, dice2, dice3, dice4, dice5};
+		for (Dice d : dice) {
+			if (!(d.isSelected()) || d.getText().equals("?"))
+				d.roll();
 		}
+		System.out.println("rollDice()   Würfel-Zähler: " + rollCounter + " von 3");
+		incrementRolLCounter();
+		updateGUI();
 	}
 
-	// returns roll button
+	/**
+	 * Returns roll button.
+	 * @return
+	 */
 	public JButton getRollButton() {
 		return this.rollButton;
 	}
 
+	/**
+	 * Returns dice buttons.
+	 * @return
+	 */
 	public Dice[] getDiceButtons() {
 		return new Dice[]{dice1, dice2, dice3, dice4, dice5};
 	}
 
+	/**
+	 * Return field buttons.
+	 * @return
+	 */
 	public Field[] getFieldButtons() {
 		return fields;
 	}
 
-	// enters points into field and updates text fields
+	/**
+	 * Enter points and update gui.
+	 * @param field option chosen by player
+	 */
 	public void enterPoints(Field field) {
-		if(isStillRunning) {
-			field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
-			scoreCard.updateScore();
-			updateRoundCounters();
-			updateCounterTextFields();
-			resetDiceButtons();
-			roundIsOver = true;
+		// calculate points
+		field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
+		// increment counters
+		incrementRoundCounters();
+		resetRollCounter();
+		// update graphic user interface
+		updateGUI();
+		// reset dice buttons and (re)activate roll button
+		resetDiceButtons();
+		activateRollButton();
+	}
+
+	/**
+	 * Update text fields and counters in gui.
+	 */
+	private void updateGUI() {
+		scoreCard.calculateScoreSums();
+		if(rollCounter == 0) {
+			rollTextField.setText("Bitte wählen Sie eine Option");
+		} else {
+			rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
 		}
 	}
 
+	/**
+	 * Reset dice buttons for a new round: [?]
+	 */
 	private void resetDiceButtons() {
 		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
 		for(Dice d : dice) {
@@ -132,40 +160,60 @@ public class Game extends JFrame {
 		}
 	}
 
-	private void updateRolLCounter() {
-		if (rollCounter > 0) {
-			rollCounter--;
-		} else {
-			rollCounter = 3;
-		}
+	/**
+	 * Reset roll counter.
+	 */
+	private void resetRollCounter() {
+		this.rollCounter = 3;
 	}
 
-	// increment or reset roll and round counters
-	private void updateRoundCounters() {
-		if(!roundIsOver) {
-			System.out.println("Runde ist noch nicht vorbei");
-		} else if (roundIsOver && roundCounter < 13) {
+	/**
+	 * Increment roll counters.
+	 */
+	private void incrementRolLCounter() {
+		if(rollCounter == 1) {
+			rollCounter--;
+			System.out.println("deactivate roll button");
+			deactivateRollButton();
+		} else {
+			rollCounter--;
+		}
+		System.out.println("incrementRolLCounter()   Würfel-Zähler: " + rollCounter + " von 3");
+	}
+
+	/**
+	 * Increment round counters.
+	 */
+	private void incrementRoundCounters() {
+		if (roundCounter < 13) {
 			roundCounter++;
 		} else {
 			roundCounter = 1;
+			deactivateRollButton();
 			noteForPlayer.setText("Das Spiel ist vorbei");
 			isStillRunning = false;
 		}
 		rollCounter = 3;
 	}
 
-	private void updateCounterTextFields() {
-		if (isStillRunning) {
-			if(rollCounter == 0)
-				rollTextField.setText("Würfeln, um Runde " + (roundCounter+1) + " zu starten");
-			else if (rollCounter == 1)
-				rollTextField.setText("Bitte wählen Sie eine Option");
-			else
-				rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
-		}
-
+	/**
+	 * Deactivate roll button.
+	 */
+	private void deactivateRollButton() {
+		this.rollButton.setEnabled(false);
 	}
 
+	/**
+	 * Activate roll button.
+	 */
+	private void activateRollButton() {
+		this.rollButton.setEnabled(true);
+	}
+
+	/**
+	 * Returns whether the game is still running.
+	 * @return true, if game is still running, otherwise false
+	 */
 	public boolean isStillRunning() {
 		return this.isStillRunning;
 	}

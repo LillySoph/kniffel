@@ -33,7 +33,10 @@ public class ScoreCard extends JPanel {
         }
     }
 
-    public void updateScore() {
+    /**
+     * Update upper, lower and overall score sum.
+     */
+    public void calculateScoreSums() {
         // reset old sum
         sumUpper = 0;
         sumLower = 0;
@@ -53,6 +56,9 @@ public class ScoreCard extends JPanel {
         updateTextFields();
     }
 
+    /**
+     * update text fields of upper, lower and overall score sum.
+     */
     private void updateTextFields() {
         bonusTextField.setText("" + bonus);
         sumUpperTextField.setText("" + sumUpper);

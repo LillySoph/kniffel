@@ -10,7 +10,6 @@ public class GameController implements ActionListener {
 
     private Game game;
 
-    // Constructor
     public GameController(Game game) {
 		this.game = game;
 

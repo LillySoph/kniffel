@@ -1,3 +1,3 @@
 "# kniffel"
 
-"gui geht bis darauf, dass wenn die runde vorbei ist, der Spieler einfach weiter wuerfeln kann... " 
+"gui geht, spieler kann nur bis zu 3 mal wÃ¼rfeln und ist danach gezwungen, etwas auszusuchen. " 

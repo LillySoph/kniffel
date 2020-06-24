@@ -10,6 +10,7 @@ public class Field extends JButton {
 	private int points;
 	private FieldType fieldType;
 	private boolean isEmpty;
+	private boolean isDisabled;
 
 	// creates empty field button of given type
 	public Field(FieldType fieldType) {
@@ -80,6 +81,13 @@ public class Field extends JButton {
         }
 		// update button text
 		this.setText(toString());
+		// disable field after it has been zeroed
+		if(this.isEmpty || this.points == 0)
+			this.isDisabled = true;
+	}
+
+	public boolean isDisabled() {
+		return isDisabled;
 	}
 
 	public String toString() {

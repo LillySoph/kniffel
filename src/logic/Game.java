@@ -77,6 +77,7 @@ public class Game extends JFrame {
 		this.add(rightSidePanel);
 
 		this.updateGUI();
+		deactivateFieldButtons();
 
 		this.setLocationRelativeTo(null);
 		this.pack();
@@ -92,7 +93,10 @@ public class Game extends JFrame {
 				d.roll();
 		}
 		System.out.println("rollDice()   Würfel-Zähler: " + rollCounter + " von 3");
+		// increment roll counter
 		incrementRolLCounter();
+		// activate field buttons so that player can choose something
+		activateFieldButtons();
 		updateGUI();
 	}
 
@@ -132,8 +136,10 @@ public class Game extends JFrame {
 		resetRollCounter();
 		// update graphic user interface
 		updateGUI();
-		// reset dice buttons and (re)activate roll button
+		// reset dice buttons for new round
 		resetDiceButtons();
+		// deactivate field buttons so that player cannot chose anything before having rolled at least once
+		deactivateFieldButtons();
 		activateRollButton();
 	}
 
@@ -157,6 +163,25 @@ public class Game extends JFrame {
 		for(Dice d : dice) {
 			d.setSelected(false);
 			d.setText("?");
+		}
+	}
+
+	/**
+	 * Deactivate field buttons.
+	 */
+	private void deactivateFieldButtons() {
+		for(Field f : fields) {
+			f.setEnabled(false);
+		}
+	}
+
+	/**
+	 * Activates field buttons, if they are not supposed to stay deactivated.
+	 */
+	private void activateFieldButtons() {
+		for(Field f : fields) {
+			if(!f.isDisabled())
+				f.setEnabled(true);
 		}
 	}
 

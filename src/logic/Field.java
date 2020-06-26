@@ -20,8 +20,9 @@ public class Field extends JButton {
 		this.isEmpty = true;
 	}
 
+	// resets field to be an empty field
 	public void resetPoints() {
-		this.points = -1;
+		this.isEmpty = true;
 	}
 
 	public int getPoints() {

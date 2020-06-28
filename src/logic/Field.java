@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class Field extends JButton {
 
-	//TODO Small Straight &  LargeStraight fehlen noch @author prett
-	// Attribut isEmpty hinzugefügt. Ist true, wenn feld noch nicht gefüllt, ersetzt points=-1
+	// Attribut isEmpty hinzugefügt. Ist true, wenn feld noch nicht gefüllt, ersetzt
+	// points=-1
 
 	private int points;
 	private FieldType fieldType;
@@ -16,7 +16,7 @@ public class Field extends JButton {
 	public Field(FieldType fieldType) {
 		this.fieldType = fieldType;
 		// field is empty
-        this.points = 0;
+		this.points = 0;
 		this.isEmpty = true;
 	}
 
@@ -29,61 +29,64 @@ public class Field extends JButton {
 		return this.points;
 	}
 
-	// calculates points depending on given dices & field type and updates button
-	// text
-	public void calculateAndStorePoints(Dice[] dices) {
+	// calculates points depending on given dice & field type and updates button
+	// and text
+	public void calculateAndStorePoints(Dice[] dice) {
 
 		// field was zero before or is now being set to zero
 		if (!(this.isEmpty)) {
 			this.points = 0;
 		} else {
-            // otherwise calculate points
-            switch (this.fieldType) {
-                case Aces:
-                    this.points = calculatePointsForFirstBlock(dices, 1);
-                    break;
-                case Twos:
-                    this.points = calculatePointsForFirstBlock(dices, 2);
-                    break;
-                case Threes:
-                    this.points = calculatePointsForFirstBlock(dices, 3);
-                    break;
-                case Fours:
-                    this.points = calculatePointsForFirstBlock(dices, 4);
-                    break;
-                case Fives:
-                    this.points = calculatePointsForFirstBlock(dices, 5);
-                    break;
-                case Sixes:
-                    this.points = calculatePointsForFirstBlock(dices, 6);
-                    break;
-                case ThreeOfOneKind:
-                    this.points = calculatePointsOfAKind(dices, 3);
-                    break;
-                case FourOfOneKind:
-                    this.points = calculatePointsOfAKind(dices, 4);
-                    break;
-                case Kniffel:
-                    this.points = calculatePointsOfAKind(dices, 5);
-                    break;
-                case FullHouse:
-                    this.points = calculatePointsForFullHouse(dices);
-                    break;
-                case SmallStraight:
-                    this.points = calculatePointsForStraight(dices, 4);
-                    break;
-                case LargeStraight:
-                    this.points = calculatePointsForStraight(dices, 5);
-                    break;
-                default:
-                    this.points = calculatePointsForChance(dices);
-            }
-            this.isEmpty = false;
-        }
+			// otherwise calculate points depending on field type
+			switch (this.fieldType) {
+			case Aces:
+				this.points = calculatePointsForFirstBlock(dice, 1);
+				break;
+			case Twos:
+				this.points = calculatePointsForFirstBlock(dice, 2);
+				break;
+			case Threes:
+				this.points = calculatePointsForFirstBlock(dice, 3);
+				break;
+			case Fours:
+				this.points = calculatePointsForFirstBlock(dice, 4);
+				break;
+			case Fives:
+				this.points = calculatePointsForFirstBlock(dice, 5);
+				break;
+			case Sixes:
+				this.points = calculatePointsForFirstBlock(dice, 6);
+				break;
+			case ThreeOfOneKind:
+				this.points = calculatePointsOfAKind(dice, 3);
+				break;
+			case FourOfOneKind:
+				this.points = calculatePointsOfAKind(dice, 4);
+				break;
+			case Kniffel:
+				this.points = calculatePointsOfAKind(dice, 5);
+				break;
+			case FullHouse:
+				this.points = calculatePointsForFullHouse(dice);
+				break;
+			case SmallStraight:
+				this.points = calculatePointsForSmallStraight(dice);
+				// this.points = calculatePointsForStraight(dice, 4);
+				break;
+			case LargeStraight:
+				this.points = calculatePointsForLargeStraight(dice);
+				// this.points = calculatePointsForStraight(dice, 5);
+				break;
+			default:
+				this.points = calculatePointsForChance(dice);
+			}
+			//set false for not resetting the field
+			this.isEmpty = false;
+		}
 		// update button text
 		this.setText(toString());
 		// disable field after it has been zeroed
-		if(this.isEmpty || this.points == 0)
+		if (this.isEmpty || this.points == 0)
 			this.isDisabled = true;
 	}
 
@@ -96,7 +99,7 @@ public class Field extends JButton {
 	}
 
 	/**
-	 * calculates and returns points for Aces, Twos, Threes, Fours, Fives and Sixes
+	 * Calculates and returns points for Aces, Twos, Threes, Fours, Fives and Sixes
 	 * 
 	 * @param dices
 	 * @param n     , number of dice value regarding to field type
@@ -121,7 +124,7 @@ public class Field extends JButton {
 	 */
 
 	private int calculatePointsOfAKind(Dice[] dices, int nInARow) {
-		int counter = 1, sum = 0, i = 0;
+		int counter = 1, result = 0, i = 0;
 		boolean foundNumbersInARow = false;
 
 		while (!foundNumbersInARow && i < dices.length) {
@@ -145,9 +148,9 @@ public class Field extends JButton {
 				return 50;
 			} else {
 				for (i = 0; i < dices.length; i++) {
-					sum += dices[i].getValue();
+					result += dices[i].getValue();
 				}
-				return sum;
+				return result;
 			}
 		} else {
 			// condition failed
@@ -172,31 +175,33 @@ public class Field extends JButton {
 	/**
 	 * Uses one dice to compare its value with other four dice values
 	 * 
-	 * @param dices
+	 * @param dice
 	 * @return 25 points if three of one number and two of another number exist in a
 	 *         row
 	 */
 
-	private int calculatePointsForFullHouse(Dice[] dices) {
+	private int calculatePointsForFullHouse(Dice[] dice) {
 		boolean foundThreeOfARow = false;
 		boolean foundTwoOfARow = false;
-		int indexOfDiceValueInThreeRow = 0;
+		int valueOfThreeNumbersInARow = 0;
 
 		int counter = 1, i = 0;
 
 		// first check if there are three of one number in a row
-		while (!foundThreeOfARow && i < dices.length) {
+		while (!foundThreeOfARow && i < dice.length) {
 
-			for (int j = i + 1; j <= dices.length - 1; j++) {
-				if (dices[i].getValue() == dices[j].getValue()) {
+			for (int j = i + 1; j <= dice.length - 1; j++) {
+				if (dice[i].getValue() == dice[j].getValue()) {
 					counter++;
 				}
+				// counter checks if three of one number are in the row
 				if (counter == 3) {
-					// save index of dice because its value appears three times
-					indexOfDiceValueInThreeRow = i;
+					// save value of dice because it appears three times
+					valueOfThreeNumbersInARow = dice[i].getValue();
 					foundThreeOfARow = true;
 				}
 			}
+			// reset counter and restart
 			counter = 1;
 			i++;
 		}
@@ -206,18 +211,20 @@ public class Field extends JButton {
 
 			i = 0;
 			counter = 1;
-			while (!foundTwoOfARow && i < dices.length) {
+			while (!foundTwoOfARow && i < dice.length) {
 
-				for (int j = i + 1; j <= dices.length - 1
-						&& dices[i].getValue() != dices[indexOfDiceValueInThreeRow].getValue(); j++) {
-					if (dices[i].getValue() == dices[j].getValue()) {
+				// dice value in two row should be another number
+				for (int j = i + 1; j <= dice.length - 1 && dice[i].getValue() != valueOfThreeNumbersInARow; j++) {
+					if (dice[i].getValue() == dice[j].getValue()) {
 						counter++;
 					}
 
+					// counter checks if two of another number are in the row
 					if (counter == 2) {
 						foundTwoOfARow = true;
 					}
 				}
+				// reset counter and restart
 				counter = 1;
 				i++;
 			}
@@ -233,65 +240,164 @@ public class Field extends JButton {
 	}
 
 	/**
+	 * Calculates points for small straight
 	 * 
-	 * @param dices
-	 * @param nInARow
-	 * @return
+	 * @param dice
+	 * @return 30 points if condition fulfilled or 0 if not
 	 */
+
+	private int calculatePointsForSmallStraight(Dice[] dice) {
 	
-	private int calculatePointsForStraight(Dice[] dices, int nInARow) {
-		int [] v1 = {1,2,3,4};
-		int [] v2 = {2,3,4,5};
-		int [] v3 = {3,4,5,6};
-		int counter = 1, i = 0;
-		boolean conditionSucceed = false;
-		
-		while(!conditionSucceed && i < dices.length)
-			
-		for(int j = 0; j < v1.length; j++) {
-			if(dices[i].getValue() == v1[j]) {
-				counter++;
+		boolean isSmallStraight = false;
+	
+		boolean isNotASmallStraight = false;
+
+		// counts the frequency of the numbers 3 and 4
+		int counterOfThree = 0, counterOfFour = 0;
+
+		// All small straight combinations have numbers like 3 and 4 in common
+		// checks if any dice has the number 3 and 4 and
+		for (int i = 0; i < dice.length; i++) {
+			if (dice[i].getValue() == 3) {
+				counterOfThree++;
 			}
-			
-			if(counter == nInARow) {
-				conditionSucceed = true;
+
+			if (dice[i].getValue() == 4) {
+				counterOfFour++;
 			}
 		}
-		counter = 1;
-		i++;
 
-		// TODO straight
+		// checks so that 3 and 4 appear more than twice or never
+		// only one duplicate of 3 or 4 is possible
+		if (counterOfThree >= 2 && counterOfFour >= 2 || counterOfThree > 2 && counterOfFour < 2
+				|| counterOfThree < 2 && counterOfFour > 2 || counterOfThree == 0 || counterOfFour == 0) {
+			isNotASmallStraight = true;
+		}
+
+		if (!isNotASmallStraight) {
+
+			// counts frequency rest of the numbers
+			int counterOfOne = 0, counterOfTwo = 0, counterOfFive = 0, counterOfSix = 0;
+
+			// checks if dice has other numbers than 3 and 4
+			for (int i = 0; i < dice.length && (dice[i].getValue() != 3 || dice[i].getValue() != 4)
+					&& (!isSmallStraight); i++) {
+
+				if (dice[i].getValue() == 1) {
+					counterOfOne++;
+				}
+
+				if (dice[i].getValue() == 2) {
+					counterOfTwo++;
+				}
+
+				if (dice[i].getValue() == 5) {
+					counterOfFive++;
+				}
+
+				if (dice[i].getValue() == 6) {
+					counterOfSix++;
+				}
+			}
+			// either 1-2 or 1-1-2 or 1-2-2 is possible
+			if (counterOfOne == 1 && counterOfTwo == 1 || counterOfOne == 2 && counterOfTwo == 1
+					|| counterOfOne == 1 && counterOfTwo == 2) {
+				isSmallStraight = true;
+			}
+			// either 2-5 or 2-2-5 or 2-5-5
+			if (counterOfTwo == 1 && counterOfFive == 1 || counterOfTwo == 2 && counterOfFive == 1
+					|| counterOfTwo == 1 && counterOfFive == 2) {
+				isSmallStraight = true;
+			}
+			// either 5-6 or 5-5-6 or 5-6-6
+			if (counterOfFive == 1 && counterOfSix == 1 || counterOfFive == 2 && counterOfSix == 1
+					|| counterOfFive == 1 && counterOfSix == 2) {
+				isSmallStraight = true;
+			}
+
+			if (isSmallStraight) {
+				return 30;
+
+			}
+
+		}
+		// condition failed
 		return 0;
-		
-		
-		}
-
-
-    // TODO chance
-	public int calculatePointsForChance(Dice [] dice) {
-        return 0;
-    }
-}
-	// calculates and returns points for SmalLStraight and LargeStraight
-/*	private int calculatePointsForStraight(Dice[] dices, int nInARow) {
-		int points = (nInARow - 1) * 10;
-		int start = 1;
-		boolean straight = false;
-		while (!straight || start == 7 - nInARow) {
-			for (int i = 0; i < dices.length; i++) {
-				if (dices[i].getValue() == start)
-					start++;
-			}
-			if (start >= nInARow)
-				straight = true;
-		}
-		if (!straight)
-			return 0;
-		else
-			return points;
 	}
 
-	// calculates and returns points for Chance
+	// calculates and returns points for SmalLStraight and LargeStraight
+	/*
+	 * private int calculatePointsForStraight(Dice[] dices, int nInARow) { int
+	 * points = (nInARow - 1) * 10; int start = 1; boolean straight = false; while
+	 * (!straight || start == 7 - nInARow) { for (int i = 0; i < dices.length; i++)
+	 * { if (dices[i].getValue() == start) start++; } if (start >= nInARow) straight
+	 * = true; } if (!straight) return 0; else return points; }
+	 */
+
+	/**
+	 * Calculates points for large straight
+	 * @param dice
+	 * @return 40 if condition is fulfilled or 0 if not
+	 */
+	private int calculatePointsForLargeStraight(Dice[] dice) {
+
+		boolean isLargeStraight = false;
+		boolean isNotLargeStraight = false;
+
+		// All small straight combinations have numbers like 2,3,4 and 5 common
+		// counts the frequency of the numbers 2, 3, 4 and 5
+		int counterOfTwo = 0, counterOfThree = 0, counterOfFour = 0, counterOfFive = 0;
+
+		// checks if any dice has the number 2,3,4 and 5
+		for (int i = 0; i < dice.length; i++) {
+
+			if (dice[i].getValue() == 2) {
+				counterOfTwo++;
+			}
+			if (dice[i].getValue() == 3) {
+				counterOfThree++;
+			}
+
+			if (dice[i].getValue() == 4) {
+				counterOfFour++;
+			}
+
+			if (dice[i].getValue() == 5) {
+				counterOfFive++;
+			}
+		}
+
+		// checks if none of these combination appear or one number appears often
+		if (counterOfTwo != 1 || counterOfThree != 1 || counterOfFour != 1 || counterOfFive != 1) {
+			isNotLargeStraight = true;
+		}
+
+		if (!isNotLargeStraight) {
+
+			// checks if dice has numbers either 1 or 6
+			for (int i = 0; i < dice.length && (dice[i].getValue() != 2 || dice[i].getValue() != 3
+					|| dice[i].getValue() != 4 || dice[i].getValue() != 5) && (!isLargeStraight); i++) {
+
+				if (dice[i].getValue() == 1 || dice[i].getValue() == 6) {
+					isLargeStraight = true;
+				}
+			}
+
+			if (isLargeStraight) {
+				return 40;
+			}
+		}
+		return 0;
+
+	}
+
+	
+	/**
+	 * Calculates and returns points for Chance
+	 * 
+	 * @param dices
+	 * @return sum of all values of dice
+	 */
 	private int calculatePointsForChance(Dice[] dices) {
 		int result = 0;
 		for (int i = 0; i < dices.length; i++) {
@@ -300,4 +406,3 @@ public class Field extends JButton {
 		return result;
 	}
 }
-*/

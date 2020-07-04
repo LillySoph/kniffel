@@ -12,15 +12,20 @@ public class Field extends JButton {
 	private boolean isEmpty;
 	private boolean isDisabled;
 
-	// creates empty field button of given type
+	/**
+	 * Creates empty field button of given type
+	 * 
+	 **/
 	public Field(FieldType fieldType) {
 		this.fieldType = fieldType;
-		// field is empty
 		this.points = 0;
+		//true if field has no points
 		this.isEmpty = true;
 	}
 
-	// resets field to be an empty field
+	/**
+	 *  Resets field to be an empty field
+	 */
 	public void resetPoints() {
 		this.isEmpty = true;
 	}
@@ -29,8 +34,11 @@ public class Field extends JButton {
 		return this.points;
 	}
 
-	// calculates points depending on given dice & field type and updates button
-	// and text
+	/**
+	 * Calculates points depending on given dice & field type and updates button and text
+	 * @param dice
+	 */
+	
 	public void calculateAndStorePoints(Dice[] dice) {
 
 		// field was zero before or is now being set to zero

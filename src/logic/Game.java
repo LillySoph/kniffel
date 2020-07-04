@@ -31,7 +31,7 @@ public class Game extends JFrame {
 
 		// initialize field buttons
 		int i = 0;
-		for(FieldType ft : FieldType.values()) {
+		for (FieldType ft : FieldType.values()) {
 			fields[i] = new Field(ft);
 			i++;
 		}
@@ -41,7 +41,8 @@ public class Game extends JFrame {
 		this.add(scoreCard);
 
 		// create right panel and panels within right panel
-		JPanel rightSidePanel = new JPanel(), counterPanel = new JPanel(), rollPanel = new JPanel(), dicePanel = new JPanel(), notePanel = new JPanel();
+		JPanel rightSidePanel = new JPanel(), counterPanel = new JPanel(), rollPanel = new JPanel(),
+				dicePanel = new JPanel(), notePanel = new JPanel();
 		rightSidePanel.setLayout(new GridLayout(4, 1));
 
 		// create panel with roll and round counters
@@ -87,7 +88,7 @@ public class Game extends JFrame {
 	 * Rolls all dice that are not "kept" by player and increments roll counter.
 	 */
 	public void rollDice() {
-		Dice[] dice = {dice1, dice2, dice3, dice4, dice5};
+		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
 		for (Dice d : dice) {
 			if (!(d.isSelected()) || d.getText().equals("?"))
 				d.roll();
@@ -102,6 +103,7 @@ public class Game extends JFrame {
 
 	/**
 	 * Returns roll button.
+	 * 
 	 * @return
 	 */
 	public JButton getRollButton() {
@@ -110,14 +112,16 @@ public class Game extends JFrame {
 
 	/**
 	 * Returns dice buttons.
+	 * 
 	 * @return
 	 */
 	public Dice[] getDiceButtons() {
-		return new Dice[]{dice1, dice2, dice3, dice4, dice5};
+		return new Dice[] { dice1, dice2, dice3, dice4, dice5 };
 	}
 
 	/**
 	 * Return field buttons.
+	 * 
 	 * @return
 	 */
 	public Field[] getFieldButtons() {
@@ -126,11 +130,12 @@ public class Game extends JFrame {
 
 	/**
 	 * Enter points and update gui.
+	 * 
 	 * @param field option chosen by player
 	 */
 	public void enterPoints(Field field) {
 		// calculate points
-		field.calculateAndStorePoints(new Dice[]{dice1, dice2, dice3, dice4, dice5});
+		field.calculateAndStorePoints(new Dice[] { dice1, dice2, dice3, dice4, dice5 });
 		// increment counters
 		incrementRoundCounters();
 		resetRollCounter();
@@ -138,7 +143,8 @@ public class Game extends JFrame {
 		updateGUI();
 		// reset dice buttons for new round
 		resetDiceButtons();
-		// deactivate field buttons so that player cannot chose anything before having rolled at least once
+		// deactivate field buttons so that player cannot chose anything before having
+		// rolled at least once
 		deactivateFieldButtons();
 		activateRollButton();
 	}
@@ -148,7 +154,7 @@ public class Game extends JFrame {
 	 */
 	private void updateGUI() {
 		scoreCard.calculateScoreSums();
-		if(rollCounter == 0) {
+		if (rollCounter == 0) {
 			rollTextField.setText("Bitte wählen Sie eine Option");
 		} else {
 			rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
@@ -159,8 +165,8 @@ public class Game extends JFrame {
 	 * Reset dice buttons for a new round: [?]
 	 */
 	private void resetDiceButtons() {
-		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
-		for(Dice d : dice) {
+		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		for (Dice d : dice) {
 			d.setSelected(false);
 			d.setText("?");
 		}
@@ -170,7 +176,7 @@ public class Game extends JFrame {
 	 * Deactivate field buttons.
 	 */
 	private void deactivateFieldButtons() {
-		for(Field f : fields) {
+		for (Field f : fields) {
 			f.setEnabled(false);
 		}
 	}
@@ -179,8 +185,8 @@ public class Game extends JFrame {
 	 * Activates field buttons, if they are not supposed to stay deactivated.
 	 */
 	private void activateFieldButtons() {
-		for(Field f : fields) {
-			if(!f.isDisabled())
+		for (Field f : fields) {
+			if (!f.isDisabled())
 				f.setEnabled(true);
 		}
 	}
@@ -196,7 +202,7 @@ public class Game extends JFrame {
 	 * Increment roll counters.
 	 */
 	private void incrementRolLCounter() {
-		if(rollCounter == 1) {
+		if (rollCounter == 1) {
 			rollCounter--;
 			System.out.println("deactivate roll button");
 			deactivateRollButton();
@@ -237,6 +243,7 @@ public class Game extends JFrame {
 
 	/**
 	 * Returns whether the game is still running.
+	 * 
 	 * @return true, if game is still running, otherwise false
 	 */
 	public boolean isStillRunning() {

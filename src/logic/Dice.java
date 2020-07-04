@@ -27,7 +27,7 @@ public class Dice extends JToggleButton {
         this.setText(toString());
     }
 
-    // return value of dice as string for textfield
-    public String toString() { return "" + value; }
+    // return value of dice as string for text field
+    public String toString() { return "" + this.value; }
 
 }

@@ -4,12 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameE extends JFrame {
-	
-		//TODO methoden nochmal durchgehen eventuell und eigene mitbringen verbessern 
-	//TODO enterPoints stehen geblieben
+
 	/**
 	 * Game manages all game components like dice, fields, text fields and so on..
 	 */
+	
+
+	public static void main(String[] args) {
+		GameE e = new GameE();
+		new GameControllerE(e);
+		e.setVisible(true);
+
+	}
 	
 	
 	/**
@@ -22,8 +28,10 @@ public class GameE extends JFrame {
 	private Dice dice5 = new Dice();
 	
 	private JButton rollButton = new JButton("Würfeln");
-	private int rollRoundCounter = 3, gameRoundCounter = 1;
-	private JTextField rollRound, gameRound, noteForPlayer;
+	private int throwsCounter = 3, gameRoundCounter = 1;
+	private JTextField throwsRoundText = new JTextField("Würfe: "+this.throwsCounter + " /3");
+	private JTextField gameRoundText  = new JTextField("Runde: "+ this.gameRoundCounter + " /13");
+	private JTextField noteForPlayer  = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
 	/**
 	 * Initializes 13 fields in an array 
 	 */
@@ -31,22 +39,80 @@ public class GameE extends JFrame {
 	private boolean isStillRunning = (this.gameRoundCounter != 13);
 	
 	/**
-	 * 
+	 * Contains all fields with their scores
 	 */
 	private ScoreCard scoreCard;
+	private Image img;
 	
 	public GameE() {
-		super("Willkommen zu Kniffel! ");
+		super("Willkommen bei Kniffel! ");
+		
+		this.setLayout(new GridLayout(1,2));
+		
+		ImageIcon imageIcon = new ImageIcon(getClass().getResource("Kniffelpic.jpg"));
+		img = imageIcon.getImage();
+		this.setIconImage(img);
 		
 		
-		/*Text soll nicht verändert werden*/
-		//t.setEditable(false);
-			
+		// initializes all field buttons
+		int i = 0;
+		for (FieldType field : FieldType.values()) {
+			this.fields[i] = new Field(field);
+			i++;
+		}
+
+		//adds score card to frame
+		this.scoreCard = new ScoreCard(this.fields);
+		this.add(scoreCard);
+	
+		//to add all components on the right side
+		JPanel rightSidePanel = new JPanel();
+		rightSidePanel.setLayout(new GridLayout(4,1));
 		
-		this.setSize(550,550);
+		//adds throws and game rounds text fields to the panel
+		JPanel throwsAndGameRoundsPanel = new JPanel();
 		
+		throwsAndGameRoundsPanel.setLayout(new FlowLayout());
 		
+		throwsAndGameRoundsPanel.add(this.throwsRoundText);
+		throwsAndGameRoundsPanel.add(this.gameRoundText);
 		
+		//prevent changing the text field
+		this.throwsRoundText.setEditable(false);
+		this.gameRoundText.setEditable(false);
+		
+		//add roll button to the panel
+		JPanel rollPanel = new JPanel();
+		rollPanel.setLayout(new FlowLayout());
+		rollPanel.add(this.rollButton);
+	
+		
+		//add each dice to the dice panel
+		JPanel  dicePanel = new JPanel();
+		dicePanel.setLayout(new FlowLayout());
+		dicePanel.add(this.dice1);
+		dicePanel.add(this.dice2);
+		dicePanel.add(this.dice3);
+		dicePanel.add(this.dice4);
+		dicePanel.add(this.dice5);
+		
+		//add all panels to one panel
+		rightSidePanel.add(throwsAndGameRoundsPanel);
+		rightSidePanel.add(rollPanel);
+		rightSidePanel.add(dicePanel);
+		
+		this.noteForPlayer.setEditable(false);
+		rightSidePanel.add(this.noteForPlayer);
+		
+		//add panel to the main frame
+		this.add(rightSidePanel);
+		
+		this.setSize(500,500);
+		this.updateGame();
+		//in the beginning all field buttons should be deactivated
+		this.deactivateAllFieldButtons();
+		//in the beginning all dice should be reset
+		this.resetDiceButtons();
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -57,19 +123,19 @@ public class GameE extends JFrame {
 	public void rollAllDice() {
 		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
 		for(Dice d : dice) {
-			//dice is not selected
-			if(!(d.isSelected() || d.getText().equals("?"))){
+			//checks if dice is not selected 
+			if (!(d.isSelected()) || d.getText().equals("?"))
 				d.roll();
-			}
 		}
-		//increments roll round counter
-		this.incrementRollRoundCounter();
 		
-		this.updateGame();
+		//decrements throws 
+		this.decrementThrowsCounter();
 		
-		//activates fields which is not already selected
+		//activates fields which is not already selected by user
 		this.activateFieldButtons();
-		
+		//this.deactivateChosenFieldButton();
+		this.updateGame();
+
 	}
 	
 	/**
@@ -77,13 +143,13 @@ public class GameE extends JFrame {
 	 */
 	private void updateGame() {
 		scoreCard.calculateScoreSums();
-		//if all roll rounds is finished start again
-		if (this.rollRoundCounter == 0) {
-			this.rollRound.setText("Bitte wählen Sie ein Feld");
+		//if player has the last throw, you should choose a field
+		if (this.throwsCounter == 0) {
+			this.throwsRoundText.setText("Bitte wählen Sie ein Feld");
 		} else {
 			//updates roll rounds and game rounds
-			this.rollRound.setText("Würfe: " + this.rollRoundCounter + "/3" );
-			this.gameRound.setText("Runde: " + this.gameRoundCounter + " / 13");
+			this.throwsRoundText.setText("Würfe: " + this.throwsCounter + "/3" );
+			this.gameRoundText.setText("Runde: " + this.gameRoundCounter + "/13");
 		}
 	}
 
@@ -99,13 +165,16 @@ public class GameE extends JFrame {
 		field.calculateAndStorePoints(new Dice[] { dice1, dice2, dice3, dice4, dice5 });
 		//increment game rounds
 		this.incrementGameRoundCounter();
+		//reset throws
+		this.resetThrowsCounter();
 		// update graphic user interface
 		this.updateGame();
 		// reset dice buttons for new round
 		this.resetDiceButtons();
 		// deactivate field buttons so that player cannot chose anything before having
 		// rolled at least once
-		this.deactivateAllFieldButton();
+		this.deactivateAllFieldButtons();
+
 		this.activateRollButton();
 	}
 	
@@ -134,7 +203,7 @@ public class GameE extends JFrame {
 	}
 
 	/**
-	 * Increments game rounds.
+	 * Increments game rounds and resets throws
 	 * The Game has usually 13 rounds.
 	 */
 	
@@ -145,37 +214,38 @@ public class GameE extends JFrame {
 		}else {
 			//rounds are finished, deactivate all buttons
 			this.deactivateRollButton();
-			this.deactivateAllFieldButton();
+			this.deactivateAllFieldButtons();
 			this.deactivateAllDiceButton();
-			this.noteForPlayer.setText("Das Spiel ist vorbei. Auf Wiedersehen! ");
+			this.noteForPlayer.setText("Das Spiel ist vorbei. Auf Wiedersehen!");
 			this.noteForPlayer.setEditable(false);
 			this.isStillRunning = false;
 			
 		}
-		this.resetRollRoundCounter();
+		this.resetThrowsCounter();
+		
 	}
 	
 	
 	/**
-	 * Increments roll round counter
+	 * Decrements throws, starting from 3 and ends to 1
 	 */
 	
-	private void incrementRollRoundCounter() {
-		if(this.rollRoundCounter == 1) {
-			this.rollRoundCounter--;
-			//after 3 rounds roll button is deactivated
+	private void decrementThrowsCounter() {
+		if(this.throwsCounter == 1) {
+			this.throwsCounter--;
+			//after 3 throws is deactivated
 		this.deactivateRollButton();
 	}else {
-		this.rollRoundCounter--;
+		this.throwsCounter--;
 	}
 	}
 	
 	/**
-	 * Resets roll round counter after round is finished
+	 * Resets throws to 3 after round is finished
 	 */
 	
-	private void resetRollRoundCounter() {
-		this.rollRoundCounter = 3;
+	private void resetThrowsCounter() {
+		this.throwsCounter = 3;
 	}
 	
 	
@@ -195,29 +265,31 @@ public class GameE extends JFrame {
 	 */
 	private void activateFieldButtons() {
 		for(Field f: this.fields) {
-			//only activate fields which is not set on zero or is  selected before
-			if(!(f.isDisabled() || f.isSelected())) {
-				f.setEnabled(true);
-			}
-		}
-	}
-	
-	/**
-	 * Deactivates all fields
-	 */
-	private void deactivateAllFieldButton() {
-		for(Field f: this.fields) {
+			//only activate fields which is not set on zero or is selected before
+			if((f.isDisabled() || f.isSelected()))
+				f.setEnabled(false);
+			
 			f.setEnabled(true);
 		}
 	}
 	
 	/**
-	 * Deactivates all dice
+	 * Deactivates all fields after the end of game
+	 */
+	private void deactivateAllFieldButtons() {
+		for(Field f: this.fields) {
+			f.setEnabled(false);
+		}
+	}
+	
+
+	/**
+	 * Deactivates all dice after the end of game
 	 */
 	private void deactivateAllDiceButton() {
 		Dice []dice = {dice1, dice2, dice3, dice4, dice5};
 		for(Dice d: dice) {
-			d.setEnabled(true);
+			d.setEnabled(false);
 		}
 	}
 
@@ -244,12 +316,5 @@ public class GameE extends JFrame {
 		return this.isStillRunning;
 	}
 
-	
-	public static void main(String[] args) {
-		GameE e = new GameE();
-		new GameControllerE(e);
-		e.setVisible(true);
-
-	}
 
 }

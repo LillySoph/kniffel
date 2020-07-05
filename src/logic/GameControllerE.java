@@ -9,8 +9,6 @@ import java.awt.event.WindowEvent;
 public class GameControllerE implements ActionListener {
 
 	private GameE game;
-	private Dice dice[];
-	private Field fields[];
 	
 	public GameControllerE(GameE game) {
 		this.game = game;
@@ -19,9 +17,10 @@ public class GameControllerE implements ActionListener {
 		this.game.getRollButton().addActionListener(this);
 		
 		//initialize dice array with all dice from game
-		this.dice = game.getDiceButtons();
+		Dice dice[] = game.getDiceButtons();
+		
 		//initialize field array with all fields from game
-		this.fields = game.getFieldButtons();
+		 Field fields[] = game.getFieldButtons();
 		
 		//register all dice as ActionListener
 		for(int i = 0; i < dice.length; i++) {
@@ -46,7 +45,7 @@ public class GameControllerE implements ActionListener {
 							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
 									null, options, options[0]);
 						} else {
-							JOptionPane.showOptionDialog(game, "Auf Wiedersehen :)", null, 0, 0, null, options, options);	
+							
 							System.exit(0);
 						}
 					}
@@ -64,12 +63,12 @@ public class GameControllerE implements ActionListener {
 		//rollButton was clicked
 		if(e.getSource() == this.game.getRollButton()) {
 			//roll all dice
-			//this.game.rol
+			this.game.rollAllDice();
 			
 			//field was clicked
-		}else if(e.getSource() == this.fields) {
-			//enter points
-			
+		}else if(e.getSource() instanceof Field) {
+			this.game.enterPoints((Field)e.getSource());
+			System.out.println("Enter Points");
 		}
 	}
 

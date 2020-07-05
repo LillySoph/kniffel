@@ -4,9 +4,6 @@ import javax.swing.*;
 
 public class Field extends JButton {
 
-	// Attribut isEmpty hinzugefügt. Ist true, wenn feld noch nicht gefüllt, ersetzt
-	// points=-1
-
 	private int points;
 	private FieldType fieldType;
 	private boolean isEmpty;

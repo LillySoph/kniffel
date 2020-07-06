@@ -9,66 +9,79 @@ import java.awt.event.WindowEvent;
 public class GameControllerE implements ActionListener {
 
 	private GameE game;
-	
+
+	/**
+	 * Game Controller is the connection between game and ActionListener roll and
+	 * field button(s) are registered as ActionListener and pass information to the
+	 * action event if they are clicked
+	 * 
+	 * @param game
+	 */
 	public GameControllerE(GameE game) {
 		this.game = game;
-		
-		//register rollButton as ActionListener
+
+		// register rollButton as ActionListener
 		this.game.getRollButton().addActionListener(this);
-		
-		//initialize dice array with all dice from game
-		Dice dice[] = game.getDiceButtons();
-		
-		//initialize field array with all fields from game
-		 Field fields[] = game.getFieldButtons();
-		
-		//register all dice as ActionListener
-		for(int i = 0; i < dice.length; i++) {
-			dice[i].addActionListener(this);
-		}
-		
-		//register all fields as ActionListener
-		for(int i = 0; i < fields.length; i++) {
+
+		// initialize field array buttons with all fields from game
+		Field fields[] = game.getFieldButtons();
+
+		// register all fields as ActionListener
+		for (int i = 0; i < fields.length; i++) {
 			fields[i].addActionListener(this);
 		}
-		
-		//register game as WindowListener
+
+		// register game as WindowListener
 		game.addWindowListener(
-		//window adapter implements all methods from windowListener Interfaces
-				new WindowAdapter(){
-					//send messages to client just in case if client would like to exit the game 
+				// window adapter implements all methods from windowListener Interfaces
+				new WindowAdapter() {
+					// send messages to client just in case if client would like to exit the game
 					@Override
 					public void windowClosing(WindowEvent e) {
-						// Creating array of data type Object, adding the options	
-						Object[] options = {"Nein, weiterspielen", "Ja, beenden"};
-						if(game.isStillRunning()) {
-							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-									null, options, options[0]);
+						// Creating array of data type Object, adding the options
+						Object[] options = { "Ja, beenden", "Nein, weiterspielen" };
+
+						if (game.isStillRunning()) {
+							// show warning and note which option was clicked
+							int dialogButton = JOptionPane.showOptionDialog(game,
+									"Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung",
+									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+							if (dialogButton == JOptionPane.YES_OPTION) {
+								// yes option was clicked
+								System.exit(0);
+							} else {
+								// no option was clicked
+								// close JOption pane window and continue the game
+								game.setDefaultCloseOperation(game.DO_NOTHING_ON_CLOSE);
+							}
 						} else {
-							
+							// game is over close window
 							System.exit(0);
 						}
 					}
-				}
-		);
-		
-		
+				});
+
 	}
+
 	/**
 	 * Action Event object knows all information from the ActionListeners
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
-		//rollButton was clicked
-		if(e.getSource() == this.game.getRollButton()) {
-			//roll all dice
+
+		// rollButton was clicked
+		if (e.getSource() == this.game.getRollButton()) {
+			// if game is over rolling is not possible anymore
+			if (this.game.getGameRoundCounter() > 13) {
+				this.game.deactivateRollButton();
+			}
+			// roll all dice
 			this.game.rollAllDice();
-			
-			//field was clicked
-		}else if(e.getSource() instanceof Field) {
-			this.game.enterPoints((Field)e.getSource());
-			System.out.println("Enter Points");
+
+			// field was clicked
+		} else if (e.getSource() instanceof Field) {
+			this.game.enterPoints((Field) e.getSource());
 		}
 	}
 

@@ -93,6 +93,7 @@ public class Field extends JButton {
 		// disable field after it has been zeroed
 		if (this.isEmpty || this.points == 0)
 			this.isDisabled = true;
+			
 	}
 
 	public boolean isDisabled() {

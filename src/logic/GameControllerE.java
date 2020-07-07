@@ -3,7 +3,6 @@ package logic;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -13,7 +12,7 @@ public class GameControllerE implements ActionListener {
 	private GameE game;
 
 	/**
-	 * Game Controller is the connection between game and ActionListener roll and
+	 * Game Controller is the connection between game and ActionListener roll, dice and
 	 * field button(s) are registered as ActionListener and pass information to the
 	 * action event if they are clicked
 	 * 
@@ -27,6 +26,13 @@ public class GameControllerE implements ActionListener {
 
 		// initialize field array buttons with all fields from game
 		Field fields[] = game.getFieldButtons();
+		// initialize dice array buttons with all dice from game
+		Dice dice[] = game.getDiceButtons();
+		
+		// register all dice as ActionListener
+		for (int i = 0; i < dice.length; i++) {
+			dice[i].addActionListener(this);
+		}
 
 		// register all fields as ActionListener
 		for (int i = 0; i < fields.length; i++) {
@@ -86,6 +92,14 @@ public class GameControllerE implements ActionListener {
 			// field was clicked
 		} else if (e.getSource() instanceof Field) {
 			this.game.enterPoints((Field) e.getSource());
+		}
+		// dice was clicked
+		else if (e.getSource() instanceof Dice) {
+			for (int i = 0; i < this.game.getDiceButtons().length; i++) {
+				if (this.game.getDiceButtons()[i].isSelected()) {
+					this.game.getDiceButtons()[i].setSelected(true);
+				}
+			}
 		}
 	}
 

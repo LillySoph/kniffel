@@ -113,7 +113,7 @@ public class GameE extends JFrame {
 		this.updateGame();
 		// in the beginning all field buttons should be deactivated
 		this.deactivateAllFieldButtons();
-		// in the beginning all dice should be reset
+		// in the beginning all dice should be reset 
 		this.resetDiceButtons();
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,6 +123,7 @@ public class GameE extends JFrame {
 	 * Rolls all dice unless they are not selected or kept
 	 */
 	public void rollAllDice() {
+	
 		Dice [] dice = { dice1, dice2, dice3, dice4, dice5 };
 		for (Dice d : dice) {
 			// checks if dice is not selected

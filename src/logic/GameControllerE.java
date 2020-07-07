@@ -53,7 +53,7 @@ public class GameControllerE implements ActionListener {
 							// show warning and note which option was clicked
 							int dialogButton = JOptionPane.showOptionDialog(game,
 									"Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung",
-									JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+									JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 
 							if (dialogButton == JOptionPane.YES_OPTION) {
 								// yes option was clicked

@@ -2,6 +2,8 @@ package logic;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -52,7 +54,7 @@ public class GameControllerE implements ActionListener {
 								System.exit(0);
 							} else {
 								// no option was clicked
-								// close JOption pane window and continue the game
+								// close JOption Pane window and continue the game
 								game.setDefaultCloseOperation(game.DO_NOTHING_ON_CLOSE);
 							}
 						} else {
@@ -75,10 +77,12 @@ public class GameControllerE implements ActionListener {
 			// if game is over rolling is not possible anymore
 			if (this.game.getGameRoundCounter() > 13) {
 				this.game.deactivateRollButton();
-			}
-			// roll all dice
-			this.game.rollAllDice();
+				this.game.resetDiceButtons();
 
+			} else {
+				// roll all dice
+				this.game.rollAllDice();
+			}
 			// field was clicked
 		} else if (e.getSource() instanceof Field) {
 			this.game.enterPoints((Field) e.getSource());

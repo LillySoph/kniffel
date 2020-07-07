@@ -88,7 +88,7 @@ public class GameE extends JFrame {
 		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
 		rollPanel.add(this.rollButton);
-
+		
 		// add each dice to the dice panel
 		JPanel dicePanel = new JPanel();
 		dicePanel.setLayout(new FlowLayout());
@@ -261,7 +261,7 @@ public class GameE extends JFrame {
 	/**
 	 * Resets dice buttons for a new round with content "?"
 	 */
-	private void resetDiceButtons() {
+	public void resetDiceButtons() {
 		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
 		for (Dice d : dice) {
 			d.setSelected(false);

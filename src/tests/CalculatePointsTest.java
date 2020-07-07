@@ -18,12 +18,6 @@ public class CalculatePointsTest {
 		}
 	}
 
-	/**
-	 * Question: Test if sum = 63 points get +35 bonus points ?
-	 * 
-	 * @author prett
-	 * 
-	 */
 	@Test
 	public void testAces() {
 		f = new Field(FieldType.Aces);

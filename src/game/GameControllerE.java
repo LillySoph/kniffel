@@ -25,9 +25,9 @@ public class GameControllerE implements ActionListener {
 		this.game.getRollButton().addActionListener(this);
 
 		// initialize field array buttons with all fields from game
-		Field fields[] = game.getFieldButtons();
+		FieldE fields[] = game.getFieldButtons();
 		// initialize dice array buttons with all dice from game
-		Dice dice[] = game.getDiceButtons();
+		DiceE dice[] = game.getDiceButtons();
 		
 		// register all dice as ActionListener
 		for (int i = 0; i < dice.length; i++) {
@@ -90,8 +90,8 @@ public class GameControllerE implements ActionListener {
 				this.game.rollAllDice();
 			}
 			// field was clicked
-		} else if (e.getSource() instanceof Field) {
-			this.game.enterPoints((Field) e.getSource());
+		} else if (e.getSource() instanceof FieldE) {
+			this.game.enterPoints((FieldE) e.getSource());
 		}
 		// dice was clicked
 		else if (e.getSource() instanceof Dice) {

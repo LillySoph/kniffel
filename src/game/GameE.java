@@ -1,7 +1,9 @@
 package game;
 
 import javax.swing.*;
+
 import java.awt.*;
+//TODO size ändern damit das Spiel breiter wird 
 
 public class GameE extends JFrame {
 
@@ -19,11 +21,11 @@ public class GameE extends JFrame {
 	/**
 	 * Initializes all 5 dice
 	 */
-	private Dice dice1 = new Dice();
-	private Dice dice2 = new Dice();
-	private Dice dice3 = new Dice();
-	private Dice dice4 = new Dice();
-	private Dice dice5 = new Dice();
+	private DiceE dice1 = new DiceE();
+	private DiceE dice2 = new DiceE();
+	private DiceE dice3 = new DiceE();
+	private DiceE dice4 = new DiceE();
+	private DiceE dice5 = new DiceE();
 
 	private JButton rollButton = new JButton("Würfeln");
 	private int throwsCounter = 3, gameRoundCounter = 1;
@@ -33,14 +35,14 @@ public class GameE extends JFrame {
 	/**
 	 * Initializes 13 fields in an array
 	 */
-	private Field[] fields = new Field[13];
+	private FieldE[] fields = new FieldE[13];
 	private boolean isStillRunning = (this.gameRoundCounter != 13);
 	
 
 	/**
 	 * Contains all fields with their scores
 	 */
-	private ScoreCard scoreCard;
+	private ScoreCardE scoreCard;
 	private Image img;
 	
 	/**
@@ -60,12 +62,12 @@ public class GameE extends JFrame {
 		// initializes all field buttons
 		int i = 0;
 		for (FieldType field : FieldType.values()) {
-			this.fields[i] = new Field(field);
+			this.fields[i] = new FieldE(field);
 			i++;
 		}
 
 		// adds score card to frame
-		this.scoreCard = new ScoreCard(this.fields);
+		this.scoreCard = new ScoreCardE(this.fields);
 		this.add(scoreCard);
 
 		// to add all components on the right side
@@ -75,18 +77,30 @@ public class GameE extends JFrame {
 		// adds throws and game rounds text fields to the panel
 		JPanel throwsAndGameRoundsPanel = new JPanel();
 
-		throwsAndGameRoundsPanel.setLayout(new FlowLayout());
-
+		throwsAndGameRoundsPanel.setLayout(new GridLayout(1, 2));
+		
+		//editing throws round text 
+		this.throwsRoundText.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.throwsRoundText.setHorizontalAlignment(SwingConstants.CENTER);
+		this.throwsRoundText.setBorder(null);
+		this.throwsRoundText.setEditable(false);
+		
+		//editing game round text
+		this.gameRoundText.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.gameRoundText.setHorizontalAlignment(SwingConstants.CENTER);
+		this.gameRoundText.setBorder(null);
+		this.gameRoundText.setEditable(false);
+		
 		throwsAndGameRoundsPanel.add(this.throwsRoundText);
 		throwsAndGameRoundsPanel.add(this.gameRoundText);
 
-		// prevent changing the text field
-		this.throwsRoundText.setEditable(false);
-		this.gameRoundText.setEditable(false);
 
 		// add roll button to the panel
 		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
+		
+		this.rollButton.setBackground(Color.pink);
+		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 18));
 		rollPanel.add(this.rollButton);
 		
 		// add each dice to the dice panel
@@ -102,14 +116,17 @@ public class GameE extends JFrame {
 		rightSidePanel.add(throwsAndGameRoundsPanel);
 		rightSidePanel.add(rollPanel);
 		rightSidePanel.add(dicePanel);
-
+		
+		this.noteForPlayer.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.noteForPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+		this.noteForPlayer.setBorder(null);
 		this.noteForPlayer.setEditable(false);
 		rightSidePanel.add(this.noteForPlayer);
 
 		// add panel to the main frame
 		this.add(rightSidePanel);
 
-		this.setSize(500, 500);
+		this.setSize(600, 500);
 		this.updateGame();
 		// in the beginning all field buttons should be deactivated
 		this.deactivateAllFieldButtons();
@@ -124,8 +141,8 @@ public class GameE extends JFrame {
 	 */
 	public void rollAllDice() {
 	
-		Dice [] dice = { dice1, dice2, dice3, dice4, dice5 };
-		for (Dice d : dice) {
+		DiceE [] dice = { dice1, dice2, dice3, dice4, dice5 };
+		for (DiceE d : dice) {
 			// checks if dice is not selected
 			if (!(d.isSelected()) || d.getText().equals("?"))
 				d.roll();
@@ -163,9 +180,9 @@ public class GameE extends JFrame {
 	 * 
 	 * @param field option chosen by player
 	 */
-	public void enterPoints(Field field) {
+	public void enterPoints(FieldE field) {
 		// calculate points
-		field.calculateAndStorePoints(new Dice[] { dice1, dice2, dice3, dice4, dice5 });
+		field.calculateAndStorePoints(new DiceE[] { dice1, dice2, dice3, dice4, dice5 });
 		// increment game rounds
 		this.incrementGameRoundCounter();
 		// reset throws
@@ -193,15 +210,15 @@ public class GameE extends JFrame {
 	 * Returns dice buttons in an array.
 	 * 
 	 */
-	public Dice[] getDiceButtons() {
-		return new Dice[] { dice1, dice2, dice3, dice4, dice5 };
+	public DiceE[] getDiceButtons() {
+		return new DiceE[] { dice1, dice2, dice3, dice4, dice5 };
 	}
 
 	/**
 	 * Returns field buttons.
 	 * 
 	 */
-	public Field[] getFieldButtons() {
+	public FieldE[] getFieldButtons() {
 		return this.fields;
 	}
 	
@@ -263,8 +280,8 @@ public class GameE extends JFrame {
 	 * Resets dice buttons for a new round with content "?"
 	 */
 	public void resetDiceButtons() {
-		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
-		for (Dice d : dice) {
+		DiceE[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		for (DiceE d : dice) {
 			d.setSelected(false);
 			d.setText("?");
 		}
@@ -275,7 +292,7 @@ public class GameE extends JFrame {
 	 * before
 	 */
 	private void activateFieldButtons() {
-		for (Field f : this.fields) {
+		for (FieldE f : this.fields) {
 			// only activate fields which is not set on zero or is selected before
 			if ((f.isDisabled() || f.isSelected()))
 				f.setEnabled(false);
@@ -288,7 +305,7 @@ public class GameE extends JFrame {
 	 * Deactivates all fields after the end of game
 	 */
 	private void deactivateAllFieldButtons() {
-		for (Field f : this.fields) {
+		for (FieldE f : this.fields) {
 			f.setEnabled(false);
 		}
 	}
@@ -298,7 +315,7 @@ public class GameE extends JFrame {
 	 * to select it again
 	 */
 	private void deactivateSelectedFieldButton() {
-		for (Field f : this.fields) {
+		for (FieldE f : this.fields) {
 			if (f.isSelected() || f.getPoints() > 0 || f.isDisabled()) {
 				f.setEnabled(false);
 			}
@@ -309,8 +326,8 @@ public class GameE extends JFrame {
 	 * Deactivates all dice after the end of game
 	 */
 	private void deactivateAllDiceButton() {
-		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
-		for (Dice d : dice) {
+		DiceE[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		for (DiceE d : dice) {
 			d.setEnabled(false);
 		}
 	}

@@ -25,19 +25,34 @@ public class GameController implements ActionListener {
 		}
 
 		game.addWindowListener(
-				new WindowAdapter(){
+				// window adapter implements all methods from windowListener Interfaces
+				new WindowAdapter() {
+					// send messages to client just in case if client would like to exit the game
 					@Override
 					public void windowClosing(WindowEvent e) {
-						Object[] options = {"Nein, weiterspielen", "Ja, beenden"};
-						if(game.isStillRunning()) {
-							JOptionPane.showOptionDialog(game, "Das Spiel läuft noch. Möchten Sie sicher beenden?", "Warnung", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-									null, options, options[0]);
+						// Creating array of data type Object, adding the options
+						Object[] options = { "Ja, beenden", "Nein, weiterspielen" };
+
+						if (game.isStillRunning()) {
+							// show warning and note which option was clicked
+							int dialogButton = JOptionPane.showOptionDialog(game,
+									"Das Spiel läuft noch. Möchten Sie sicher beenden?", "Spiel läuft noch!",
+									JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+
+							if (dialogButton == JOptionPane.YES_OPTION) {
+								// yes option was clicked
+								System.exit(0);
+							} else {
+								// no option was clicked
+								// close JOption Pane window and continue the game
+								game.setDefaultCloseOperation(game.DO_NOTHING_ON_CLOSE);
+							}
 						} else {
+							// game is over close window
 							System.exit(0);
 						}
 					}
-				}
-		);
+				});
     }
 
     @Override
@@ -57,5 +72,7 @@ public class GameController implements ActionListener {
 			this.game.rollDice();
 			System.out.println("Roll dice! ");
 		}
+		System.out.println("    | dice width: " + game.getDiceButtons()[0].getWidth() + "   dice height: " + game.getDiceButtons()[0].getHeight());
+		System.out.println("    | dice x: " + game.getDiceButtons()[0].getX() + "   dice y: " + game.getDiceButtons()[0].getY());
     }
 }

@@ -16,8 +16,9 @@ public class Field extends JButton {
 	public Field(FieldType fieldType) {
 		this.fieldType = fieldType;
 		this.points = 0;
-		//true if field has no points
+		// no points have been entered
 		this.isEmpty = true;
+		this.setSize(85,30);
 	}
 
 	/**

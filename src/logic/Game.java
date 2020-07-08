@@ -29,20 +29,24 @@ public class Game extends JFrame {
 		super("Willkommen zu Kniffel! ");
 		this.setLayout(new FlowLayout());
 
+		JPanel window = new JPanel(new GridBagLayout());
+		GridBagConstraints cWindow = new GridBagConstraints();
+
 		// initialize field buttons
 		int i = 0;
 		for (FieldType ft : FieldType.values()) {
-			fields[i] = new Field(ft);
+			this.fields[i] = new Field(ft);
+			System.out.println("init; width: " + this.fields[i].getWidth() + "  height: " + this.fields[i].getHeight());
 			i++;
 		}
 
 		// add score card to frame
-		scoreCard = new ScoreCard(fields);
-		this.add(scoreCard);
+		scoreCard = new ScoreCard(this.fields);
+		window.add(scoreCard, cWindow);
 
 		// create right panel and panels within right panel
 		JPanel rightSidePanel = new JPanel(), counterPanel = new JPanel(), rollPanel = new JPanel(),
-				dicePanel = new JPanel(), notePanel = new JPanel();
+		dicePanel = new JPanel(), notePanel = new JPanel();
 		rightSidePanel.setLayout(new GridLayout(4, 1));
 
 		// create panel with roll and round counters
@@ -75,7 +79,9 @@ public class Game extends JFrame {
 		rightSidePanel.add(notePanel);
 
 		// add right panel to frame
-		this.add(rightSidePanel);
+		window.add(rightSidePanel, cWindow);
+
+		this.add(window);
 
 		this.updateGUI();
 		deactivateFieldButtons();
@@ -88,12 +94,15 @@ public class Game extends JFrame {
 	 * Rolls all dice that are not "kept" by player and increments roll counter.
 	 */
 	public void rollDice() {
-		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		Dice[] dice = getDiceButtons();
 		for (Dice d : dice) {
-			if (!(d.isSelected()) || d.getText().equals("?"))
+			// roll if dice is not kept or is reset
+			if (!(d.isSelected()) || d.isReset())
 				d.roll();
+			d.setSelected(false);
 		}
-		System.out.println("rollDice()   Würfel-Zähler: " + rollCounter + " von 3");
+		System.out.println("roll | dice width: " + dice[0].getWidth() + "   dice height: " + dice[0].getHeight());
+		System.out.println("roll | dice x: " + dice[0].getX() + "   dice y: " + dice[0].getY());
 		// increment roll counter
 		incrementRolLCounter();
 		// activate field buttons so that player can choose something
@@ -135,7 +144,7 @@ public class Game extends JFrame {
 	 */
 	public void enterPoints(Field field) {
 		// calculate points
-		field.calculateAndStorePoints(new Dice[] { dice1, dice2, dice3, dice4, dice5 });
+		field.calculateAndStorePoints(getDiceButtons());
 		// increment counters
 		incrementRoundCounters();
 		resetRollCounter();
@@ -147,6 +156,7 @@ public class Game extends JFrame {
 		// rolled at least once
 		deactivateFieldButtons();
 		activateRollButton();
+		System.out.println("enter points; width: " + field.getWidth() + "  height: " + field.getHeight());
 	}
 
 	/**
@@ -159,17 +169,21 @@ public class Game extends JFrame {
 		} else {
 			rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
 		}
+		System.out.println("score card; width: " + scoreCard.getWidth() + "  height: " + scoreCard.getHeight());
+		System.out.println("game; width: " + this.getWidth() + "  height: " + this.getHeight());
 	}
 
 	/**
-	 * Reset dice buttons for a new round: [?]
+	 * Reset dice buttons for a new round: [ ]
 	 */
 	private void resetDiceButtons() {
-		Dice[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		Dice[] dice = getDiceButtons();
 		for (Dice d : dice) {
 			d.setSelected(false);
-			d.setText("?");
+			d.reset();
 		}
+		System.out.println("reset | dice width: " + dice[0].getWidth() + "   dice height: " + dice[0].getHeight());
+		System.out.println("reset | dice x: " + dice[0].getX() + "   dice y: " + dice[0].getY());
 	}
 
 	/**

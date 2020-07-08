@@ -1,4 +1,4 @@
-package logic;
+package game;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;

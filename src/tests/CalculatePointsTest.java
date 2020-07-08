@@ -1,8 +1,8 @@
 package tests;
 
-import logic.Dice;
-import logic.Field;
-import logic.FieldType;
+import game.Dice;
+import game.Field;
+import game.FieldType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

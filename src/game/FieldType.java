@@ -1,4 +1,4 @@
-package logic;
+package game;
 
 public enum FieldType {
     Aces, Twos, Threes, Fours, Fives, Sixes,

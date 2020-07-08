@@ -1,6 +1,8 @@
-package logic;
+package game;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -13,10 +15,10 @@ public class GameController implements ActionListener {
     public GameController(Game game) {
 		this.game = game;
 
-		// get buttons from game and initialize action listeners
-		game.getRollButton().addActionListener(this);
-		Dice dice[] = game.getDiceButtons();
-		Field fields[] = game.getFieldButtons();
+		// get buttons from game and add action listeners
+		this.game.getRollButton().addActionListener(this);
+		Dice dice[] = this.game.getDiceButtons();
+		Field fields[] = this.game.getFieldButtons();
 		for(int i = 0; i < dice.length; i++) {
 			dice[i].addActionListener(this);
 		}
@@ -63,16 +65,10 @@ public class GameController implements ActionListener {
 			this.game.enterPoints((Field) e.getSource());
 			System.out.println("Enter points! ");
 		}
-    	// button clicked was dice
-    	else if(source instanceof Dice) {
-			System.out.println("Keep dice (or not)! ");
-		}
 		// button clicked was roll button
 		else if(source instanceof JButton) {
 			this.game.rollDice();
 			System.out.println("Roll dice! ");
 		}
-		System.out.println("    | dice width: " + game.getDiceButtons()[0].getWidth() + "   dice height: " + game.getDiceButtons()[0].getHeight());
-		System.out.println("    | dice x: " + game.getDiceButtons()[0].getX() + "   dice y: " + game.getDiceButtons()[0].getY());
     }
 }

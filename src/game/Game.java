@@ -1,6 +1,7 @@
-package logic;
+package game;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Game extends JFrame {
@@ -16,7 +17,7 @@ public class Game extends JFrame {
 	private boolean isStillRunning;
 	private ScoreCard scoreCard;
 	private Field[] fields = new Field[13];
-	private JButton rollButton = new JButton("Würfeln");
+	private JButton rollButton;
 	private int rollCounter = 3, roundCounter = 1;
 	private JTextField rollTextField, roundTextField, noteForPlayer;
 	private Dice dice1 = new Dice();
@@ -27,67 +28,89 @@ public class Game extends JFrame {
 
 	Game() {
 		super("Willkommen zu Kniffel! ");
-		this.setLayout(new FlowLayout());
 
-		JPanel window = new JPanel(new GridBagLayout());
-		GridBagConstraints cWindow = new GridBagConstraints();
+//		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.jpg")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icon.jpg")));
 
-		// initialize field buttons
-		int i = 0;
-		for (FieldType ft : FieldType.values()) {
-			this.fields[i] = new Field(ft);
-			System.out.println("init; width: " + this.fields[i].getWidth() + "  height: " + this.fields[i].getHeight());
-			i++;
-		}
+		// setup grid bag layout
+		this.setLayout(new GridLayout(1,2));
 
-		// add score card to frame
-		scoreCard = new ScoreCard(this.fields);
-		window.add(scoreCard, cWindow);
+		// init and add score card
+		this.scoreCard = new ScoreCard(fields);
+		this.add(scoreCard);
 
-		// create right panel and panels within right panel
-		JPanel rightSidePanel = new JPanel(), counterPanel = new JPanel(), rollPanel = new JPanel(),
-		dicePanel = new JPanel(), notePanel = new JPanel();
-		rightSidePanel.setLayout(new GridLayout(4, 1));
+		// init right panel
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new GridLayout(4,1));
 
-		// create panel with roll and round counters
-		rollTextField = new JTextField();
+		// add counter panel
+		JPanel counterPanel = new JPanel();
 		counterPanel.setLayout(new FlowLayout());
-		counterPanel.add(rollTextField);
+		this.rollTextField = new JTextField(); this.rollTextField.setEditable(false);
+		this.roundTextField = new JTextField(); this.roundTextField.setEditable(false);
+		this.rollTextField.setPreferredSize(new Dimension(200,40));
+		this.roundTextField.setPreferredSize(new Dimension(200,40));
+		counterPanel.add(rollTextField); counterPanel.add(roundTextField);
+		rightPanel.add(counterPanel);
+		this.rollTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		this.rollTextField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.rollTextField.setBorder(null);
+		this.roundTextField.setHorizontalAlignment(SwingConstants.CENTER);
+		this.roundTextField.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.roundTextField.setBorder(null);
 
-		// create panel with roll button
+		// add roll panel
+		this.rollButton = new JButton("Würfeln");
+		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 28));
+		this.rollButton.setBackground(Color.PINK);
+		this.setPreferredSize(new Dimension(90,60));
+		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
 		rollPanel.add(rollButton);
+		rightPanel.add(rollPanel);
 
-		// create panel with dice buttons
+		// add dice panel
+		JPanel dicePanel = new JPanel();
 		dicePanel.setLayout(new FlowLayout());
-		dicePanel.add(dice1);
-		dicePanel.add(dice2);
-		dicePanel.add(dice3);
-		dicePanel.add(dice4);
-		dicePanel.add(dice5);
-		resetDiceButtons();
+		Dice[] dice = getDiceButtons();
+		for(Dice d : dice) {
+			dicePanel.add(d);
+		}
+		rightPanel.add(dicePanel);
 
-		// create panel with note for player
-		noteForPlayer = new JTextField("Würfel anklicken bedeutet Würfel behalten.");
+		// add note panel
+		JPanel notePanel = new JPanel();
 		notePanel.setLayout(new FlowLayout());
+		this.noteForPlayer = new JTextField("Würfel auswählen bedeutet Würfel behalten.");
+		noteForPlayer.setFont(new Font("SansSerif", Font.ITALIC, 16));
+		this.noteForPlayer.setEditable(false);
 		notePanel.add(noteForPlayer);
+		rightPanel.add(notePanel);
+		noteForPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+		noteForPlayer.setAlignmentY(Component.TOP_ALIGNMENT);
+		noteForPlayer.setBorder(null);
 
-		// add panels to right panel
-		rightSidePanel.add(counterPanel);
-		rightSidePanel.add(rollPanel);
-		rightSidePanel.add(dicePanel);
-		rightSidePanel.add(notePanel);
-
-		// add right panel to frame
-		window.add(rightSidePanel, cWindow);
-
-		this.add(window);
-
+		this.add(rightPanel);
 		this.updateGUI();
 		deactivateFieldButtons();
 
+		this.isStillRunning = true;
+
+		this.setSize(900,600);
 		this.setLocationRelativeTo(null);
-		this.pack();
+	}
+
+	private void addComponentToGui(Component component, Integer gridX, Integer gridY, Integer gridHeight, Integer gridWidth) {
+		GridBagConstraints c = new GridBagConstraints();
+		if(gridX != null)
+			c.gridx = gridX;
+		if(gridY != null)
+			c.gridy = gridY;
+		if(gridHeight != null)
+			c.gridheight = gridHeight;
+		if(gridWidth != null)
+			c.gridwidth = gridWidth;
+		this.add(component, c);
 	}
 
 	/**
@@ -101,8 +124,6 @@ public class Game extends JFrame {
 				d.roll();
 			d.setSelected(false);
 		}
-		System.out.println("roll | dice width: " + dice[0].getWidth() + "   dice height: " + dice[0].getHeight());
-		System.out.println("roll | dice x: " + dice[0].getX() + "   dice y: " + dice[0].getY());
 		// increment roll counter
 		incrementRolLCounter();
 		// activate field buttons so that player can choose something
@@ -156,7 +177,6 @@ public class Game extends JFrame {
 		// rolled at least once
 		deactivateFieldButtons();
 		activateRollButton();
-		System.out.println("enter points; width: " + field.getWidth() + "  height: " + field.getHeight());
 	}
 
 	/**
@@ -167,10 +187,9 @@ public class Game extends JFrame {
 		if (rollCounter == 0) {
 			rollTextField.setText("Bitte wählen Sie eine Option");
 		} else {
-			rollTextField.setText("Noch " + rollCounter + " mal Würfeln (Runde " + roundCounter + ")");
+			rollTextField.setText("Noch " + rollCounter + " mal Würfeln");
 		}
-		System.out.println("score card; width: " + scoreCard.getWidth() + "  height: " + scoreCard.getHeight());
-		System.out.println("game; width: " + this.getWidth() + "  height: " + this.getHeight());
+		roundTextField.setText("Runde " + roundCounter + " von 13");
 	}
 
 	/**
@@ -179,11 +198,8 @@ public class Game extends JFrame {
 	private void resetDiceButtons() {
 		Dice[] dice = getDiceButtons();
 		for (Dice d : dice) {
-			d.setSelected(false);
 			d.reset();
 		}
-		System.out.println("reset | dice width: " + dice[0].getWidth() + "   dice height: " + dice[0].getHeight());
-		System.out.println("reset | dice x: " + dice[0].getX() + "   dice y: " + dice[0].getY());
 	}
 
 	/**

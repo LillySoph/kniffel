@@ -29,7 +29,6 @@ public class Game extends JFrame {
 	Game() {
 		super("Willkommen zu Kniffel! ");
 
-//		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.jpg")));
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icon.jpg")));
 
 		// setup grid bag layout

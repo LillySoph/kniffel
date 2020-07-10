@@ -27,8 +27,8 @@ public class DiceE extends JToggleButton {
 	// "roll" dice, generate number between 1 and 6, and updates button text
 	public void roll() {
 		this.setSelected(false);
-		this.setText(this.toString());
 		this.value = (int) (Math.random() * 6) + 1;
+		this.setText(this.toString());
 	}
 
 	// return value of dice as string for text field

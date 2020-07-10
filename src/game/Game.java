@@ -29,7 +29,7 @@ public class Game extends JFrame {
 	Game() {
 		super("Willkommen zu Kniffel! ");
 
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icon.jpg")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icon.png")));
 
 		// setup grid bag layout
 		this.setLayout(new GridLayout(1,2));
@@ -62,6 +62,7 @@ public class Game extends JFrame {
 		this.rollButton = new JButton("Würfeln");
 		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 28));
 		this.rollButton.setBackground(Color.PINK);
+		this.rollButton.setFocusPainted(false);
 		this.setPreferredSize(new Dimension(90,60));
 		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
@@ -163,11 +164,13 @@ public class Game extends JFrame {
 	 * @param field option chosen by player
 	 */
 	public void enterPoints(Field field) {
+		if(!(isStillRunning()))
+			return;
 		// calculate points
 		field.calculateAndStorePoints(getDiceButtons());
 		// increment counters
 		incrementRoundCounters();
-		resetRollCounter();
+		this.rollCounter = 3;
 		// update graphic user interface
 		updateGUI();
 		// reset dice buttons for new round
@@ -221,24 +224,15 @@ public class Game extends JFrame {
 	}
 
 	/**
-	 * Reset roll counter.
-	 */
-	private void resetRollCounter() {
-		this.rollCounter = 3;
-	}
-
-	/**
 	 * Increment roll counters.
 	 */
 	private void incrementRolLCounter() {
 		if (rollCounter == 1) {
 			rollCounter--;
-			System.out.println("deactivate roll button");
 			deactivateRollButton();
 		} else {
 			rollCounter--;
 		}
-		System.out.println("incrementRolLCounter()   Würfel-Zähler: " + rollCounter + " von 3");
 	}
 
 	/**

@@ -10,23 +10,23 @@ public class Dice extends JToggleButton {
 
     private int value;
     private boolean isReset;
-    private static final LineBorder standardBorder = new LineBorder(Color.LIGHT_GRAY, 3, true);
-    private static final LineBorder selectedBorder = new LineBorder(Color.PINK, 3, true);
+    private static final LineBorder STANDARD_BORDER = new LineBorder(Color.LIGHT_GRAY, 3, true);
+    private static final LineBorder SELECTED_BORDER = new LineBorder(Color.PINK, 3, true);
     private static final int DICE_SCALE = 75;
 
     // creates new dice and resets it for new round
     public Dice() {
         this.reset();
-        this.setBorder(standardBorder);
+        this.setBorder(STANDARD_BORDER);
         this.setPreferredSize(new Dimension(DICE_SCALE,DICE_SCALE));
         //
         addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if (getModel().isSelected()) {
-                    setBorder(selectedBorder);
+                    setBorder(SELECTED_BORDER);
                 } else {
-                    setBorder(standardBorder);
+                    setBorder(STANDARD_BORDER);
                 }
             }
         });

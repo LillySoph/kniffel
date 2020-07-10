@@ -1,13 +1,7 @@
-package _local;
+package game;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
-import game.DiceE;
-import game.FieldE;
-import game.FieldType;
-import game.GameControllerE;
-import game.ScoreCardE;
 
 import java.awt.*;
 

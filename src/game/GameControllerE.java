@@ -3,8 +3,6 @@ package game;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import _local.GameE;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -93,7 +91,6 @@ public class GameControllerE implements ActionListener {
 			}
 			// field was clicked
 		} else if (e.getSource() instanceof FieldE) {
-			System.out.println("Enter Points");
 			this.game.enterPoints((FieldE) e.getSource());
 		}
 		// dice was clicked

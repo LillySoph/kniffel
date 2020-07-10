@@ -2,7 +2,11 @@ package _local;
 
 import javax.swing.*;
 
+import game.DiceE;
+import game.FieldE;
 import game.FieldType;
+import game.GameControllerE;
+import game.ScoreCardE;
 
 import java.awt.*;
 //Problem LargeStraight SmallStraight funktioniert nicht
@@ -16,7 +20,6 @@ public class GameE extends JFrame {
 		GameE e = new GameE();
 		new GameControllerE(e);
 		e.setVisible(true);
-
 
 	}
 
@@ -211,7 +214,7 @@ public class GameE extends JFrame {
 	 * 
 	 */
 	public DiceE[] getDiceButtons() {
-		return new DiceE[] { dice1, dice2, dice3, dice4, dice5 };
+		return new DiceE[] { this.dice1, this.dice2, this.dice3, this.dice4, this.dice5 };
 	}
 
 	/**
@@ -280,7 +283,7 @@ public class GameE extends JFrame {
 	 * Resets dice buttons for a new round with content "?"
 	 */
 	public void resetDiceButtons() {
-		DiceE[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		DiceE[] dice = { this.dice1, this.dice2, this.dice3, this.dice4, this.dice5 };
 		for (DiceE d : dice) {
 			d.setSelected(false);
 			d.setText("?");
@@ -326,7 +329,7 @@ public class GameE extends JFrame {
 	 * Deactivates all dice after the end of game
 	 */
 	private void deactivateAllDiceButton() {
-		DiceE[] dice = { dice1, dice2, dice3, dice4, dice5 };
+		DiceE[] dice = {this.dice1, this.dice2, this.dice3, this.dice4, this.dice5 };
 		for (DiceE d : dice) {
 			d.setEnabled(false);
 		}

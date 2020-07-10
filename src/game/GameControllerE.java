@@ -1,7 +1,9 @@
-package _local;
+package game;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
+import _local.GameE;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;

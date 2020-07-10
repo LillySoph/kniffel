@@ -1,8 +1,7 @@
-package _local;
+package game;
 
 import javax.swing.*;
 
-import game.FieldType;
 
 import java.awt.*;
 

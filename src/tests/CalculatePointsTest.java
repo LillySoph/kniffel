@@ -585,7 +585,7 @@ public class CalculatePointsTest {
 
 		f.resetPoints();
 		
-		int[] v5 = {2, 3, 4, 1,5 };
+		int[] v5 = {2, 3, 4, 1, 5 };
 		setDicesValue(v5);
 		f.calculateAndStorePoints(dices);
 		assertEquals(40, f.getPoints());

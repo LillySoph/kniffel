@@ -1,4 +1,4 @@
-package game;
+package _local;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -91,10 +91,11 @@ public class GameControllerE implements ActionListener {
 			}
 			// field was clicked
 		} else if (e.getSource() instanceof FieldE) {
+			System.out.println("Enter Points");
 			this.game.enterPoints((FieldE) e.getSource());
 		}
 		// dice was clicked
-		else if (e.getSource() instanceof Dice) {
+		else if (e.getSource() instanceof DiceE) {
 			for (int i = 0; i < this.game.getDiceButtons().length; i++) {
 				if (this.game.getDiceButtons()[i].isSelected()) {
 					this.game.getDiceButtons()[i].setSelected(true);

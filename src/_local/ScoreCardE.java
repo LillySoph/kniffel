@@ -1,6 +1,9 @@
-package game;
+package _local;
 
 import javax.swing.*;
+
+import game.FieldType;
+
 import java.awt.*;
 
 public class ScoreCardE extends JPanel {

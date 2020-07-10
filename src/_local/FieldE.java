@@ -1,10 +1,12 @@
-package game;
-
+package _local;
 import java.awt.Color;
 
 import javax.swing.JButton;
 
-public class FieldE extends JButton{
+
+
+public class FieldE extends JButton {
+
 	private int points;
 	private FieldType fieldType;
 	private boolean isEmpty;
@@ -14,13 +16,12 @@ public class FieldE extends JButton{
 	 * Creates empty field button of given type
 	 * 
 	 **/
-	public FieldE (FieldType fieldType) {
-		this.setBackground(Color.PINK);
+	public FieldE(FieldType fieldType) {
 		this.fieldType = fieldType;
 		this.points = 0;
 		// no points have been entered
 		this.isEmpty = true;
-	//	this.setSize(85,30);
+		this.setBackground(Color.pink);
 	}
 
 	/**
@@ -79,11 +80,9 @@ public class FieldE extends JButton{
 				break;
 			case SmallStraight:
 				this.points = calculatePointsForSmallStraight(dice);
-				// this.points = calculatePointsForStraight(dice, 4);
 				break;
 			case LargeStraight:
 				this.points = calculatePointsForLargeStraight(dice);
-				// this.points = calculatePointsForStraight(dice, 5);
 				break;
 			default:
 				this.points = calculatePointsForChance(dice);
@@ -126,20 +125,20 @@ public class FieldE extends JButton{
 	/**
 	 * Uses one dice to compare its value with other four dice values
 	 * 
-	 * @param dices
+	 * @param dice
 	 * @param nInARow , number of numbers in a row
 	 * @return points for ThreeOfAKind(sum of all dice), FourOfAKind (sum of all
 	 *         dice) and Kniffel(50)
 	 */
 
-	private int calculatePointsOfAKind(DiceE[] dices, int nInARow) {
+	private int calculatePointsOfAKind(DiceE[] dice, int nInARow) {
 		int counter = 1, result = 0, i = 0;
 		boolean foundNumbersInARow = false;
 
-		while (!foundNumbersInARow && i < dices.length) {
+		while (!foundNumbersInARow && i < dice.length) {
 
-			for (int j = i + 1; j <= dices.length - 1; j++) {
-				if (dices[i].getValue() == dices[j].getValue()) {
+			for (int j = i + 1; j <= dice.length - 1; j++) {
+				if (dice[i].getValue() == dice[j].getValue()) {
 					counter++;
 				}
 				if (counter == nInARow) {
@@ -156,8 +155,8 @@ public class FieldE extends JButton{
 			if (this.fieldType == FieldType.Kniffel) {
 				return 50;
 			} else {
-				for (i = 0; i < dices.length; i++) {
-					result += dices[i].getValue();
+				for (i = 0; i < dice.length; i++) {
+					result += dice[i].getValue();
 				}
 				return result;
 			}
@@ -168,18 +167,6 @@ public class FieldE extends JButton{
 
 	}
 
-	// calculates and returns points for FullHouse
-	/*
-	 * private int calculatePointsForFullHouse(Dice[] dices) { boolean found3OfAKind
-	 * = false; int counter3 = 0; int num3 = 1; while (!found3OfAKind && num3 <= 6)
-	 * { for (int i = 0; i < dices.length; i++) { if (dices[i].getValue() == num3)
-	 * counter3++; } if (counter3 == 3) found3OfAKind = true; } boolean
-	 * found4OfAKind = false; int counter4 = 0; int num4 = 1; while (!found4OfAKind
-	 * && num4 <= 6) { for (int i = 0; i < dices.length; i++) { if
-	 * (dices[i].getValue() == num4) counter4++; } if (counter4 == 3) found4OfAKind
-	 * = true; } if (found3OfAKind == true && found4OfAKind == true && num3 != num4)
-	 * return 25; else return 0; }
-	 */
 
 	/**
 	 * Uses one dice to compare its value with other four dice values
@@ -334,15 +321,6 @@ public class FieldE extends JButton{
 		return 0;
 	}
 
-	// calculates and returns points for SmalLStraight and LargeStraight
-	/*
-	 * private int calculatePointsForStraight(Dice[] dices, int nInARow) { int
-	 * points = (nInARow - 1) * 10; int start = 1; boolean straight = false; while
-	 * (!straight || start == 7 - nInARow) { for (int i = 0; i < dices.length; i++)
-	 * { if (dices[i].getValue() == start) start++; } if (start >= nInARow) straight
-	 * = true; } if (!straight) return 0; else return points; }
-	 */
-
 	/**
 	 * Calculates points for large straight
 	 * @param dice
@@ -404,16 +382,15 @@ public class FieldE extends JButton{
 	/**
 	 * Calculates and returns points for Chance
 	 * 
-	 * @param dices
+	 * @param dice
 	 * @return sum of all values of dice
 	 */
-	private int calculatePointsForChance(DiceE[] dices) {
+	private int calculatePointsForChance(DiceE[] dice) {
 		int result = 0;
-		for (int i = 0; i < dices.length; i++) {
-			result += dices[i].getValue();
+		for (int i = 0; i < dice.length; i++) {
+			result += dice[i].getValue();
 		}
 		return result;
 	}
 }
-
 

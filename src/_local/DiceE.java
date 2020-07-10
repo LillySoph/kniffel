@@ -1,18 +1,16 @@
-package game;
+package _local;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 
-import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
 public class DiceE extends JToggleButton {
 	private int value;
 
 	public DiceE() {
-		this.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		this.setBackground(Color.pink);
+	this.setFont(new Font("SansSerif", Font.PLAIN, 14));
+	this.setBackground(Color.pink);
 		roll();
 	}
 	// ** Constructor For Testing ** //

@@ -1,10 +1,11 @@
-package game;
+package _local;
 
 import javax.swing.*;
 
-import java.awt.*;
-//TODO size ändern damit das Spiel breiter wird 
+import game.FieldType;
 
+import java.awt.*;
+//Problem LargeStraight SmallStraight funktioniert nicht
 public class GameE extends JFrame {
 
 	/**
@@ -15,6 +16,7 @@ public class GameE extends JFrame {
 		GameE e = new GameE();
 		new GameControllerE(e);
 		e.setVisible(true);
+
 
 	}
 
@@ -43,7 +45,6 @@ public class GameE extends JFrame {
 	 * Contains all fields with their scores
 	 */
 	private ScoreCardE scoreCard;
-	private Image img;
 	
 	/**
 	 * Constructor of game which order all game component in the frame
@@ -53,11 +54,8 @@ public class GameE extends JFrame {
 		super("Willkommen bei Kniffel! ");
 
 		this.setLayout(new GridLayout(1, 2));
-
-		// set icon
-		ImageIcon imageIcon = new ImageIcon(getClass().getResource("Kniffelpic.jpg"));
-		img = imageIcon.getImage();
-		this.setIconImage(img);
+		
+		//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceIcon.png")));
 
 		// initializes all field buttons
 		int i = 0;
@@ -117,8 +115,10 @@ public class GameE extends JFrame {
 		rightSidePanel.add(rollPanel);
 		rightSidePanel.add(dicePanel);
 		
-		this.noteForPlayer.setFont(new Font("SansSerif", Font.PLAIN, 16));
+	
+		this.noteForPlayer.setFont(new Font("SansSerif", Font.ITALIC, 16));
 		this.noteForPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+
 		this.noteForPlayer.setBorder(null);
 		this.noteForPlayer.setEditable(false);
 		rightSidePanel.add(this.noteForPlayer);
@@ -126,7 +126,7 @@ public class GameE extends JFrame {
 		// add panel to the main frame
 		this.add(rightSidePanel);
 
-		this.setSize(600, 500);
+		this.setSize(800, 500);
 		this.updateGame();
 		// in the beginning all field buttons should be deactivated
 		this.deactivateAllFieldButtons();
@@ -182,7 +182,7 @@ public class GameE extends JFrame {
 	 */
 	public void enterPoints(FieldE field) {
 		// calculate points
-		field.calculateAndStorePoints(new DiceE[] { dice1, dice2, dice3, dice4, dice5 });
+		field.calculateAndStorePoints(this.getDiceButtons());
 		// increment game rounds
 		this.incrementGameRoundCounter();
 		// reset throws

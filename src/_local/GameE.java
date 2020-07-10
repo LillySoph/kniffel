@@ -1,6 +1,7 @@
 package _local;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import game.DiceE;
 import game.FieldE;
@@ -9,7 +10,7 @@ import game.GameControllerE;
 import game.ScoreCardE;
 
 import java.awt.*;
-//Problem LargeStraight SmallStraight funktioniert nicht
+
 public class GameE extends JFrame {
 
 	/**
@@ -54,11 +55,11 @@ public class GameE extends JFrame {
 	 */
 
 	public GameE() {
-		super("Willkommen bei Kniffel! ");
+		super("Willkommen bei Kniffel!");
 
 		this.setLayout(new GridLayout(1, 2));
 		
-		//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceIcon.png")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceIcon.png")));
 
 		// initializes all field buttons
 		int i = 0;
@@ -81,13 +82,13 @@ public class GameE extends JFrame {
 		throwsAndGameRoundsPanel.setLayout(new GridLayout(1, 2));
 		
 		//editing throws round text 
-		this.throwsRoundText.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.throwsRoundText.setFont(new Font("SansSerif", Font.ITALIC, 16));
 		this.throwsRoundText.setHorizontalAlignment(SwingConstants.CENTER);
 		this.throwsRoundText.setBorder(null);
 		this.throwsRoundText.setEditable(false);
 		
 		//editing game round text
-		this.gameRoundText.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		this.gameRoundText.setFont(new Font("SansSerif",Font.ITALIC, 16));
 		this.gameRoundText.setHorizontalAlignment(SwingConstants.CENTER);
 		this.gameRoundText.setBorder(null);
 		this.gameRoundText.setEditable(false);
@@ -100,8 +101,10 @@ public class GameE extends JFrame {
 		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
 		
+		//editing rollButton
 		this.rollButton.setBackground(Color.pink);
 		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 18));
+		this.rollButton.setPreferredSize(new Dimension(200,40));
 		rollPanel.add(this.rollButton);
 		
 		// add each dice to the dice panel
@@ -117,11 +120,9 @@ public class GameE extends JFrame {
 		rightSidePanel.add(throwsAndGameRoundsPanel);
 		rightSidePanel.add(rollPanel);
 		rightSidePanel.add(dicePanel);
-		
-	
+
 		this.noteForPlayer.setFont(new Font("SansSerif", Font.ITALIC, 16));
 		this.noteForPlayer.setHorizontalAlignment(SwingConstants.CENTER);
-
 		this.noteForPlayer.setBorder(null);
 		this.noteForPlayer.setEditable(false);
 		rightSidePanel.add(this.noteForPlayer);

@@ -1,9 +1,11 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JToggleButton;
+import javax.swing.border.LineBorder;
 
 public class DiceE extends JToggleButton {
 	private int value;
@@ -11,6 +13,7 @@ public class DiceE extends JToggleButton {
 	public DiceE() {
 		this.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		this.setBackground(Color.pink);
+		this.setPreferredSize(new Dimension(55,55));
 		this.roll();
 	}
 

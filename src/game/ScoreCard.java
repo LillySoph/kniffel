@@ -20,7 +20,7 @@ public class ScoreCard extends JPanel {
         super(new GridLayout(ROWS, COLUMNS));
         this.fields = fields;
 
-        // initialize field buttons
+        // initialize field buttons with central alignment
         int i = 0;
         for (FieldType ft : FieldType.values()) {
             this.fields[i] = new Field(ft);
@@ -28,6 +28,7 @@ public class ScoreCard extends JPanel {
             i++;
         }
 
+        // set text alignment for text fields as center
         bonusTextField.setHorizontalAlignment(SwingConstants.CENTER);
         sumUpperTextField.setHorizontalAlignment(SwingConstants.CENTER);
         sumLowerTextField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -37,7 +38,7 @@ public class ScoreCard extends JPanel {
         JComponent[] secondColumn = new JComponent[]{fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], bonusTextField, sumUpperTextField, fields[6], fields[7], fields[8], fields[9], fields[10], fields[11], fields[12], sumLowerTextField, sumOverallTextField};
         updateTextFields();
 
-        // add text fields and buttons to layout
+        // add text fields and buttons to layout and set its font type and size
         for(i = 0; i < ROWS; i++) {
             firstColumn[i].setFont(new Font("SansSerif", Font.PLAIN, 18));
             secondColumn[i].setFont(new Font("SansSerif", Font.PLAIN, 18));
@@ -48,7 +49,7 @@ public class ScoreCard extends JPanel {
     }
 
     /**
-     * Update upper, lower and overall score sum.
+     * Calculate upper, lower and overall score sum
      */
     public void calculateScoreSums() {
         // reset old sum
@@ -71,7 +72,7 @@ public class ScoreCard extends JPanel {
     }
 
     /**
-     * update text fields of upper, lower and overall score sum.
+     * update text fields of upper, lower and overall score sum as well as of bonus
      */
     private void updateTextFields() {
         bonusTextField.setText("" + bonus);

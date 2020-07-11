@@ -15,10 +15,11 @@ public class GameController implements ActionListener {
     public GameController(Game game) {
 		this.game = game;
 
-		// get buttons from game and add action listeners
-		this.game.getRollButton().addActionListener(this);
+		// get buttons from game
 		Dice dice[] = this.game.getDiceButtons();
 		Field fields[] = this.game.getFieldButtons();
+		// add action listeners
+		this.game.getRollButton().addActionListener(this);
 		for(int i = 0; i < dice.length; i++) {
 			dice[i].addActionListener(this);
 		}
@@ -26,6 +27,7 @@ public class GameController implements ActionListener {
 			fields[i].addActionListener(this);
 		}
 
+		// window listener for the window closing event
 		game.addWindowListener(
 				// window adapter implements all methods from windowListener Interfaces
 				new WindowAdapter() {

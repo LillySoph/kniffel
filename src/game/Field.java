@@ -11,8 +11,8 @@ public class Field extends JButton {
 
 	/**
 	 * Creates empty field button of given type
-	 * 
-	 **/
+	 * @param fieldType
+	 */
 	public Field(FieldType fieldType) {
 		this.fieldType = fieldType;
 		this.points = 0;
@@ -22,12 +22,16 @@ public class Field extends JButton {
 	}
 
 	/**
-	 *  Resets field to be an empty field
+	 *  Resets field to be an empty field, for testing
 	 */
 	public void resetPoints() {
 		this.isEmpty = true;
 	}
 
+	/**
+	 * Returns stored points
+	 * @return
+	 */
 	public int getPoints() {
 		return this.points;
 	}
@@ -36,7 +40,6 @@ public class Field extends JButton {
 	 * Calculates points depending on given dice & field type and updates button and text
 	 * @param dice
 	 */
-	
 	public void calculateAndStorePoints(Dice[] dice) {
 
 		// field was zero before or is now being set to zero

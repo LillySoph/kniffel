@@ -14,12 +14,14 @@ public class Dice extends JToggleButton {
     private static final LineBorder SELECTED_BORDER = new LineBorder(Color.PINK, 3, true);
     private static final int DICE_SCALE = 75;
 
-    // creates new dice and resets it for new round
+    /**
+     * Create new empty dice
+     */
     public Dice() {
         this.reset();
         this.setBorder(STANDARD_BORDER);
         this.setPreferredSize(new Dimension(DICE_SCALE,DICE_SCALE));
-        //
+        // define look of selected / unselected state of dice
         addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -32,35 +34,57 @@ public class Dice extends JToggleButton {
         });
     }
 
-    // ** Constructor For Testing ** //
+    /**
+     * Creates dice with given value, for testing
+     * @param value
+     */
     public Dice(int value) {
         this.value = value; }
 
-    // getter for value of dice
+    /**
+     * Getter for value of dice
+     * @return
+     */
     public int getValue() {
         return this.value;
     }
 
-    // "roll" dice, generate number between 1 and 6, and updates button text
+    /**
+     * Generate number between 1 and 6 and updates dice icon
+     */
     public void roll() {
         this.isReset = false;
         this.value = (int) (Math.random() * 6) + 1;
         setDiceIcon("/resources/d" + value + ".png");
     }
 
+    /**
+     * Sets empty dice as icon
+     */
     public void reset() {
         this.isReset = true;
         setDiceIcon("/resources/d.png");
     }
 
+    /**
+     * Helper method to set icon of dice
+     * @param resource path of icon file
+     */
     private void setDiceIcon(String resource) {
         this.setSelected(false);
         this.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(resource)).getImage().getScaledInstance(DICE_SCALE,DICE_SCALE,Image.SCALE_SMOOTH)));
     }
 
+    /**
+     * Returns whether the dice is reset
+     * @return
+     */
     public boolean isReset() { return this.isReset; }
 
-    // return value of dice as string for text field
+    /**
+     * Returns value of dice as string
+     * @return
+     */
     public String toString() { return "" + this.value; }
 
 }

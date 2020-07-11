@@ -174,7 +174,7 @@ public class Game extends JFrame {
 			this.rollButton.setText("Das Spiel ist vorbei");
 			roundTextField.setText("");
 			rollTextField.setText("");
-			noteForPlayer.setText("Glückwunsch, Ihre Gesamt-Punktzahl beträgt " + scoreCard.getOverallScore() + "!");
+			noteForPlayer.setText("Glückwunsch, Ihre Gesamt-Punktzahl beträgt " + scoreCard.getSumOverall() + "!");
 			resetDiceButtons();
 			deactivateFieldButtons();
 		}

@@ -21,6 +21,10 @@ public class Field extends JButton {
 		this.setSize(85,30);
 	}
 
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
 	/**
 	 *  Resets field to be an empty field, for testing
 	 */
@@ -168,19 +172,6 @@ public class Field extends JButton {
 		}
 
 	}
-
-	// calculates and returns points for FullHouse
-	/*
-	 * private int calculatePointsForFullHouse(Dice[] dices) { boolean found3OfAKind
-	 * = false; int counter3 = 0; int num3 = 1; while (!found3OfAKind && num3 <= 6)
-	 * { for (int i = 0; i < dices.length; i++) { if (dices[i].getValue() == num3)
-	 * counter3++; } if (counter3 == 3) found3OfAKind = true; } boolean
-	 * found4OfAKind = false; int counter4 = 0; int num4 = 1; while (!found4OfAKind
-	 * && num4 <= 6) { for (int i = 0; i < dices.length; i++) { if
-	 * (dices[i].getValue() == num4) counter4++; } if (counter4 == 3) found4OfAKind
-	 * = true; } if (found3OfAKind == true && found4OfAKind == true && num3 != num4)
-	 * return 25; else return 0; }
-	 */
 
 	/**
 	 * Uses one dice to compare its value with other four dice values
@@ -334,15 +325,6 @@ public class Field extends JButton {
 		// condition failed
 		return 0;
 	}
-
-	// calculates and returns points for SmalLStraight and LargeStraight
-	/*
-	 * private int calculatePointsForStraight(Dice[] dices, int nInARow) { int
-	 * points = (nInARow - 1) * 10; int start = 1; boolean straight = false; while
-	 * (!straight || start == 7 - nInARow) { for (int i = 0; i < dices.length; i++)
-	 * { if (dices[i].getValue() == start) start++; } if (start >= nInARow) straight
-	 * = true; } if (!straight) return 0; else return points; }
-	 */
 
 	/**
 	 * Calculates points for large straight

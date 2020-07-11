@@ -3,6 +3,7 @@ package tests;
 import game.Dice;
 import game.Field;
 import game.FieldType;
+import game.ScoreCard;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,7 +11,14 @@ import static org.junit.Assert.assertEquals;
 public class CalculatePointsTest {
 
 	private Dice[] dices = new Dice[5];
-	private Field f;
+	private ScoreCard scoreCard = new ScoreCard(getAlLFields());
+	private Field aces = new Field(FieldType.Aces), twos = new Field(FieldType.Twos),
+			threes = new Field(FieldType.Threes), fours = new Field(FieldType.Fours),
+			fives = new Field(FieldType.Fives), sixes = new Field(FieldType.Sixes),
+			threeOfOneKind = new Field(FieldType.ThreeOfOneKind), fourOfOneKind = new Field(FieldType.FourOfOneKind),
+			fullHouse = new Field(FieldType.FullHouse), smallStraight = new Field(FieldType.SmallStraight),
+			largeStraight = new Field(FieldType.LargeStraight), kniffel = new Field(FieldType.Kniffel),
+			chance = new Field(FieldType.Chance);
 
 	public void setDicesValue(int[] values) {
 		for (int i = 0; i < dices.length; i++) {
@@ -18,754 +26,796 @@ public class CalculatePointsTest {
 		}
 	}
 
+	public Field[] getAlLFields() {
+		return new Field[]{aces, twos, threes, fours, fives, sixes, threeOfOneKind, fourOfOneKind, fullHouse, smallStraight, largeStraight, kniffel, chance};
+	}
+
+	// testing field score
+
 	@Test
 	public void testAces() {
-		f = new Field(FieldType.Aces);
-
 		int[] v1 = { 1, 1, 1, 1, 1 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(5, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(5, aces.getPoints());
 
-		f.resetPoints();
+		aces.resetPoints();
 
 		int[] v2 = { 1, 1, 1, 1, 3 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(4, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(4, aces.getPoints());
 
-		f.resetPoints();
+		aces.resetPoints();
 
 		int[] v3 = { 1, 1, 5, 1, 3 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(3, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(3, aces.getPoints());
 
-		f.resetPoints();
+		aces.resetPoints();
 
 		int[] v4 = { 6, 1, 5, 1, 3 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(2, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(2, aces.getPoints());
 
-		f.resetPoints();
+		aces.resetPoints();
 
 		int[] v5 = { 6, 4, 5, 1, 3 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(1, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(1, aces.getPoints());
 
-		f.resetPoints();
+		aces.resetPoints();
 
 		int[] v6 = { 6, 4, 5, 2, 3 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		aces.calculateAndStorePoints(dices);
+		assertEquals(0, aces.getPoints());
 
 	}
 
 	@Test
 	public void testTwos() {
-		f = new Field(FieldType.Twos);
-
 		int[] v1 = { 2, 2, 2, 2, 2 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(10, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(10, twos.getPoints());
 
-		f.resetPoints();
+		twos.resetPoints();
 
 		int[] v2 = { 1, 2, 2, 2, 2 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(8, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(8, twos.getPoints());
 
-		f.resetPoints();
+		twos.resetPoints();
 
 		int[] v3 = { 2, 2, 5, 2, 3 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(6, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(6, twos.getPoints());
 
-		f.resetPoints();
+		twos.resetPoints();
 
 		int[] v4 = { 6, 2, 5, 2, 3 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(4, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(4, twos.getPoints());
 
-		f.resetPoints();
+		twos.resetPoints();
 
 		int[] v5 = { 6, 4, 5, 2, 3 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(2, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(2, twos.getPoints());
 
-		f.resetPoints();
+		twos.resetPoints();
 
 		int[] v6 = { 6, 4, 5, 1, 3 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		twos.calculateAndStorePoints(dices);
+		assertEquals(0, twos.getPoints());
 	}
 
 	@Test
 	public void testThrees() {
-		f = new Field(FieldType.Threes);
-
 		int[] v1 = { 3, 3, 3, 3, 3 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(15, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(15, threes.getPoints());
 
-		f.resetPoints();
+		threes.resetPoints();
 
 		int[] v2 = { 1, 3, 3, 3, 3 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(12, threes.getPoints());
 
-		f.resetPoints();
+		threes.resetPoints();
 
 		int[] v3 = { 3, 3, 5, 3, 2 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(9, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(9, threes.getPoints());
 
-		f.resetPoints();
+		threes.resetPoints();
 
 		int[] v4 = { 6, 3, 5, 3, 2 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(6, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(6, threes.getPoints());
 
-		f.resetPoints();
+		threes.resetPoints();
 
 		int[] v5 = { 6, 4, 5, 3, 2 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(3, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(3, threes.getPoints());
 
-		f.resetPoints();
+		threes.resetPoints();
 
 		int[] v6 = { 6, 4, 5, 1, 2 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		threes.calculateAndStorePoints(dices);
+		assertEquals(0, threes.getPoints());
 	}
 
 	@Test
 	public void testFours() {
-		f = new Field(FieldType.Fours);
-
 		int[] v1 = { 4, 4, 4, 4, 4 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(20, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(20, fours.getPoints());
 
-		f.resetPoints();
+		fours.resetPoints();
 
 		int[] v2 = { 4, 4, 4, 5, 4 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(16, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(16, fours.getPoints());
 
-		f.resetPoints();
+		fours.resetPoints();
 
 		int[] v3 = { 1, 4, 4, 5, 4 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(12, fours.getPoints());
 
-		f.resetPoints();
+		fours.resetPoints();
 
 		int[] v4 = { 1, 2, 4, 6, 4 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(8, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(8, fours.getPoints());
 
-		f.resetPoints();
+		fours.resetPoints();
 
 		int[] v5 = { 2, 3, 4, 5, 6 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(4, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(4, fours.getPoints());
 
-		f.resetPoints();
+		fours.resetPoints();
 
 		int[] v6 = { 1, 3, 2, 5, 6 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fours.calculateAndStorePoints(dices);
+		assertEquals(0, fours.getPoints());
 
 	}
 
 	@Test
 	public void testOfFives() {
-		f = new Field(FieldType.Fives);
-
 		int[] v1 = { 5, 5, 5, 5, 5 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(25, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(25, fives.getPoints());
 
-		f.resetPoints();
+		fives.resetPoints();
 
 		int[] v2 = { 1, 5, 5, 5, 5 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(20, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(20, fives.getPoints());
 
-		f.resetPoints();
+		fives.resetPoints();
 
 		int[] v3 = { 1, 3, 5, 5, 5 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(15, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(15, fives.getPoints());
 
-		f.resetPoints();
+		fives.resetPoints();
 
 		int[] v4 = { 1, 2, 4, 5, 5 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(10, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(10, fives.getPoints());
 
-		f.resetPoints();
+		fives.resetPoints();
 
 		int[] v5 = { 2, 6, 1, 3, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(5, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(5, fives.getPoints());
 
-		f.resetPoints();
+		fives.resetPoints();
 
 		int[] v6 = { 1, 4, 3, 6, 2 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fives.calculateAndStorePoints(dices);
+		assertEquals(0, fives.getPoints());
 
 	}
 
 	@Test
 	public void testOfSixes() {
-		f = new Field(FieldType.Sixes);
-
 		int[] v1 = { 6, 6, 6, 6, 6 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(30, sixes.getPoints());
 
-		f.resetPoints();
+		sixes.resetPoints();
 
 		int[] v2 = { 1, 6, 6, 6, 6 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(24, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(24, sixes.getPoints());
 
-		f.resetPoints();
+		sixes.resetPoints();
 
 		int[] v3 = { 3, 5, 6, 6, 6 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(18, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(18, sixes.getPoints());
 
-		f.resetPoints();
+		sixes.resetPoints();
 
 		int[] v4 = { 1, 2, 6, 5, 6 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(12, sixes.getPoints());
 
-		f.resetPoints();
+		sixes.resetPoints();
 
 		int[] v5 = { 1, 2, 4, 6, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(6, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(6, sixes.getPoints());
 
-		f.resetPoints();
+		sixes.resetPoints();
 
 		int[] v6 = { 1, 2, 3, 5, 4 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		sixes.calculateAndStorePoints(dices);
+		assertEquals(0, sixes.getPoints());
 
 	}
 
 	@Test
 	public void testThreeOfOneKind() {
-		f = new Field(FieldType.ThreeOfOneKind);
-
 		int[] v1 = { 1, 1, 1, 4, 5 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(12, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v2 = { 2, 2, 2, 1, 5 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(12, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v3 = { 3, 3, 3, 6, 2 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(17, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(17, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v4 = { 1, 4, 4, 4, 5 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(18, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(18, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v5 = { 1, 5, 2, 5, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(18, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(18, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v6 = { 6, 1, 6, 3, 6 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(22, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(22, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v7 = { 1, 1, 1, 1, 5 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(9, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(9, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v8 = { 1, 1, 1, 1, 1 };
 		setDicesValue(v8);
-		f.calculateAndStorePoints(dices);
-		assertEquals(5, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(5, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v9 = { 1, 1, 3, 4, 5 };
 		setDicesValue(v9);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(0, threeOfOneKind.getPoints());
 
-		f.resetPoints();
+		threeOfOneKind.resetPoints();
 
 		int[] v10 = { 1, 2, 3, 4, 5 };
 		setDicesValue(v10);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		threeOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(0, threeOfOneKind.getPoints());
 
 	}
 
 	@Test
 	public void testFourOfOneKind() {
-		f = new Field(FieldType.FourOfOneKind);
-
 		int[] v1 = { 1, 1, 1, 1, 5 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(9, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(9, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v2 = { 2, 2, 2, 2, 1 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(9, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(9, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v3 = { 3, 3, 3, 3, 2 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(14, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(14, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v4 = { 4, 4, 4, 4, 5 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(21, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(21, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v5 = { 1, 5, 5, 5, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(21, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(21, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v6 = { 6, 6, 6, 6, 2 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(26, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(26, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v7 = { 1, 1, 1, 4, 5 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(0, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v8 = { 1, 1, 3, 4, 5 };
 		setDicesValue(v8);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(0, fourOfOneKind.getPoints());
 
-		f.resetPoints();
+		fourOfOneKind.resetPoints();
 
 		int[] v9 = { 1, 2, 3, 4, 5 };
 		setDicesValue(v9);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fourOfOneKind.calculateAndStorePoints(dices);
+		assertEquals(0, fourOfOneKind.getPoints());
 
 	}
 
 	@Test
 	public void testFullHouse() {
-		f = new Field(FieldType.FullHouse);
-
 		int[] v1 = { 1, 1, 1, 2, 2 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(25, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(25, fullHouse.getPoints());
 
-		f.resetPoints();
+		fullHouse.resetPoints();
 
 		int[] v2 = { 2, 2, 3, 3, 3 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(25, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(25, fullHouse.getPoints());
 
-		f.resetPoints();
+		fullHouse.resetPoints();
 
 		int[] v3 = { 1, 1, 2, 3, 3 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(0, fullHouse.getPoints());
 
-		f.resetPoints();
+		fullHouse.resetPoints();
 
 		int[] v4 = { 1, 1, 1, 2, 3 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(0, fullHouse.getPoints());
 
-		f.resetPoints();
+		fullHouse.resetPoints();
 
 		int[] v5 = { 1, 1, 1, 1, 3 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(0, fullHouse.getPoints());
 
-		f.resetPoints();
+		fullHouse.resetPoints();
 
 		int[] v6 = { 1, 1, 1, 1, 1 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		fullHouse.calculateAndStorePoints(dices);
+		assertEquals(0, fullHouse.getPoints());
 
 	}
 
 	@Test
-	public void SmallStraight() {
-		f = new Field(FieldType.SmallStraight);
-
+	public void testSmallStraight() {
 		int[] v1 = { 1, 2, 3, 4, 1 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v2 = { 2, 3, 4, 5, 1 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v3 = { 3, 4, 5, 6, 2 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v4 = { 3, 2, 4, 4, 1 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v5 = { 5, 6, 3, 4, 1 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v6 = { 3, 2, 3, 4, 5 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(30, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(30, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v7 = { 1, 1, 3, 4, 1 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(0, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v8 = { 1, 1, 1, 4, 1 };
 		setDicesValue(v8);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(0, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v9 = { 1, 2, 3, 5, 6 };
 		setDicesValue(v9);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(0, smallStraight.getPoints());
 
-		f.resetPoints();
+		smallStraight.resetPoints();
 
 		int[] v10 = { 1, 4, 4, 2, 2 };
 		setDicesValue(v10);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		smallStraight.calculateAndStorePoints(dices);
+		assertEquals(0, smallStraight.getPoints());
 		
 	}
 
 	@Test
-	public void LargeStraight() {
-		f = new Field(FieldType.LargeStraight);
-
+	public void testLargeStraight() {
 		int[] v1 = { 1, 2, 3, 4, 5 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(40, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(40, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v2 = { 2, 3, 4, 5, 6 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(40, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(40, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v3 = { 1, 4, 2, 3, 5 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(40, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(40, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v4 = { 3, 4, 2, 5, 6 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(40, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(40, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v5 = {2, 3, 4, 1, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(40, f.getPoints());
-		
-		f.resetPoints();
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(40, largeStraight.getPoints());
+
+		largeStraight.resetPoints();
 		
 		int[] v6 = { 1, 2, 3, 1, 1 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v7 = { 1, 2, 4, 2, 1 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
-		
-		f.resetPoints();
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
+
+		largeStraight.resetPoints();
 		
 		int[] v8 = { 2, 3, 4, 3, 3 };
 		setDicesValue(v8);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
-		
-		f.resetPoints();
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
+
+		largeStraight.resetPoints();
 		
 		int[] v9 = { 2, 3, 2, 2, 2 };
 		setDicesValue(v9);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
 
-		f.resetPoints();
+		largeStraight.resetPoints();
 		
 		int[] v10 = { 1, 6, 1, 6, 1 };
 		setDicesValue(v10);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
-		
-		f.resetPoints();
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
+
+		largeStraight.resetPoints();
 
 		int[] v11 = { 1, 1, 1, 1, 1 };
 		setDicesValue(v11);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		largeStraight.calculateAndStorePoints(dices);
+		assertEquals(0, largeStraight.getPoints());
 
 	}
 
 	@Test
 	public void testKniffel() {
-		f = new Field(FieldType.Kniffel);
-
 		int[] v1 = { 1, 1, 1, 1, 1 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v2 = { 2, 2, 2, 2, 2 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v3 = { 3, 3, 3, 3, 3 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v4 = { 4, 4, 4, 4, 4 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v5 = { 5, 5, 5, 5, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v6 = { 6, 6, 6, 6, 6 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(50, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(50, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v7 = { 1, 1, 1, 1, 4 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(0, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v8 = { 1, 1, 1, 2, 4 };
 		setDicesValue(v8);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(0, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v9 = { 1, 1, 3, 2, 4 };
 		setDicesValue(v9);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(0, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v10 = { 1, 5, 3, 2, 4 };
 		setDicesValue(v10);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(0, kniffel.getPoints());
 
-		f.resetPoints();
+		kniffel.resetPoints();
 
 		int[] v11 = { 1, 2, 3, 5, 6 };
 		setDicesValue(v11);
-		f.calculateAndStorePoints(dices);
-		assertEquals(0, f.getPoints());
+		kniffel.calculateAndStorePoints(dices);
+		assertEquals(0, kniffel.getPoints());
 
 	}
 
 	@Test
 	public void testChance() {
-		f = new Field(FieldType.Chance);
-
 		int[] v1 = { 1, 2, 3, 4, 1 };
 		setDicesValue(v1);
-		f.calculateAndStorePoints(dices);
-		assertEquals(11, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(11, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v2 = { 1, 2, 3, 4, 6 };
 		setDicesValue(v2);
-		f.calculateAndStorePoints(dices);
-		assertEquals(16, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(16, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v3 = { 5, 6, 3, 4, 1 };
 		setDicesValue(v3);
-		f.calculateAndStorePoints(dices);
-		assertEquals(19, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(19, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v4 = { 1, 2, 3, 4, 5 };
 		setDicesValue(v4);
-		f.calculateAndStorePoints(dices);
-		assertEquals(15, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(15, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v5 = { 6, 6, 5, 5, 5 };
 		setDicesValue(v5);
-		f.calculateAndStorePoints(dices);
-		assertEquals(27, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(27, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v6 = { 1, 2, 3, 3, 3 };
 		setDicesValue(v6);
-		f.calculateAndStorePoints(dices);
-		assertEquals(12, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(12, chance.getPoints());
 
-		f.resetPoints();
+		chance.resetPoints();
 
 		int[] v7 = { 1, 2, 2, 4, 1 };
 		setDicesValue(v7);
-		f.calculateAndStorePoints(dices);
-		assertEquals(10, f.getPoints());
+		chance.calculateAndStorePoints(dices);
+		assertEquals(10, chance.getPoints());
 
+	}
+
+	// testing sum and bonus score
+
+	@Test
+	public void testNoPoints() {
+		scoreCard.setAllPoints(new int[]{0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0});
+		assertEquals(0, scoreCard.getBonus());
+		assertEquals(0, scoreCard.getSumUpper());
+		assertEquals(0, scoreCard.getSumLower());
+		assertEquals(0, scoreCard.getSumOverall());
+	}
+
+	@Test
+	public void testLowerNoBonus() {
+		scoreCard.setAllPoints(new int[]{0, 0, 0, 0, 0, 0,
+				5, 5, 25, 0, 0, 0, 15});
+		assertEquals(0, scoreCard.getBonus());
+		assertEquals(0, scoreCard.getSumUpper());
+		assertEquals(50, scoreCard.getSumLower());
+		assertEquals(50, scoreCard.getSumOverall());
+	}
+
+	@Test
+	public void testUpperAndLowerNoBonus() {
+		scoreCard.setAllPoints(new int[]{1, 8, 3, 20, 0, 30,
+				5, 5, 25, 0, 0, 0, 15});
+		assertEquals(0, scoreCard.getBonus());
+		assertEquals(62, scoreCard.getSumUpper());
+		assertEquals(50, scoreCard.getSumLower());
+		assertEquals(112, scoreCard.getSumOverall());
+	}
+
+	@Test
+	public void testUpperAndLowerWithBonus() {
+		scoreCard.setAllPoints(new int[]{1, 10, 3, 20, 0, 30,
+				5, 5, 25, 0, 0, 0, 15});
+		assertEquals(35, scoreCard.getBonus());
+		assertEquals(99, scoreCard.getSumUpper());
+		assertEquals(50, scoreCard.getSumLower());
+		assertEquals(149, scoreCard.getSumOverall());
+	}
+
+	@Test
+	public void testUpperNoBonus() {
+		scoreCard.setAllPoints(new int[]{2, 10, 0, 20, 0, 30,
+				0, 0, 0, 0, 0, 0, 0});
+		assertEquals(0, scoreCard.getBonus());
+		assertEquals(62, scoreCard.getSumUpper());
+		assertEquals(0, scoreCard.getSumLower());
+		assertEquals(62, scoreCard.getSumOverall());
+	}
+
+	@Test
+	public void testUpperWithBonus() {
+		scoreCard.setAllPoints(new int[]{1, 10, 3, 20, 0, 30,
+				0, 0, 0, 0, 0, 0, 0});
+		assertEquals(35, scoreCard.getBonus());
+		assertEquals(99, scoreCard.getSumUpper());
+		assertEquals(0, scoreCard.getSumLower());
+		assertEquals(99, scoreCard.getSumOverall());
 	}
 
 }

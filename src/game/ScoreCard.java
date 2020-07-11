@@ -86,8 +86,29 @@ public class ScoreCard extends JPanel {
         sumOverallTextField.setText("" + sumOverall);
     }
 
-    public int getOverallScore() {
+    // FOR TESTING //
+
+    public void setAllPoints(int[] points) {
+        for(int i = 0; i < fields.length; i++) {
+            fields[i].setPoints(points[i]);
+        }
+        calculateScoreSums();
+    }
+
+    public int getSumOverall() {
         return this.sumOverall;
+    }
+
+    public int getSumUpper() {
+        return this.sumUpper;
+    }
+
+    public int getSumLower() {
+        return this.sumLower;
+    }
+
+    public int getBonus() {
+        return this.bonus;
     }
 
     /**

@@ -11,7 +11,7 @@ public class Game extends JFrame {
 		Game g = new Game();
 		new GameController(g);
 		g.setVisible(true);
-		
+
 	}
 
 	private boolean isStillRunning;
@@ -29,7 +29,7 @@ public class Game extends JFrame {
 	Game() {
 		super("Willkommen zu Kniffel! ");
 
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/icon.png")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceicon.png")));
 
 		// setup grid bag layout
 		this.setLayout(new GridLayout(1,2));

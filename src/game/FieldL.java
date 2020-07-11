@@ -2,7 +2,7 @@ package game;
 
 import javax.swing.*;
 
-public class Field extends JButton {
+public class FieldL extends JButton {
 
 	private int points;
 	private FieldType fieldType;
@@ -13,7 +13,7 @@ public class Field extends JButton {
 	 * Creates empty field button of given type
 	 * @param fieldType
 	 */
-	public Field(FieldType fieldType) {
+	public FieldL(FieldType fieldType) {
 		this.fieldType = fieldType;
 		this.points = 0;
 		// no points have been entered
@@ -44,7 +44,7 @@ public class Field extends JButton {
 	 * Calculates points depending on given dice & field type and updates button and text
 	 * @param dice
 	 */
-	public void calculateAndStorePoints(Dice[] dice) {
+	public void calculateAndStorePoints(DiceL[] dice) {
 
 		// field was zero before or is now being set to zero
 		if (!(this.isEmpty)) {
@@ -119,7 +119,7 @@ public class Field extends JButton {
 	 * @param n     , number of dice value regarding to field type
 	 * @return sum of dice with appropriate field type
 	 */
-	private int calculatePointsForFirstBlock(Dice[] dices, int n) {
+	private int calculatePointsForFirstBlock(DiceL[] dices, int n) {
 		int result = 0;
 		for (int i = 0; i < dices.length; i++) {
 			if (dices[i].getValue() == n)
@@ -137,7 +137,7 @@ public class Field extends JButton {
 	 *         dice) and Kniffel(50)
 	 */
 
-	private int calculatePointsOfAKind(Dice[] dices, int nInARow) {
+	private int calculatePointsOfAKind(DiceL[] dices, int nInARow) {
 		int counter = 1, result = 0, i = 0;
 		boolean foundNumbersInARow = false;
 
@@ -181,7 +181,7 @@ public class Field extends JButton {
 	 *         row
 	 */
 
-	private int calculatePointsForFullHouse(Dice[] dice) {
+	private int calculatePointsForFullHouse(DiceL[] dice) {
 		boolean foundThreeOfARow = false;
 		boolean foundTwoOfARow = false;
 		int valueOfThreeNumbersInARow = 0;
@@ -247,7 +247,7 @@ public class Field extends JButton {
 	 * @return 30 points if condition fulfilled or 0 if not
 	 */
 
-	private int calculatePointsForSmallStraight(Dice[] dice) {
+	private int calculatePointsForSmallStraight(DiceL[] dice) {
 	
 		boolean isSmallStraight = false;
 	
@@ -331,7 +331,7 @@ public class Field extends JButton {
 	 * @param dice
 	 * @return 40 if condition is fulfilled or 0 if not
 	 */
-	private int calculatePointsForLargeStraight(Dice[] dice) {
+	private int calculatePointsForLargeStraight(DiceL[] dice) {
 
 		boolean isLargeStraight = false;
 		boolean isNotLargeStraight = false;
@@ -390,7 +390,7 @@ public class Field extends JButton {
 	 * @param dices
 	 * @return sum of all values of dice
 	 */
-	private int calculatePointsForChance(Dice[] dices) {
+	private int calculatePointsForChance(DiceL[] dices) {
 		int result = 0;
 		for (int i = 0; i < dices.length; i++) {
 			result += dices[i].getValue();

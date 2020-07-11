@@ -4,29 +4,29 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class Game extends JFrame {
+public class GameL extends JFrame {
 
 	public static void main(String[] args) {
 
-		Game g = new Game();
-		new GameController(g);
+		GameL g = new GameL();
+		new GameControllerL(g);
 		g.setVisible(true);
 
 	}
 
 	private boolean isStillRunning;
-	private ScoreCard scoreCard;
-	private Field[] fields = new Field[13];
+	private ScoreCardL scoreCard;
+	private FieldL[] fields = new FieldL[13];
 	private JButton rollButton;
 	private int rollCounter = 3, roundCounter = 1;
 	private JTextField rollTextField, roundTextField, noteForPlayer;
-	private Dice dice1 = new Dice();
-	private Dice dice2 = new Dice();
-	private Dice dice3 = new Dice();
-	private Dice dice4 = new Dice();
-	private Dice dice5 = new Dice();
+	private DiceL dice1 = new DiceL();
+	private DiceL dice2 = new DiceL();
+	private DiceL dice3 = new DiceL();
+	private DiceL dice4 = new DiceL();
+	private DiceL dice5 = new DiceL();
 
-	Game() {
+	GameL() {
 		super("Willkommen zu Kniffel! ");
 
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceicon.png")));
@@ -35,7 +35,7 @@ public class Game extends JFrame {
 		this.setLayout(new GridLayout(1,2));
 
 		// init and add score card
-		this.scoreCard = new ScoreCard(fields);
+		this.scoreCard = new ScoreCardL(fields);
 		this.add(scoreCard);
 
 		// init right panel
@@ -73,8 +73,8 @@ public class Game extends JFrame {
 		// add dice panel
 		JPanel dicePanel = new JPanel();
 		dicePanel.setLayout(new FlowLayout());
-		Dice[] dice = getDiceButtons();
-		for(Dice d : dice) {
+		DiceL[] dice = getDiceButtons();
+		for(DiceL d : dice) {
 			dicePanel.add(d);
 		}
 		rightPanel.add(dicePanel);
@@ -107,8 +107,8 @@ public class Game extends JFrame {
 	 * Rolls all dice that are not "kept" by player and increments roll counter.
 	 */
 	public void rollDice() {
-		Dice[] dice = getDiceButtons();
-		for (Dice d : dice) {
+		DiceL[] dice = getDiceButtons();
+		for (DiceL d : dice) {
 			// roll if dice is not kept or is reset
 			if (!(d.isSelected()) || d.isReset())
 				d.roll();
@@ -134,8 +134,8 @@ public class Game extends JFrame {
 	 * 
 	 * @return
 	 */
-	public Dice[] getDiceButtons() {
-		return new Dice[] { dice1, dice2, dice3, dice4, dice5 };
+	public DiceL[] getDiceButtons() {
+		return new DiceL[] { dice1, dice2, dice3, dice4, dice5 };
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class Game extends JFrame {
 	 * 
 	 * @return
 	 */
-	public Field[] getFieldButtons() {
+	public FieldL[] getFieldButtons() {
 		return fields;
 	}
 
@@ -152,7 +152,7 @@ public class Game extends JFrame {
 	 * 
 	 * @param field option chosen by player
 	 */
-	public void enterPoints(Field field) {
+	public void enterPoints(FieldL field) {
 		// calculate points
 		field.calculateAndStorePoints(getDiceButtons());
 		// increment counters
@@ -175,7 +175,7 @@ public class Game extends JFrame {
 	private void gameIsOver() {
 		scoreCard.calculateScoreSums();
 		deactivateRollButton();
-		for(Dice d : getDiceButtons()) {
+		for(DiceL d : getDiceButtons()) {
 			d.setEnabled(false);
 		}
 		this.rollButton.setText("Das Spiel ist vorbei");
@@ -209,8 +209,8 @@ public class Game extends JFrame {
 	 * Reset dice buttons for a new round: [ ]
 	 */
 	private void resetDiceButtons() {
-		Dice[] dice = getDiceButtons();
-		for (Dice d : dice) {
+		DiceL[] dice = getDiceButtons();
+		for (DiceL d : dice) {
 			d.reset();
 		}
 	}
@@ -219,7 +219,7 @@ public class Game extends JFrame {
 	 * Deactivate field buttons.
 	 */
 	private void deactivateFieldButtons() {
-		for (Field f : fields) {
+		for (FieldL f : fields) {
 			f.setEnabled(false);
 		}
 	}
@@ -228,7 +228,7 @@ public class Game extends JFrame {
 	 * Activates field buttons, if they are not supposed to stay deactivated.
 	 */
 	private void activateFieldButtons() {
-		for (Field f : fields) {
+		for (FieldL f : fields) {
 			if (!f.isDisabled())
 				f.setEnabled(true);
 		}

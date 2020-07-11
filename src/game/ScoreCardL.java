@@ -4,28 +4,28 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class ScoreCard extends JPanel {
+public class ScoreCardL extends JPanel {
 
     private static final int ROWS = 17;
     private static final int COLUMNS = 2;
 
-    private Field[] fields;
+    private FieldL[] fields;
     private int bonus = 0;
     private int sumUpper = 0;
     private int sumLower = 0;
     private int sumOverall = 0;
     private JTextField bonusTextField = new JTextField(), sumUpperTextField = new JTextField(),
             sumLowerTextField = new JTextField(), sumOverallTextField = new JTextField();
-    private ScoreCard scoreCard;
+    private ScoreCardL scoreCard;
 
-    public ScoreCard(Field fields[]) {
+    public ScoreCardL(FieldL fields[]) {
         super(new GridLayout(ROWS, COLUMNS));
         this.fields = fields;
 
         // initialize field buttons with central alignment
         int i = 0;
         for (FieldType ft : FieldType.values()) {
-            this.fields[i] = new Field(ft);
+            this.fields[i] = new FieldL(ft);
             this.fields[i].setHorizontalAlignment(SwingConstants.CENTER);
             i++;
         }
@@ -115,7 +115,7 @@ public class ScoreCard extends JPanel {
      * Getter for testing
      * @return
      */
-    public Field[] getFields() {
+    public FieldL[] getFields() {
         return fields;
     }
 
@@ -123,7 +123,7 @@ public class ScoreCard extends JPanel {
      * Setter for testing
      * @param fields
      */
-    public void setFields(Field[] fields) {
+    public void setFields(FieldL[] fields) {
         this.fields = fields;
     }
 }

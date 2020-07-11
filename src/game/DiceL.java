@@ -6,7 +6,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class Dice extends JToggleButton {
+public class DiceL extends JToggleButton {
 
     private int value;
     private boolean isReset;
@@ -17,7 +17,7 @@ public class Dice extends JToggleButton {
     /**
      * Create new empty dice
      */
-    public Dice() {
+    public DiceL() {
         this.reset();
         this.setBorder(STANDARD_BORDER);
         this.setPreferredSize(new Dimension(DICE_SCALE,DICE_SCALE));
@@ -38,7 +38,7 @@ public class Dice extends JToggleButton {
      * Creates dice with given value, for testing
      * @param value
      */
-    public Dice(int value) {
+    public DiceL(int value) {
         this.value = value; }
 
     /**

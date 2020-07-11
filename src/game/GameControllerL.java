@@ -1,28 +1,22 @@
 package game;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class GameController implements ActionListener {
+public class GameControllerL implements ActionListener {
 
-    private Game game;
+    private GameL game;
 
-    public GameController(Game game) {
+    public GameControllerL(GameL game) {
 		this.game = game;
 
 		// get buttons from game
-		Dice dice[] = this.game.getDiceButtons();
-		Field fields[] = this.game.getFieldButtons();
+		FieldL fields[] = this.game.getFieldButtons();
 		// add action listeners
 		this.game.getRollButton().addActionListener(this);
-		for(int i = 0; i < dice.length; i++) {
-			dice[i].addActionListener(this);
-		}
 		for(int i = 0; i < fields.length; i++) {
 			fields[i].addActionListener(this);
 		}
@@ -63,14 +57,12 @@ public class GameController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     	Object source = e.getSource();
     	// button clicked was field
-		if(source instanceof Field) {
-			this.game.enterPoints((Field) e.getSource());
-			System.out.println("Enter points! ");
+		if(source instanceof FieldL) {
+			this.game.enterPoints((FieldL) e.getSource());
 		}
 		// button clicked was roll button
 		else if(source instanceof JButton) {
 			this.game.rollDice();
-			System.out.println("Roll dice! ");
 		}
     }
 }

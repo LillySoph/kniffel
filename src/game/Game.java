@@ -11,7 +11,7 @@ public class Game extends JFrame {
 		Game g = new Game();
 		new GameController(g);
 		g.setVisible(true);
-
+		
 	}
 
 	private boolean isStillRunning;
@@ -101,7 +101,6 @@ public class Game extends JFrame {
 		this.setSize(900,600);
 		this.setLocationRelativeTo(null);
 
-
 	}
 
 	/**
@@ -113,7 +112,6 @@ public class Game extends JFrame {
 			// roll if dice is not kept or is reset
 			if (!(d.isSelected()) || d.isReset())
 				d.roll();
-			d.setSelected(false);
 		}
 		// increment roll counter
 		incrementRolLCounter();
@@ -167,17 +165,32 @@ public class Game extends JFrame {
 			deactivateFieldButtons();
 			activateRollButton();
 		} else {
-			deactivateRollButton();
-			for(Dice d : getDiceButtons()) {
-				d.setEnabled(false);
-			}
-			this.rollButton.setText("Das Spiel ist vorbei");
-			roundTextField.setText("");
-			rollTextField.setText("");
-			noteForPlayer.setText("Glückwunsch, Ihre Gesamt-Punktzahl beträgt " + scoreCard.getSumOverall() + "!");
-			resetDiceButtons();
-			deactivateFieldButtons();
+			gameIsOver();
 		}
+	}
+
+	/**
+	 * Deactivate and resets all buttons and display score.
+	 */
+	private void gameIsOver() {
+		scoreCard.calculateScoreSums();
+		deactivateRollButton();
+		for(Dice d : getDiceButtons()) {
+			d.setEnabled(false);
+		}
+		this.rollButton.setText("Das Spiel ist vorbei");
+		this.rollButton.setPreferredSize(new Dimension(300,50));
+		roundTextField.setText("");
+		rollTextField.setText("");
+		int score = scoreCard.getSumOverall();
+		if(score == 275)
+			noteForPlayer.setText("Wow, Sie haben mit " + score + " Punkten die volle Punktzahl erreicht!");
+		else if(score > 50)
+			noteForPlayer.setText("Glückwunsch, Ihre Gesamt-Punktzahl beträgt " + score + "!");
+		else
+			noteForPlayer.setText("Sie haben " + score + " Punkte erreicht.");
+		resetDiceButtons();
+		deactivateFieldButtons();
 	}
 
 	/**

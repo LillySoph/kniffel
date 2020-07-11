@@ -10,7 +10,7 @@ public class Field extends JButton {
     private boolean isDisabled;
 
     /**
-     * Creates empty field button of given type
+     * Create empty field button of given type.
      * @param fieldType
      */
     public Field(FieldType fieldType) {
@@ -26,14 +26,14 @@ public class Field extends JButton {
     }
 
     /**
-     *  Resets field to be an empty field, for testing
+     *  Resets field to be an empty field, for testing´.
      */
     public void resetPoints() {
         this.isEmpty = true;
     }
 
     /**
-     * Returns stored points
+     * Return stored points.
      * @return
      */
     public int getPoints() {
@@ -41,7 +41,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Calculates points depending on given dice & field type and updates button and text
+     * Calculate points depending on given dice & field type and updates button and text.
      * @param dice
      */
     public void calculateAndStorePoints(Dice[] dice) {
@@ -111,7 +111,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Calculates and returns points for Aces, Twos, Threes, Fours, Fives and Sixes
+     * Calculate and returns points for Aces, Twos, Threes, Fours, Fives and Sixes.
      *
      * @param dice
      * @param n     , number of dice value regarding to field type
@@ -127,7 +127,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Uses one dice to compare its value with other four dice values
+     * Use one dice to compare its value with other four dice values.
      *
      * @param dice
      * @param nInARow , number of numbers in a row
@@ -171,7 +171,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Uses one dice to compare its value with other four dice values
+     * Use one dice to compare its value with other four dice values
      *
      * @param dice
      * @return 25 points if three of one number and two of another number exist in a
@@ -237,7 +237,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Calculates points for small straight
+     * Calculate points for small straight:
      *
      * @param dice
      * @return 30 points if condition fulfilled or 0 if not
@@ -322,7 +322,7 @@ public class Field extends JButton {
     }
 
     /**
-     * Calculates points for large straight
+     * Calculate points for large straight:
      * @param dice
      * @return 40 if condition is fulfilled or 0 if not
      */
@@ -379,7 +379,7 @@ public class Field extends JButton {
     }
     
     /**
-     * Calculates and returns points for Chance
+     * Calculate and returns points for Chance:
      *
      * @param dices
      * @return sum of all values of dice

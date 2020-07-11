@@ -34,14 +34,14 @@ public class Dice extends JToggleButton {
     }
 
     /**
-     * Creates dice with given value, for testing
+     * Create dice with given value, for testing.
      * @param value
      */
     public Dice(int value) {
         this.value = value; }
 
     /**
-     * Getter for value of dice
+     * Getter for value of dice.
      * @return
      */
     public int getValue() {
@@ -49,7 +49,7 @@ public class Dice extends JToggleButton {
     }
 
     /**
-     * Generate number between 1 and 6 and updates dice icon
+     * Generate number between 1 and 6 and updates dice icon.
      */
     public void roll() {
         this.isReset = false;
@@ -66,7 +66,7 @@ public class Dice extends JToggleButton {
     }
 
     /**
-     * Helper method to set icon of dice
+     * Helper method to set icon of dice.
      * @param resource path of icon file
      */
     private void setDiceIcon(String resource) {
@@ -75,13 +75,13 @@ public class Dice extends JToggleButton {
     }
 
     /**
-     * Returns whether the dice is reset
+     * Return whether the dice is reset.
      * @return
      */
     public boolean isReset() { return this.isReset; }
 
     /**
-     * Returns value of dice as string
+     * Return value of dice as string.
      * @return
      */
     public String toString() { return "" + this.value; }

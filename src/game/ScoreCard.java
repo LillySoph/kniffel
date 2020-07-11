@@ -132,7 +132,7 @@ public class ScoreCard extends JPanel {
 
     /**
      * Get fields for testing
-     * @return
+     * @return fields
      */
     public Field[] getFields() {
         return fields;

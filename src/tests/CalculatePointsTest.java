@@ -30,7 +30,9 @@ public class CalculatePointsTest {
 		return new Field[]{aces, twos, threes, fours, fives, sixes, threeOfOneKind, fourOfOneKind, fullHouse, smallStraight, largeStraight, kniffel, chance};
 	}
 
-	// testing field score
+	/**
+	 * Testing field score
+	 */
 
 	@Test
 	public void testAces() {
@@ -756,7 +758,9 @@ public class CalculatePointsTest {
 
 	}
 
-	// testing sum and bonus score
+	/**
+	 *  Testing sum and bonus score
+	 */
 
 	@Test
 	public void testNoPoints() {
@@ -818,7 +822,9 @@ public class CalculatePointsTest {
 		assertEquals(99, scoreCard.getSumOverall());
 	}
 
-	// test that dice has only six sides (nothing higher than 6 or lower than 1 can be rolled):
+	/**
+	 *  Tests that dice has only six sides (nothing higher than 6 or lower than 1 can be rolled)
+	 */
 
 	@Test
 	public void testDice() {

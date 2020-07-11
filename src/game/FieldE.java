@@ -1,4 +1,5 @@
 package game;
+
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -23,7 +24,7 @@ public class FieldE extends JButton {
 	}
 
 	/**
-	 *  Resets field to be an empty field
+	 * Resets field to be an empty field
 	 */
 	public void resetPoints() {
 		this.isEmpty = true;
@@ -34,10 +35,12 @@ public class FieldE extends JButton {
 	}
 
 	/**
-	 * Calculates points depending on given dice & field type and updates button and text
+	 * Calculates points depending on given dice & field type and updates button and
+	 * text
+	 * 
 	 * @param dice
 	 */
-	
+
 	public void calculateAndStorePoints(DiceE[] dice) {
 
 		// field was zero before or is now being set to zero
@@ -82,10 +85,12 @@ public class FieldE extends JButton {
 			case LargeStraight:
 				this.points = calculatePointsForLargeStraight(dice);
 				break;
-			default:
+			case Chance:
 				this.points = calculatePointsForChance(dice);
+			default:
+				break;
 			}
-			//set false for not resetting the field
+			// set false for not resetting the field
 			this.isEmpty = false;
 		}
 		// update button text
@@ -93,7 +98,7 @@ public class FieldE extends JButton {
 		// disable field after it has been zeroed
 		if (this.isEmpty || this.points == 0)
 			this.isDisabled = true;
-			
+
 	}
 
 	public boolean isDisabled() {
@@ -164,7 +169,6 @@ public class FieldE extends JButton {
 		}
 
 	}
-
 
 	/**
 	 * Uses one dice to compare its value with other four dice values
@@ -241,9 +245,9 @@ public class FieldE extends JButton {
 	 */
 
 	private int calculatePointsForSmallStraight(DiceE[] dice) {
-	
+
 		boolean isSmallStraight = false;
-	
+
 		boolean isNotASmallStraight = false;
 
 		// counts the frequency of the numbers 3 and 4
@@ -321,6 +325,7 @@ public class FieldE extends JButton {
 
 	/**
 	 * Calculates points for large straight
+	 * 
 	 * @param dice
 	 * @return 40 if condition is fulfilled or 0 if not
 	 */
@@ -376,7 +381,6 @@ public class FieldE extends JButton {
 
 	}
 
-	
 	/**
 	 * Calculates and returns points for Chance
 	 * 
@@ -391,4 +395,3 @@ public class FieldE extends JButton {
 		return result;
 	}
 }
-

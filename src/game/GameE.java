@@ -98,7 +98,7 @@ public class GameE extends JFrame {
 		//editing rollButton
 		this.rollButton.setBackground(Color.pink);
 		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 18));
-		this.rollButton.setPreferredSize(new Dimension(200,40));
+		this.rollButton.setPreferredSize(new Dimension(250,40));
 		rollPanel.add(this.rollButton);
 		
 		// add each dice to the dice panel
@@ -115,7 +115,7 @@ public class GameE extends JFrame {
 		rightSidePanel.add(rollPanel);
 		rightSidePanel.add(dicePanel);
 
-		this.noteForPlayer.setFont(new Font("SansSerif", Font.ITALIC, 16));
+		this.noteForPlayer.setFont(new Font("SansSerif", Font.ITALIC, 13));
 		this.noteForPlayer.setHorizontalAlignment(SwingConstants.CENTER);
 		this.noteForPlayer.setBorder(null);
 		this.noteForPlayer.setEditable(false);
@@ -247,8 +247,11 @@ public class GameE extends JFrame {
 	 */
 	public void settingsForEndOfGame() {
 		this.deactivateAllDiceButton();
-		this.noteForPlayer.setText("Das Spiel ist vorbei. Auf Wiedersehen!");
+		this.getRollButton().setText("Das Spiel ist vorbei!");
+		this.noteForPlayer.setText("Das Spiel ist vorbei. Ihre Gesamtpunktzahl beträgt "+ this.scoreCard.getSumOverall()+" von 375.");
 		this.noteForPlayer.setEditable(false);
+		this.gameRoundText.setVisible(false);
+		this.throwsRoundText.setVisible(false);
 		this.isStillRunning = false;
 	}
 

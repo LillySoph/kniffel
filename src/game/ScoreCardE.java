@@ -58,20 +58,29 @@ public class ScoreCardE extends JPanel {
         sumLower = 0;
         // calculate new sum and bonus
         for(int i = 0; i < 6; i++) {
-            this.sumUpper += fields[i].getPoints();
+            this.sumUpper += this.fields[i].getPoints();
         }
         if(this.sumUpper >= 63) {
-            bonus = 35;
-            sumUpper += bonus;
+            this.bonus = 35;
+           this.sumUpper += this.bonus;
         }
         for(int i = 6; i < 13; i++) {
-            this.sumLower += fields[i].getPoints();
+            this.sumLower += this.fields[i].getPoints();
         }
         this.sumOverall = this.sumLower + this.sumUpper;
         // update text fields
         updateTextFields();
     }
+    
+    /**
+     * Gets sum overall
+     * 
+     */
 
+    public int getSumOverall() {
+    	return this.sumOverall;
+    }
+    
     /**
      * update text fields of upper, lower and overall score sum.
      */

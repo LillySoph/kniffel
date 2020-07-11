@@ -77,7 +77,7 @@ public class GameControllerE implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 		// rollButton was clicked
 		if (e.getSource() == this.game.getRollButton()) {
 			// if game is over rolling is not possible anymore
@@ -100,7 +100,7 @@ public class GameControllerE implements ActionListener {
 					this.game.getDiceButtons()[i].setSelected(true);
 				}
 			}
-		}
+		} 
 	}
 
 }

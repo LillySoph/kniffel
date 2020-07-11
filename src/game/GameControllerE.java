@@ -12,7 +12,7 @@ public class GameControllerE implements ActionListener {
 	private GameE game;
 
 	/**
-	 * Game Controller is the connection between game and ActionListener roll, dice and
+	 * Game Controller is the connection between game and ActionListener,  roll and
 	 * field button(s) are registered as ActionListener and pass information to the
 	 * action event if they are clicked
 	 * 
@@ -26,14 +26,7 @@ public class GameControllerE implements ActionListener {
 
 		// initialize field array buttons with all fields from game
 		FieldE fields[] = game.getFieldButtons();
-		// initialize dice array buttons with all dice from game
-		DiceE dice[] = game.getDiceButtons();
 		
-		// register all dice as ActionListener
-		for (int i = 0; i < dice.length; i++) {
-			dice[i].addActionListener(this);
-		}
-
 		// register all fields as ActionListener
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].addActionListener(this);
@@ -87,14 +80,7 @@ public class GameControllerE implements ActionListener {
 		} else if (e.getSource() instanceof FieldE) {
 			this.game.enterPoints((FieldE) e.getSource());
 		}
-		// dice was clicked
-		else if (e.getSource() instanceof DiceE) {
-			for (int i = 0; i < this.game.getDiceButtons().length; i++) {
-				if (this.game.getDiceButtons()[i].isSelected()) {
-					this.game.getDiceButtons()[i].setSelected(true);
-				}
-			}
-		} 
+	
 	}
 
 }

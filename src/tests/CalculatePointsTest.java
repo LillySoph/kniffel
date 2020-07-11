@@ -1,33 +1,33 @@
 package tests;
 
-import game.DiceL;
-import game.FieldL;
+import game.Dice;
+import game.Field;
 import game.FieldType;
-import game.ScoreCardL;
+import game.ScoreCard;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CalculatePointsTest {
 
-	private DiceL[] dice = new DiceL[5];
-	private ScoreCardL scoreCard = new ScoreCardL(getAlLFields());
-	private FieldL aces = new FieldL(FieldType.Aces), twos = new FieldL(FieldType.Twos),
-			threes = new FieldL(FieldType.Threes), fours = new FieldL(FieldType.Fours),
-			fives = new FieldL(FieldType.Fives), sixes = new FieldL(FieldType.Sixes),
-			threeOfOneKind = new FieldL(FieldType.ThreeOfOneKind), fourOfOneKind = new FieldL(FieldType.FourOfOneKind),
-			fullHouse = new FieldL(FieldType.FullHouse), smallStraight = new FieldL(FieldType.SmallStraight),
-			largeStraight = new FieldL(FieldType.LargeStraight), kniffel = new FieldL(FieldType.Kniffel),
-			chance = new FieldL(FieldType.Chance);
+	private Dice[] dice = new Dice[5];
+	private ScoreCard scoreCard = new ScoreCard(getAlLFields());
+	private Field aces = new Field(FieldType.Aces), twos = new Field(FieldType.Twos),
+			threes = new Field(FieldType.Threes), fours = new Field(FieldType.Fours),
+			fives = new Field(FieldType.Fives), sixes = new Field(FieldType.Sixes),
+			threeOfOneKind = new Field(FieldType.ThreeOfOneKind), fourOfOneKind = new Field(FieldType.FourOfOneKind),
+			fullHouse = new Field(FieldType.FullHouse), smallStraight = new Field(FieldType.SmallStraight),
+			largeStraight = new Field(FieldType.LargeStraight), kniffel = new Field(FieldType.Kniffel),
+			chance = new Field(FieldType.Chance);
 
 	public void setDicesValue(int[] values) {
 		for (int i = 0; i < dice.length; i++) {
-			dice[i] = new DiceL(values[i]);
+			dice[i] = new Dice(values[i]);
 		}
 	}
 
-	public FieldL[] getAlLFields() {
-		return new FieldL[]{aces, twos, threes, fours, fives, sixes, threeOfOneKind, fourOfOneKind, fullHouse, smallStraight, largeStraight, kniffel, chance};
+	public Field[] getAlLFields() {
+		return new Field[]{aces, twos, threes, fours, fives, sixes, threeOfOneKind, fourOfOneKind, fullHouse, smallStraight, largeStraight, kniffel, chance};
 	}
 
 	/**
@@ -828,7 +828,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testDice() {
-		dice[0] = new DiceL();
+		dice[0] = new Dice();
 		int value;
 		for(int i = 0; i < 1000; i++) {
 			dice[0].roll();

@@ -6,21 +6,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class DiceL extends JToggleButton {
+public class Dice extends JToggleButton {
 
     private int value;
     private boolean isReset;
     private static final LineBorder STANDARD_BORDER = new LineBorder(Color.LIGHT_GRAY, 3, true);
     private static final LineBorder SELECTED_BORDER = new LineBorder(Color.PINK, 3, true);
-    private static final int DICE_SCALE = 75;
 
     /**
      * Create new empty dice
      */
-    public DiceL() {
+    public Dice() {
         this.reset();
         this.setBorder(STANDARD_BORDER);
-        this.setPreferredSize(new Dimension(DICE_SCALE,DICE_SCALE));
+        this.setPreferredSize(new Dimension(75,75));
         // define look of selected / unselected state of dice
         addChangeListener(new ChangeListener() {
             @Override
@@ -38,7 +37,7 @@ public class DiceL extends JToggleButton {
      * Creates dice with given value, for testing
      * @param value
      */
-    public DiceL(int value) {
+    public Dice(int value) {
         this.value = value; }
 
     /**
@@ -72,7 +71,7 @@ public class DiceL extends JToggleButton {
      */
     private void setDiceIcon(String resource) {
         this.setSelected(false);
-        this.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(resource)).getImage().getScaledInstance(DICE_SCALE,DICE_SCALE,Image.SCALE_SMOOTH)));
+        this.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(resource)).getImage().getScaledInstance(75,75,Image.SCALE_SMOOTH)));
     }
 
     /**

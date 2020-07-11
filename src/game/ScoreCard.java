@@ -4,28 +4,27 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class ScoreCardL extends JPanel {
+public class ScoreCard extends JPanel {
 
     private static final int ROWS = 17;
     private static final int COLUMNS = 2;
 
-    private FieldL[] fields;
+    private Field[] fields;
     private int bonus = 0;
     private int sumUpper = 0;
     private int sumLower = 0;
     private int sumOverall = 0;
     private JTextField bonusTextField = new JTextField(), sumUpperTextField = new JTextField(),
             sumLowerTextField = new JTextField(), sumOverallTextField = new JTextField();
-    private ScoreCardL scoreCard;
 
-    public ScoreCardL(FieldL fields[]) {
+    public ScoreCard(Field fields[]) {
         super(new GridLayout(ROWS, COLUMNS));
         this.fields = fields;
 
         // initialize field buttons with central alignment
         int i = 0;
         for (FieldType ft : FieldType.values()) {
-            this.fields[i] = new FieldL(ft);
+            this.fields[i] = new Field(ft);
             this.fields[i].setHorizontalAlignment(SwingConstants.CENTER);
             i++;
         }
@@ -88,6 +87,10 @@ public class ScoreCardL extends JPanel {
 
     // FOR TESTING //
 
+    /**
+     * Helper Method for JUnit tests to test if sum and bonus are calculated correctly
+     * @param points
+     */
     public void testCalculateScoreSums(int[] points) {
         for(int i = 0; i < fields.length; i++) {
             fields[i].setPoints(points[i]);
@@ -95,35 +98,51 @@ public class ScoreCardL extends JPanel {
         calculateScoreSums();
     }
 
+    /**
+     * Get overall sum for JUnit test
+     * @return
+     */
     public int getSumOverall() {
         return this.sumOverall;
     }
 
+    /**
+     * Get sum of first block for JUnit test
+     * @return
+     */
     public int getSumUpper() {
         return this.sumUpper;
     }
 
+    /**
+     * Get sum of second block for JUnit test
+     * @return
+     */
     public int getSumLower() {
         return this.sumLower;
     }
 
+    /**
+     * Get bonus for JUnit test
+     * @return
+     */
     public int getBonus() {
         return this.bonus;
     }
 
     /**
-     * Getter for testing
+     * Get fields for testing
      * @return
      */
-    public FieldL[] getFields() {
+    public Field[] getFields() {
         return fields;
     }
 
     /**
-     * Setter for testing
+     * set fields for testing
      * @param fields
      */
-    public void setFields(FieldL[] fields) {
+    public void setFields(Field[] fields) {
         this.fields = fields;
     }
 }

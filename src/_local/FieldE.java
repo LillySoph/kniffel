@@ -1,8 +1,10 @@
-package game;
+package _local;
 
 import java.awt.Color;
 
 import javax.swing.JButton;
+
+import game.FieldType;
 
 public class FieldE extends JButton {
 

@@ -1,7 +1,9 @@
-package game;
+package _local;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import game.FieldType;
 
 import java.awt.*;
 

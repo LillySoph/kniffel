@@ -1,4 +1,4 @@
-package game;
+package _local;
 
 import java.awt.event.ActionListener;
 import javax.swing.*;

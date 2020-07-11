@@ -129,20 +129,4 @@ public class ScoreCard extends JPanel {
     public int getBonus() {
         return this.bonus;
     }
-
-    /**
-     * Get fields for testing
-     * @return fields
-     */
-    public Field[] getFields() {
-        return fields;
-    }
-
-    /**
-     * set fields for testing
-     * @param fields
-     */
-    public void setFields(Field[] fields) {
-        this.fields = fields;
-    }
 }

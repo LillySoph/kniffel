@@ -88,7 +88,7 @@ public class ScoreCard extends JPanel {
 
     // FOR TESTING //
 
-    public void setAllPoints(int[] points) {
+    public void testCalculateScoreSums(int[] points) {
         for(int i = 0; i < fields.length; i++) {
             fields[i].setPoints(points[i]);
         }

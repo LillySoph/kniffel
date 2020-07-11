@@ -760,7 +760,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testNoPoints() {
-		scoreCard.setAllPoints(new int[]{0, 0, 0, 0, 0, 0,
+		scoreCard.testCalculateScoreSums(new int[]{0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0});
 		assertEquals(0, scoreCard.getBonus());
 		assertEquals(0, scoreCard.getSumUpper());
@@ -770,7 +770,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testLowerNoBonus() {
-		scoreCard.setAllPoints(new int[]{0, 0, 0, 0, 0, 0,
+		scoreCard.testCalculateScoreSums(new int[]{0, 0, 0, 0, 0, 0,
 				5, 5, 25, 0, 0, 0, 15});
 		assertEquals(0, scoreCard.getBonus());
 		assertEquals(0, scoreCard.getSumUpper());
@@ -780,7 +780,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testUpperAndLowerNoBonus() {
-		scoreCard.setAllPoints(new int[]{1, 8, 3, 20, 0, 30,
+		scoreCard.testCalculateScoreSums(new int[]{1, 8, 3, 20, 0, 30,
 				5, 5, 25, 0, 0, 0, 15});
 		assertEquals(0, scoreCard.getBonus());
 		assertEquals(62, scoreCard.getSumUpper());
@@ -790,7 +790,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testUpperAndLowerWithBonus() {
-		scoreCard.setAllPoints(new int[]{1, 10, 3, 20, 0, 30,
+		scoreCard.testCalculateScoreSums(new int[]{1, 10, 3, 20, 0, 30,
 				5, 5, 25, 0, 0, 0, 15});
 		assertEquals(35, scoreCard.getBonus());
 		assertEquals(99, scoreCard.getSumUpper());
@@ -800,7 +800,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testUpperNoBonus() {
-		scoreCard.setAllPoints(new int[]{2, 10, 0, 20, 0, 30,
+		scoreCard.testCalculateScoreSums(new int[]{2, 10, 0, 20, 0, 30,
 				0, 0, 0, 0, 0, 0, 0});
 		assertEquals(0, scoreCard.getBonus());
 		assertEquals(62, scoreCard.getSumUpper());
@@ -810,7 +810,7 @@ public class CalculatePointsTest {
 
 	@Test
 	public void testUpperWithBonus() {
-		scoreCard.setAllPoints(new int[]{1, 10, 3, 20, 0, 30,
+		scoreCard.testCalculateScoreSums(new int[]{1, 10, 3, 20, 0, 30,
 				0, 0, 0, 0, 0, 0, 0});
 		assertEquals(35, scoreCard.getBonus());
 		assertEquals(99, scoreCard.getSumUpper());

@@ -80,15 +80,9 @@ public class GameControllerE implements ActionListener {
 		
 		// rollButton was clicked
 		if (e.getSource() == this.game.getRollButton()) {
-			// if game is over rolling is not possible anymore
-			if (this.game.getGameRoundCounter() > 13) {
-				this.game.deactivateRollButton();
-				this.game.resetDiceButtons();
-
-			} else {
 				// roll all dice
 				this.game.rollAllDice();
-			}
+			
 			// field was clicked
 		} else if (e.getSource() instanceof FieldE) {
 			this.game.enterPoints((FieldE) e.getSource());

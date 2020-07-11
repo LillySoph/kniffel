@@ -68,6 +68,7 @@ public class ScoreCardE extends JPanel {
             this.sumLower += this.fields[i].getPoints();
         }
         this.sumOverall = this.sumLower + this.sumUpper;
+       
         // update text fields
         updateTextFields();
     }
@@ -78,7 +79,11 @@ public class ScoreCardE extends JPanel {
      */
 
     public int getSumOverall() {
-    	return this.sumOverall;
+    	int sum = 0;
+    	for(int i = 0; i < 13; i++) {
+    		sum += this.fields[i].getPoints();
+    	}
+    	return sum;
     }
     
     /**

@@ -52,7 +52,7 @@ public class GameE extends JFrame {
 		super("Willkommen bei Kniffel!");
 
 		this.setLayout(new GridLayout(1, 2));
-		
+
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/diceIcon.png")));
 
 		// initializes all field buttons
@@ -194,6 +194,11 @@ public class GameE extends JFrame {
 		this.deactivateAllFieldButtons();
 
 		this.activateRollButton();
+		
+		// if game is over rolling is not possible anymore
+		if(!this.isStillRunning) {
+			this.deactivateRollButton();
+		}
 	}
 
 	/**
@@ -203,7 +208,7 @@ public class GameE extends JFrame {
 	public JButton getRollButton() {
 		return this.rollButton;
 	}
-
+	
 	/**
 	 * Returns dice buttons in an array.
 	 * 
@@ -234,10 +239,8 @@ public class GameE extends JFrame {
 			this.gameRoundCounter++;
 		} else {
 			// rounds are finished, deactivate all buttons
-			this.gameRoundCounter++;
 			this.settingsForEndOfGame();
 		}
-
 		this.resetThrowsCounter();
 	}
 

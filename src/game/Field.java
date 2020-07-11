@@ -84,11 +84,9 @@ public class Field extends JButton {
                     break;
                 case SmallStraight:
                     this.points = calculatePointsForSmallStraight(dice);
-                    // this.points = calculatePointsForStraight(dice, 4);
                     break;
                 case LargeStraight:
                     this.points = calculatePointsForLargeStraight(dice);
-                    // this.points = calculatePointsForStraight(dice, 5);
                     break;
                 default:
                     this.points = calculatePointsForChance(dice);
@@ -136,7 +134,6 @@ public class Field extends JButton {
      * @return points for ThreeOfAKind(sum of all dice), FourOfAKind (sum of all
      *         dice) and Kniffel(50)
      */
-
     private int calculatePointsOfAKind(Dice[] dice, int nInARow) {
         int counter = 1, result = 0, i = 0;
         boolean foundNumbersInARow = false;
@@ -180,7 +177,6 @@ public class Field extends JButton {
      * @return 25 points if three of one number and two of another number exist in a
      *         row
      */
-
     private int calculatePointsForFullHouse(Dice[] dice) {
         boolean foundThreeOfARow = false;
         boolean foundTwoOfARow = false;
@@ -246,7 +242,6 @@ public class Field extends JButton {
      * @param dice
      * @return 30 points if condition fulfilled or 0 if not
      */
-
     private int calculatePointsForSmallStraight(Dice[] dice) {
 
         boolean isSmallStraight = false;
@@ -382,8 +377,7 @@ public class Field extends JButton {
         return 0;
 
     }
-
-
+    
     /**
      * Calculates and returns points for Chance
      *

@@ -62,8 +62,9 @@ public class Game extends JFrame {
 		this.rollButton = new JButton("Würfeln");
 		this.rollButton.setFont(new Font("SansSerif", Font.BOLD, 28));
 		this.rollButton.setBackground(Color.PINK);
+		this.rollButton.setPreferredSize(new Dimension(140,50));
+		rollButton.setBorder(new LineBorder(Color.BLACK, 3, true));
 		this.rollButton.setFocusPainted(false);
-		this.setPreferredSize(new Dimension(90,60));
 		JPanel rollPanel = new JPanel();
 		rollPanel.setLayout(new FlowLayout());
 		rollPanel.add(rollButton);
@@ -90,6 +91,7 @@ public class Game extends JFrame {
 		noteForPlayer.setAlignmentY(Component.TOP_ALIGNMENT);
 		noteForPlayer.setBorder(null);
 
+		rightPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, false));
 		this.add(rightPanel);
 		this.updateGUI();
 		deactivateFieldButtons();
@@ -98,19 +100,8 @@ public class Game extends JFrame {
 
 		this.setSize(900,600);
 		this.setLocationRelativeTo(null);
-	}
 
-	private void addComponentToGui(Component component, Integer gridX, Integer gridY, Integer gridHeight, Integer gridWidth) {
-		GridBagConstraints c = new GridBagConstraints();
-		if(gridX != null)
-			c.gridx = gridX;
-		if(gridY != null)
-			c.gridy = gridY;
-		if(gridHeight != null)
-			c.gridheight = gridHeight;
-		if(gridWidth != null)
-			c.gridwidth = gridWidth;
-		this.add(component, c);
+
 	}
 
 	/**
@@ -164,28 +155,35 @@ public class Game extends JFrame {
 	 * @param field option chosen by player
 	 */
 	public void enterPoints(Field field) {
-		if(!(isStillRunning()))
-			return;
 		// calculate points
 		field.calculateAndStorePoints(getDiceButtons());
 		// increment counters
 		incrementRoundCounters();
-		this.rollCounter = 3;
-		// update graphic user interface
-		updateGUI();
-		// reset dice buttons for new round
-		resetDiceButtons();
-		// deactivate field buttons so that player cannot chose anything before having
-		// rolled at least once
-		deactivateFieldButtons();
-		activateRollButton();
+		rollCounter = 3;
+		if(isStillRunning()) {
+			scoreCard.calculateScoreSums();
+			updateGUI();
+			resetDiceButtons();
+			deactivateFieldButtons();
+			activateRollButton();
+		} else {
+			deactivateRollButton();
+			for(Dice d : getDiceButtons()) {
+				d.setEnabled(false);
+			}
+			this.rollButton.setText("Das Spiel ist vorbei");
+			roundTextField.setText("");
+			rollTextField.setText("");
+			noteForPlayer.setText("Glückwunsch, Ihre Gesamt-Punktzahl beträgt " + scoreCard.getOverallScore() + "!");
+			resetDiceButtons();
+			deactivateFieldButtons();
+		}
 	}
 
 	/**
 	 * Update text fields and counters in gui.
 	 */
 	private void updateGUI() {
-		scoreCard.calculateScoreSums();
 		if (rollCounter == 0) {
 			rollTextField.setText("Bitte wählen Sie eine Option");
 		} else {
@@ -240,14 +238,13 @@ public class Game extends JFrame {
 	 */
 	private void incrementRoundCounters() {
 		if (roundCounter < 13) {
-			roundCounter++;
+			this.roundCounter++;
+			rollCounter = 3;
 		} else {
-			roundCounter = 1;
-			deactivateRollButton();
-			noteForPlayer.setText("Das Spiel ist vorbei");
+			this.roundCounter = 1;
 			isStillRunning = false;
 		}
-		rollCounter = 3;
+
 	}
 
 	/**

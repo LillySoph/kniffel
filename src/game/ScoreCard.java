@@ -1,6 +1,7 @@
 package game;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class ScoreCard extends JPanel {
@@ -15,6 +16,7 @@ public class ScoreCard extends JPanel {
     private int sumOverall = 0;
     private JTextField bonusTextField = new JTextField(), sumUpperTextField = new JTextField(),
             sumLowerTextField = new JTextField(), sumOverallTextField = new JTextField();
+    private ScoreCard scoreCard;
 
     public ScoreCard(Field fields[]) {
         super(new GridLayout(ROWS, COLUMNS));
@@ -41,7 +43,10 @@ public class ScoreCard extends JPanel {
         // add text fields and buttons to layout and set its font type and size
         for(i = 0; i < ROWS; i++) {
             firstColumn[i].setFont(new Font("SansSerif", Font.PLAIN, 18));
+            firstColumn[i].setBorder(new LineBorder(Color.LIGHT_GRAY, 1, false));
+
             secondColumn[i].setFont(new Font("SansSerif", Font.PLAIN, 18));
+            secondColumn[i].setBorder(new LineBorder(Color.LIGHT_GRAY, 1, false));
             firstColumn[i].setEditable(false);
             this.add(firstColumn[i]);
             this.add(secondColumn[i]);
@@ -81,4 +86,23 @@ public class ScoreCard extends JPanel {
         sumOverallTextField.setText("" + sumOverall);
     }
 
+    public int getOverallScore() {
+        return this.sumOverall;
+    }
+
+    /**
+     * Getter for testing
+     * @return
+     */
+    public Field[] getFields() {
+        return fields;
+    }
+
+    /**
+     * Setter for testing
+     * @param fields
+     */
+    public void setFields(Field[] fields) {
+        this.fields = fields;
+    }
 }

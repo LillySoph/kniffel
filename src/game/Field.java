@@ -11,6 +11,7 @@ public class Field extends JButton {
 
     /**
      * Create empty field button of given type.
+     *
      * @param fieldType
      */
     public Field(FieldType fieldType) {
@@ -18,7 +19,7 @@ public class Field extends JButton {
         this.points = 0;
         // no points have been entered
         this.isEmpty = true;
-        this.setSize(85,30);
+        this.setSize(85, 30);
     }
 
     public void setPoints(int points) {
@@ -26,7 +27,7 @@ public class Field extends JButton {
     }
 
     /**
-     *  Resets field to be an empty field, for testing´.
+     * Resets field to be an empty field, for testing´.
      */
     public void resetPoints() {
         this.isEmpty = true;
@@ -34,6 +35,7 @@ public class Field extends JButton {
 
     /**
      * Return stored points.
+     *
      * @return
      */
     public int getPoints() {
@@ -42,6 +44,7 @@ public class Field extends JButton {
 
     /**
      * Calculate points depending on given dice & field type and updates button and text.
+     *
      * @param dice
      */
     public void calculateAndStorePoints(Dice[] dice) {
@@ -114,7 +117,7 @@ public class Field extends JButton {
      * Calculate and returns points for Aces, Twos, Threes, Fours, Fives and Sixes.
      *
      * @param dice
-     * @param n     , number of dice value regarding to field type
+     * @param n    , number of dice value regarding to field type
      * @return sum of dice with appropriate field type
      */
     private int calculatePointsForFirstBlock(Dice[] dice, int n) {
@@ -132,7 +135,7 @@ public class Field extends JButton {
      * @param dice
      * @param nInARow , number of numbers in a row
      * @return points for ThreeOfAKind(sum of all dice), FourOfAKind (sum of all
-     *         dice) and Kniffel(50)
+     * dice) and Kniffel(50)
      */
     private int calculatePointsOfAKind(Dice[] dice, int nInARow) {
         int counter = 1, result = 0, i = 0;
@@ -175,7 +178,7 @@ public class Field extends JButton {
      *
      * @param dice
      * @return 25 points if three of one number and two of another number exist in a
-     *         row
+     * row
      */
     private int calculatePointsForFullHouse(Dice[] dice) {
         boolean foundThreeOfARow = false;
@@ -323,6 +326,7 @@ public class Field extends JButton {
 
     /**
      * Calculate points for large straight:
+     *
      * @param dice
      * @return 40 if condition is fulfilled or 0 if not
      */
@@ -377,7 +381,7 @@ public class Field extends JButton {
         return 0;
 
     }
-    
+
     /**
      * Calculate and returns points for Chance:
      *

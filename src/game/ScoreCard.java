@@ -40,7 +40,7 @@ public class ScoreCard extends JPanel {
         updateTextFields();
 
         // add text fields and buttons to layout and set its font type and size
-        for(i = 0; i < ROWS; i++) {
+        for (i = 0; i < ROWS; i++) {
             firstColumn[i].setFont(new Font("SansSerif", Font.PLAIN, 18));
             firstColumn[i].setBorder(new LineBorder(Color.LIGHT_GRAY, 1, false));
 
@@ -60,14 +60,14 @@ public class ScoreCard extends JPanel {
         sumUpper = 0;
         sumLower = 0;
         // calculate new sum and bonus
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             this.sumUpper += fields[i].getPoints();
         }
-        if(this.sumUpper >= 63) {
+        if (this.sumUpper >= 63) {
             bonus = 35;
             sumUpper += bonus;
         }
-        for(int i = 6; i < 13; i++) {
+        for (int i = 6; i < 13; i++) {
             this.sumLower += fields[i].getPoints();
         }
         this.sumOverall = this.sumLower + this.sumUpper;
@@ -89,10 +89,11 @@ public class ScoreCard extends JPanel {
 
     /**
      * Helper Method for JUnit tests to test if sum and bonus are calculated correctly
+     *
      * @param points
      */
     public void testCalculateScoreSums(int[] points) {
-        for(int i = 0; i < fields.length; i++) {
+        for (int i = 0; i < fields.length; i++) {
             fields[i].setPoints(points[i]);
         }
         calculateScoreSums();
@@ -100,6 +101,7 @@ public class ScoreCard extends JPanel {
 
     /**
      * Get overall sum for JUnit test
+     *
      * @return
      */
     public int getSumOverall() {
@@ -108,6 +110,7 @@ public class ScoreCard extends JPanel {
 
     /**
      * Get sum of first block for JUnit test
+     *
      * @return
      */
     public int getSumUpper() {
@@ -116,6 +119,7 @@ public class ScoreCard extends JPanel {
 
     /**
      * Get sum of second block for JUnit test
+     *
      * @return
      */
     public int getSumLower() {
@@ -124,6 +128,7 @@ public class ScoreCard extends JPanel {
 
     /**
      * Get bonus for JUnit test
+     *
      * @return
      */
     public int getBonus() {

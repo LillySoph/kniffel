@@ -40,7 +40,7 @@ public class GameController implements ActionListener {
                     @Override
                     public void windowClosing(WindowEvent e) {
                         // Creating array of data type Object, adding the options
-                        Object[] options = { "Ja, beenden", "Nein, weiterspielen" };
+                        Object[] options = {"Ja, beenden", "Nein, weiterspielen"};
 
                         if (game.isStillRunning()) {
                             // show warning and note which option was clicked

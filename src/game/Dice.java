@@ -19,7 +19,7 @@ public class Dice extends JToggleButton {
     public Dice() {
         this.reset();
         this.setBorder(STANDARD_BORDER);
-        this.setPreferredSize(new Dimension(75,75));
+        this.setPreferredSize(new Dimension(75, 75));
         // define look of selected / unselected state of dice
         addChangeListener(new ChangeListener() {
             @Override
@@ -35,13 +35,16 @@ public class Dice extends JToggleButton {
 
     /**
      * Create dice with given value, for testing.
+     *
      * @param value
      */
     public Dice(int value) {
-        this.value = value; }
+        this.value = value;
+    }
 
     /**
      * Getter for value of dice.
+     *
      * @return
      */
     public int getValue() {
@@ -67,23 +70,30 @@ public class Dice extends JToggleButton {
 
     /**
      * Helper method to set icon of dice.
+     *
      * @param resource path of icon file
      */
     private void setDiceIcon(String resource) {
         this.setSelected(false);
-        this.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(resource)).getImage().getScaledInstance(75,75,Image.SCALE_SMOOTH)));
+        this.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(resource)).getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH)));
     }
 
     /**
      * Return whether the dice is reset.
+     *
      * @return
      */
-    public boolean isReset() { return this.isReset; }
+    public boolean isReset() {
+        return this.isReset;
+    }
 
     /**
      * Return value of dice as string.
+     *
      * @return
      */
-    public String toString() { return "" + this.value; }
+    public String toString() {
+        return "" + this.value;
+    }
 
 }
